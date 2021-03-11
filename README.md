@@ -1,5 +1,9 @@
 # FrontEnd-EmporioLambda-POC
 
+![workflow status](https://github.com/github/docs/actions/workflows/deployWebsite.yml/badge.svg)
+[![codecov](https://codecov.io/gh/OmicronSwe/EmporioLambda-FE/branch/master/graph/badge.svg?token=S45ES4F9UL)](https://codecov.io/gh/OmicronSwe/EmporioLambda-FE)
+
+
 ## Requisiti
 Serve l'ultima versione di Node.js, che vi installerà il comando `npm` e l'installazione di **vercel** per il download delle variabili d'ambiente che serviranno per interfacciarsi in locale con lo **stage local** di AWS
 

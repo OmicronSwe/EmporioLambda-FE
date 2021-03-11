@@ -1,4 +1,4 @@
-export default it('should be "Hello Next.js 👋"', () => {
+export default it('should be "Initial setup👋"', () => {
   cy.visit("/");
   cy.get("h1").contains("Initial setup👋");
 });
