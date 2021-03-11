@@ -1,0 +1,46 @@
+name: Deploy website
+on: [push]
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎
+        uses: actions/checkout@v2
+
+      - name: Install Node.js
+        uses: actions/setup-node@v1
+        with:
+          node-version: 14.x
+    
+      - name: Install NPM dependencies
+        run: npm install
+
+      - name: Test ESLint 🛂
+        run: npm run checkWithLint
+
+      - name: Test Cypress 🌲👮 and push coverage to Codecov ☂️
+        run: npm run test && npx codecov
+
+      - name: Deploy preview 🚀🌟
+        if: github.ref == 'refs/heads/develop'
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required 
+          working-directory: ./
+
+      - name: Deploy production 🚀✨
+        if: github.ref == 'refs/heads/master'
+        uses: amondnet/vercel-action@v20
+        with:
+          vercel-token: ${{ secrets.VERCEL_TOKEN }} # Required
+          github-token: ${{ secrets.GITHUB_TOKEN }} #Optional
+          vercel-org-id: ${{ secrets.VERCEL_ORG_ID}}  #Required
+          vercel-project-id: ${{ secrets.VERCEL_PROJECT_ID}} #Required 
+          vercel-args: '--prod' #Optional
+          working-directory: ./
+
+
+
