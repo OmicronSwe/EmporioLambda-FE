@@ -54,6 +54,7 @@ header nav {
   margin: auto;
   padding: 2em;
   word-wrap: break-word;
+  width: 70%;
 }
 
 #footer {
