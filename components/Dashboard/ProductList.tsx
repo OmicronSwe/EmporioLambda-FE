@@ -1,7 +1,13 @@
-import React from "react"
+import React from "react";
 
-class ProductList extends React.Component<{products}> {
+class ProductList extends React.Component<{ products }> {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
+
   render() {
+    const { products } = this.props;
     return (
       <table id="productsTable">
         <caption> Products list </caption>
@@ -12,7 +18,7 @@ class ProductList extends React.Component<{products}> {
           </tr>
         </thead>
         <tbody>
-          {this.props.products.map((items) => (
+          {products.map((items) => (
             <tr key={items.id}>
               <td>{items.name}</td>
               <td>{items.description}</td>
@@ -23,8 +29,8 @@ class ProductList extends React.Component<{products}> {
           ))}
         </tbody>
       </table>
-    )
+    );
   }
 }
 
-export default ProductList
+export default ProductList;
