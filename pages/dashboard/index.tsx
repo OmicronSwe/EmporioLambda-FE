@@ -1,19 +1,34 @@
 import React from "react";
+import {GetServerSideProps} from 'next';
+import getlambdaResponse from '../api/lib/lambdas';
 import DashboardController from "../../src/ViewController/DashboardController";
 import DashboardViewModel from "../../src/ViewModel/DashboardViewModel";
 import DashboardModel from "../../src/Model/DashboardModel";
+import { getSession} from "next-auth/client";
 
-class DashboardProvider extends React.Component<{}> {
-  viewModel;
+class DashboardProvider extends React.Component<{products, session}> {
+  viewModel: DashboardViewModel;
 
   constructor(props) {
     super(props);
-    const listingProductModel = new DashboardModel();
-    this.viewModel = new DashboardViewModel(listingProductModel);
+    const dashboardModel = new DashboardModel();
+    this.viewModel = new DashboardViewModel(dashboardModel);
   }
 
   render() {
-    return <DashboardController viewModel={this.viewModel} />;
+    return <DashboardController 
+      viewModel={this.viewModel}
+      products={this.props.products}
+      session={this.props.session} />;
+  }
+}
+
+export const getServerSideProps: GetServerSideProps = async ({req}) => {
+  return {
+    props: {
+      products: await (await getlambdaResponse("product","GET")).props.response,
+      session: await getSession({req})
+    }
   }
 }
 

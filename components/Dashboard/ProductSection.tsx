@@ -1,13 +1,14 @@
 import React from "react";
+import ProductList from "../../components/Dashboard/ProductList"
 
-class ProductSection extends React.Component<{}> {
+class ProductSection extends React.Component<{products}> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    return <h1>Product Section</h1>;
+    return <ProductList products={this.props.products} />
   }
 }
 
