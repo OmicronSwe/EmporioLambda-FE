@@ -4,7 +4,7 @@ import ProductSection from "../../components/Dashboard/ProductSection";
 import CategorySection from "../../components/Dashboard/CategorySection";
 import OrderSection from "../../components/Dashboard/OrderSection";
 
-class DashboardView extends React.Component<{}> {
+class DashboardView extends React.Component<{products}> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -14,7 +14,7 @@ class DashboardView extends React.Component<{}> {
     return (
       <>
         <Layout title="Dashboard page">
-          <ProductSection />
+          <ProductSection products={this.props.products} />
           <CategorySection />
           <OrderSection />
         </Layout>
