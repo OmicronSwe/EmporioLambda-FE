@@ -3,6 +3,8 @@ import Link from "next/link";
 import Head from "next/head";
 import Image from "next/image";
 
+import Button from "react-bootstrap/Button";
+
 type Props = {
   children: ReactNode;
   title: string;
@@ -30,6 +32,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => (
       </style>
       <nav>
         <Link href="/">Home</Link>
+        <Button>Test button</Button>
       </nav>
     </header>
     <div className="content">{children}</div>
