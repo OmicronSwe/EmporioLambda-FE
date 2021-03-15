@@ -1,5 +1,5 @@
 import React from "react";
-// import ProductList from "../../components/Dashboard/ProductList"
+import ProductList from "./ProductList";
 
 class ProductSection extends React.Component<{ products }> {
   constructor(props) {
@@ -8,8 +8,8 @@ class ProductSection extends React.Component<{ products }> {
   }
 
   render() {
-    // return <ProductList products={this.props.products} />
-    return "";
+    const { products } = this.props;
+    return <ProductList products={products} />;
   }
 }
 

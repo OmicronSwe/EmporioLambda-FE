@@ -9,7 +9,7 @@ class DashboardController extends React.Component<{ viewModel; products; session
 
   render() {
     // da mostrare solo se utente loggato come venditore
-    const products = this.props;
+    const { products } = this.props;
     return <DashboardView products={products} />;
   }
 }
