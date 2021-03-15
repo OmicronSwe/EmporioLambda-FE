@@ -1,4 +1,5 @@
 import React from "react";
+import { Table, Button } from "react-bootstrap";
 
 class ProductList extends React.Component<{ products }> {
   constructor(props) {
@@ -12,8 +13,7 @@ class ProductList extends React.Component<{ products }> {
     return (
       <>
         <h1>Product Section</h1>
-        <table id="productsTable">
-          <caption> Products list </caption>
+        <Table>
           <thead>
             <tr>
               <th>ID</th>
@@ -31,10 +31,12 @@ class ProductList extends React.Component<{ products }> {
                 <td>{item.description}</td>
                 {"category" in item ? <td>Category_test</td> : <td />}
                 {"price" in item ? <td>{item.price}</td> : <td />}
+                <td><Button variant="warning">Modify</Button></td>
+                <td><Button variant="danger">Delete</Button></td>
               </tr>
             ))}
           </tbody>
-        </table>
+        </Table>
       </>
     );
   }
