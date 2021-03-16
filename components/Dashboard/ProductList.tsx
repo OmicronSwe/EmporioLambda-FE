@@ -9,14 +9,14 @@ class ProductList extends React.Component<{ products }> {
 
   render() {
     const { products } = this.props;
-    const items = products.products.result;
+    const items = products.result;
     return (
       <>
-        <h1>Product Section</h1>
         <Table>
-          <thead>
+          <thead className="thead-light">
             <tr>
               <th>ID</th>
+              <th>Image</th>
               <th>Name</th>
               <th>Description</th>
               <th>Category</th>
@@ -27,6 +27,9 @@ class ProductList extends React.Component<{ products }> {
             {items.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
+                <td>
+                  <img src="Emporio_Lambda.png" className="img-thumbnail" alt="Product" />
+                </td>
                 <td>{item.name}</td>
                 <td>{item.description}</td>
                 {"category" in item ? <td>Category_test</td> : <td />}

@@ -7,10 +7,14 @@ class DashboardController extends React.Component<{ viewModel; products; session
     this.state = {};
   }
 
+  insertProduct = async (params) => {
+    const { viewModel } = this.props;
+    return viewModel.insertProduct(params);
+  };
+
   render() {
-    // da mostrare solo se utente loggato come venditore
     const { products } = this.props;
-    return <DashboardView products={products} />;
+    return <DashboardView products={products} insertProduct={this.insertProduct} />;
   }
 }
 
