@@ -10,7 +10,7 @@ export default class Fetcher {
   async getJSONResponse(method: string, params: string): Promise<any> {
     let req = null;
     if (method === "GET") {
-      req = await fetch(this.url.href)
+      req = await fetch(this.url.href);
     } else {
       req = await fetch(this.url.href, {
         body: params,

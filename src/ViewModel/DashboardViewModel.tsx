@@ -5,7 +5,7 @@ class DashboardViewModel {
     this.model = Model;
   }
 
-  doModelAction(){
+  doModelAction() {
     return this.model.doModelAction();
   }
 }

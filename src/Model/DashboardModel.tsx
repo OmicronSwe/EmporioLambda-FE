@@ -1,7 +1,7 @@
 import Order from "./Objects/Order";
 import Product from "./Objects/Product";
 
-import getlambdaResponsePOST from "../../pages/api/lib/lambdas"
+import getlambdaResponsePOST from "../../pages/api/lib/lambdas";
 
 class DashboardModel {
   products: Product[] = null;
@@ -10,15 +10,16 @@ class DashboardModel {
 
   orders: Order[] = null;
 
-  async doModelAction(){
+  async doModelAction() {
     const stringJson = JSON.stringify({
-      //payload for API
-      name:"test",
-      condition:"getByName"
-    })
+      // payload for API
+      name: "test",
+      condition: "getByName",
+    });
 
-    const resp = await getlambdaResponsePOST("product/query","POST",stringJson) //external API call
-    console.log( resp.props.response )
+    const resp = await getlambdaResponsePOST("product/query", "POST", stringJson); // external API call
+    console.log(resp.props.response);
+    this.orders = null;
   }
 }
 

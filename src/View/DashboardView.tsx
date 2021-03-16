@@ -4,14 +4,14 @@ import ProductSection from "../../components/Dashboard/ProductSection";
 import CategorySection from "../../components/Dashboard/CategorySection";
 import OrderSection from "../../components/Dashboard/OrderSection";
 
-class DashboardView extends React.Component<{ products, doModelAction }> {
+class DashboardView extends React.Component<{ products; doModelAction }> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const { products, doModelAction} = this.props;
+    const { products, doModelAction } = this.props;
     return (
       <>
         <Layout title="Dashboard page">
