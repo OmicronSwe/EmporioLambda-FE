@@ -4,6 +4,10 @@ class DashboardViewModel {
   constructor(Model) {
     this.model = Model;
   }
+
+  doModelAction(){
+    return this.model.doModelAction();
+  }
 }
 
 export default DashboardViewModel;

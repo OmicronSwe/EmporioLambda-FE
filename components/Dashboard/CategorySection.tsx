@@ -1,13 +1,14 @@
 import React from "react";
 import { Accordion, Button, Card, CardColumns, Col, Form, Row } from "react-bootstrap";
 
-class CategorySection extends React.Component<{}> {
+class CategorySection extends React.Component<{doModelAction}> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
+    const doModelAction = this.props.doModelAction
     return (
       <>
         <h1>Category Section</h1>
@@ -42,7 +43,7 @@ class CategorySection extends React.Component<{}> {
           <Card>
             <Card.Body>
               <Card.Title>Name</Card.Title>
-              <Button variant="danger">Remove</Button>
+              <Button variant="danger" onClick={() => doModelAction()}>Remove</Button>
               <Button variant="warning">Modify</Button>
             </Card.Body>
           </Card>
