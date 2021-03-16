@@ -16,5 +16,15 @@ module.exports = {
    "react/react-in-jsx-scope": "off",
    "react/jsx-props-no-spreading": "off",
    'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Includes .prettierrc.js rules
+   "jsx-a11y/label-has-associated-control": ["error", {
+    "required": {
+      "some": ["nesting", "id"]
+    }
+  }],
+  "jsx-a11y/label-has-for": ["error", {
+    "required": {
+      "some": ["nesting", "id"]
+    }
+  }],
   }
 }
