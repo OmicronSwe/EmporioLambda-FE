@@ -8,6 +8,10 @@ class DashboardViewModel {
   insertProduct = async (params) => {
     return this.model.insertProduct(params);
   };
+
+  doModelAction() {
+    return this.model.doModelAction();
+  }
 }
 
 export default DashboardViewModel;

@@ -12,9 +12,14 @@ class DashboardController extends React.Component<{ viewModel; products; session
     return viewModel.insertProduct(params);
   };
 
+  doModelAction = () => {
+    const { viewModel } = this.props;
+    viewModel.doModelAction();
+  };
+
   render() {
     const { products } = this.props;
-    return <DashboardView products={products} insertProduct={this.insertProduct} />;
+    return <DashboardView products={products} insertProduct={this.insertProduct} doModelAction={this.doModelAction} />;
   }
 }
 
