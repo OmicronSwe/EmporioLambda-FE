@@ -14,7 +14,9 @@ class Dashboard extends React.Component<{ products; session }> {
   render() {
     return (
       <>
-        <Layout title="Dashboard page" />
+        <Layout title="Dashboard page">
+          <h1>Hello!</h1>
+        </Layout>
       </>
     );
   }
