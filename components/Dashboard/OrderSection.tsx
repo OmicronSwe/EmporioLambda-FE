@@ -4,6 +4,7 @@ import { Button, Table } from "react-bootstrap";
 class OrderSection extends React.Component<{}> {
   constructor(props) {
     super(props);
+    // this.state = { orders: "", page: 1 };
     this.state = {};
   }
 

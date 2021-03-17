@@ -2,22 +2,29 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import getlambdaResponse from "../api/lib/lambdas";
-import DashboardController from "../../src/ViewController/DashboardController";
-import DashboardViewModel from "../../src/ViewModel/DashboardViewModel";
-import DashboardModel from "../../src/Model/DashboardModel";
 
-class DashboardProvider extends React.Component<{ products; session }> {
-  viewModel: DashboardViewModel;
+import Layout from "../../components/layout";
+import ProductSection from "../../components/Dashboard/ProductSection";
+import CategorySection from "../../components/Dashboard/CategorySection";
+import OrderSection from "../../components/Dashboard/OrderSection";
 
+class Dashboard extends React.Component<{ products; session }> {
   constructor(props) {
     super(props);
-    const dashboardModel = new DashboardModel();
-    this.viewModel = new DashboardViewModel(dashboardModel);
+    this.state = {};
   }
 
   render() {
     const { products, session } = this.props;
-    return <DashboardController viewModel={this.viewModel} products={products} session={session} />;
+    return (
+      <>
+        <Layout title="Dashboard page">
+          <ProductSection products={products} session={session} />
+          <CategorySection session={session} />
+          <OrderSection />
+        </Layout>
+      </>
+    );
   }
 }
 
@@ -30,4 +37,4 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   };
 };
 
-export default DashboardProvider;
+export default Dashboard;
