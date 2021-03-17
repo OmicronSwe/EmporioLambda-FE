@@ -15,12 +15,12 @@ class Dashboard extends React.Component<{ products; session }> {
   }
 
   render() {
-    const { products, session } = this.props;
+    const { products } = this.props;
     return (
       <>
         <Layout title="Dashboard page">
-          <ProductSection products={products} session={session} />
-          <CategorySection session={session} />
+          <ProductSection products={products} />
+          <CategorySection />
           <OrderSection />
         </Layout>
       </>
