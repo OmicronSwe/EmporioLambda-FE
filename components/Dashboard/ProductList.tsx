@@ -1,7 +1,8 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
+import { removeProduct } from "../../pages/api/Services/dashboard";
 
-class ProductList extends React.Component<{ products }> {
+class ProductList extends React.Component<{ products, removeProduct }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -24,7 +25,7 @@ class ProductList extends React.Component<{ products }> {
             </tr>
           </thead>
           <tbody>
-            {items.map((item) => (
+            {items? ( items.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
                 <td>
@@ -38,10 +39,13 @@ class ProductList extends React.Component<{ products }> {
                   <Button variant="warning">Modify</Button>
                 </td>
                 <td>
-                  <Button variant="danger">Delete</Button>
+                  <Button variant="danger" onClick={() => {removeProduct(item.id)}}>Delete</Button>
                 </td>
               </tr>
-            ))}
+            ))
+            ) : (
+            <p>Nessun prodotto presente</p>
+          )}
           </tbody>
         </Table>
       </>

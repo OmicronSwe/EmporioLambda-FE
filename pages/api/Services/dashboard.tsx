@@ -5,6 +5,11 @@ export const insertProduct = async (params) => {
   return response;
 };
 
+export const removeProduct = async (id: string) => {
+  const response = await getlambdaResponse("product/"+id,"DELETE");
+  return response;
+}
+
 export const getProducts = async () => {
   const { response } = (await getlambdaResponse("product", "GET")).props;
   return response;
