@@ -1,9 +1,7 @@
 export default class Order {
   id: number;
 
-  products: string[];
-
-  quantity: string[];
+  products: ProductInCart [];
 
   totalCost: number;
 
@@ -15,14 +13,10 @@ export default class Order {
     return this.id;
   }
 
-  public getProducts(): string[] {
+  public getProducts(): ProductInCart[] {
     return this.products;
   }
-
-  public getQuantity(): string[] {
-    return this.quantity;
-  }
-
+  
   public getTotalCost(): number {
     return this.totalCost;
   }
