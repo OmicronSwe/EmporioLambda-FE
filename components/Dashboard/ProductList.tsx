@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { removeProduct } from "../../pages/api/Services/dashboard";
 
-class ProductList extends React.Component<{ products, removeProduct }> {
+class ProductList extends React.Component<{ products; removeProduct }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -25,27 +25,35 @@ class ProductList extends React.Component<{ products, removeProduct }> {
             </tr>
           </thead>
           <tbody>
-            {items? ( items.map((item) => (
-              <tr key={item.id}>
-                <td>{item.id}</td>
-                <td>
-                  <img src="Emporio_Lambda.png" className="img-thumbnail" alt="Product" />
-                </td>
-                <td>{item.name}</td>
-                <td>{item.description}</td>
-                {"category" in item ? <td>Category_test</td> : <td />}
-                {"price" in item ? <td>{item.price}</td> : <td />}
-                <td>
-                  <Button variant="warning">Modify</Button>
-                </td>
-                <td>
-                  <Button variant="danger" onClick={() => {removeProduct(item.id)}}>Delete</Button>
-                </td>
-              </tr>
-            ))
+            {items ? (
+              items.map((item) => (
+                <tr key={item.id}>
+                  <td>{item.id}</td>
+                  <td>
+                    <img src="Emporio_Lambda.png" className="img-thumbnail" alt="Product" />
+                  </td>
+                  <td>{item.name}</td>
+                  <td>{item.description}</td>
+                  {"category" in item ? <td>Category_test</td> : <td />}
+                  {"price" in item ? <td>{item.price}</td> : <td />}
+                  <td>
+                    <Button variant="warning">Modify</Button>
+                  </td>
+                  <td>
+                    <Button
+                      variant="danger"
+                      onClick={() => {
+                        removeProduct(item.id);
+                      }}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              ))
             ) : (
-            <p>Nessun prodotto presente</p>
-          )}
+              <p>Nessun prodotto presente</p>
+            )}
           </tbody>
         </Table>
       </>
