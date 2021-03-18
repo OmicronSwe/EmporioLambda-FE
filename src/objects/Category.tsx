@@ -1,8 +1,8 @@
 export default class Category {
   name: string;
 
-  constructor(event) {
-    this.name = event.target.name.value;
+  constructor(name: string) {
+    this.name = name;
   }
 
   public getName(): string {

@@ -11,9 +11,9 @@ class CategorySection extends React.Component<{ categories }, { categories }> {
     this.state = { categories };
   }
 
-  insertCategory = async (event: Event) => {
+  insertCategory = async (event) => {
     event.preventDefault();
-    const category = new Category(event).toJSONstring();
+    const category = new Category(event.target.name.value).toJSONstring();
     await insertCategory(category);
 
     const categories = await getCategories();
@@ -21,7 +21,7 @@ class CategorySection extends React.Component<{ categories }, { categories }> {
   };
 
   removeCategory = async (name: string) => {
-    await removeCategory(name);
+    await removeCategory(JSON.stringify({ name }));
 
     const categories = await getCategories();
     this.setState({ categories });

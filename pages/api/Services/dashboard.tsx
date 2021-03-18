@@ -20,8 +20,8 @@ export const insertCategory = async (params) => {
   return response;
 };
 
-export const removeCategory = async (name: string) => {
-  const response = await getlambdaResponse(`category/${name}`, "DELETE");
+export const removeCategory = async (params) => {
+  const response = await getlambdaResponse(`category`, "DELETE", params);
   return response;
 };
 

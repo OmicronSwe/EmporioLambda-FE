@@ -1,6 +1,5 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
-import { removeProduct } from "../../pages/api/Services/dashboard";
 
 class ProductList extends React.Component<{ products; removeProduct }> {
   constructor(props) {
@@ -9,7 +8,7 @@ class ProductList extends React.Component<{ products; removeProduct }> {
   }
 
   render() {
-    const { products } = this.props;
+    const { products, removeProduct } = this.props;
     const items = products.result;
     return (
       <>
