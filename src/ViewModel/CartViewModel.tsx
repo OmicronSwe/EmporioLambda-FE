@@ -1,20 +1,23 @@
-class CartViewModel {
-    store : any
+import Product from '../../components/Cart/product'
+import CartModel from '../Model/CartModel'
 
-    constructor(productStore) {
-        this.store = productStore
+class CartViewModel {
+    model : CartModel
+
+    constructor(cartModel : CartModel) {
+        this.model = cartModel
     }
 
     getProducts() {
-        return this.store.getProducts()
+        return this.model.getProducts()
     }
 
-    addProduct(product) {
+    /*addProductToCart(product) {
         this.store.addProduct(product)
-    }
+    }*/
 
-    removeProduct(product) {
-        this.store.removeProduct(product)
+    removeProductFromCart(product : Product) {
+        this.model.removeProductFromCart(product)
     }
 }
 

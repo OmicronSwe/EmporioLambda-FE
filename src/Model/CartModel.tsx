@@ -1,29 +1,56 @@
-import { GetServerSideProps } from "next"
-import { getlambdaResponse } from "../api/lib/lambdas"
-import { getSession } from "next-auth/client"
-import { observable, action } from 'mobx'
 import React from 'react'
+import Product from "../../components/Cart/product"
 
 class CartModel extends React.Component<{ response; auth }, { items: string }> {
-    @observable products : any[] = []
+    products : Product[] = []
+    cost : number
 
     constructor(props){
         super(props)
         if(!this.props.auth)
         { 
-            this.products = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")).ids : []
+            this.products = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")) : []
         }else
         {
             this.props.response.products_id != null ? this.props.response.products_id : []
         }
+        this.products.forEach(product => {
+          this.cost += product.price*product.quantity
+        }
+        )
     }
 
-    @action addProductToCart(product) {
-        this.products.push({ product })
-}
+/*    addProductToCart(product : Product) {
+      if(this.props.auth)
+      {
+        //inserisco nel carrello del DB e poi nel carrello locale
+        this.products.push( product )
+      }
+      else{
+        const cart = localStorage.getItem("cart") //retrieve cart
+        let jsonCart
 
-    @action removeProduct(product) {
-        this.products = this.products.filter(obj => obj !== product);
+        if (cart != null) {
+        jsonCart = JSON.parse(cart)
+      } else {
+        jsonCart = {
+        ids: [],
+        }
+      }
+    jsonCart.ids.push({ product_id: product.id }) //push new id to the cart
+    localStorage.setItem("cart", JSON.stringify(jsonCart)) //update localstorage
+  }
+}*/
+
+    removeProductFromCart(product) {
+        if(this.products.find(product).quantity > 1)
+        {
+          this.products.map(obj => obj == product ? obj.quantity = obj.quantity-1 : obj)
+        }
+        else
+        {
+          this.products = this.products.filter(obj => obj != product);
+        }
     }
 
     getProducts() {
@@ -31,19 +58,5 @@ class CartModel extends React.Component<{ response; auth }, { items: string }> {
     }
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    const session = await getSession({ req }) //get session data
-    if (session) {
-      const resp = await (await getlambdaResponse("cart/" + session.user.email)).props.response //external API call to get cart's product ids
-  
-      if (resp.message == "Element not found") {
-        //if no cart is found, return empty response
-        return { props: { response: [], auth: session.user.email } }
-      }
-      return { props: { response: resp, auth: session.user.email } }
-    } else {
-      return { props: { response: [], auth: null } } //if not authenticated, return empty response and null email
-    }
-  }
 
 export default CartModel
