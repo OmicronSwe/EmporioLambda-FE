@@ -33,3 +33,12 @@ export const getCategories = async () : Promise<Category[]> => {
   const res = (await getlambdaResponse("category", "GET")).props.response.result.items;
   return res
 };
+
+export const fileToBase64 = async (file) => {
+  new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.readAsDataURL(file);
+    reader.onload = () => resolve(reader.result);
+    reader.onerror = (e) => reject(e);
+  });
+};
