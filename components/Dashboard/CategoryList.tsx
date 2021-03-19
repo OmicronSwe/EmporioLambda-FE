@@ -1,7 +1,8 @@
 import React from "react";
 import { Button, CardColumns, Card } from "react-bootstrap";
+import { Category } from "../../src/objects/Category";
 
-class CategoryList extends React.Component<{ categories; removeCategory }> {
+class CategoryList extends React.Component<{ categories : Category[]; removeCategory }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -9,12 +10,11 @@ class CategoryList extends React.Component<{ categories; removeCategory }> {
 
   render() {
     const { categories, removeCategory } = this.props;
-    const { items } = categories.result;
     return (
       <>
         <CardColumns>
-          {items ? (
-            items.map((item) => (
+          {categories ? (
+            categories.map((item) => (
               <Card key={item.name}>
                 <Card.Body>
                   <Card.Title>{item.name}</Card.Title>

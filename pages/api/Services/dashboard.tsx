@@ -1,3 +1,5 @@
+
+import { Category } from "../../../src/objects/Category";
 import getlambdaResponse from "../lib/lambdas";
 
 export const insertProduct = async (params) => {
@@ -15,17 +17,19 @@ export const getProducts = async () => {
   return response;
 };
 
-export const insertCategory = async (params) => {
-  const response = await getlambdaResponse("category", "POST", params);
-  return response;
+export const insertCategory = async (category:Category) => {
+  const { response } = (await getlambdaResponse("category", "POST", JSON.stringify(category))).props;
+  if(response.err) return false
+  return true
 };
 
-export const removeCategory = async (params) => {
-  const response = await getlambdaResponse(`category`, "DELETE", params);
-  return response;
+export const removeCategory = async (name: string) : Promise<boolean> => {
+  const {response} = (await getlambdaResponse(`category/${name}`, "DELETE")).props;
+  if(response.err) return false
+  return true
 };
 
-export const getCategories = async () => {
-  const { response } = (await getlambdaResponse("category", "GET")).props;
-  return response;
+export const getCategories = async () : Promise<Category[]> => {
+  const res = (await getlambdaResponse("category", "GET")).props.response.result.items;
+  return res
 };

@@ -8,8 +8,9 @@ import CategorySection from "../../components/Dashboard/CategorySection";
 import OrderSection from "../../components/Dashboard/OrderSection";
 
 import { getProducts, getCategories } from "../api/Services/dashboard";
+import {Category} from "../../src/objects/Category";
 
-class Dashboard extends React.Component<{ products; session; categories }> {
+class Dashboard extends React.Component<{ products, session, categories : Category[] }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -17,6 +18,7 @@ class Dashboard extends React.Component<{ products; session; categories }> {
 
   render() {
     const { products, categories } = this.props;
+
     return (
       <>
         <Layout title="Dashboard page">

@@ -1,4 +1,6 @@
-export default class Product {
+import {Category} from "./Category";
+
+export default interface Product {
   name: string;
 
   description: string;
@@ -7,19 +9,5 @@ export default class Product {
 
   price: string;
 
-  public getName(): string {
-    return this.name;
-  }
-
-  public getDescription(): string {
-    return this.description;
-  }
-
-  public getImage(): string {
-    return this.image;
-  }
-
-  public getPrice(): string {
-    return this.price;
-  }
+  categories: Category[]
 }

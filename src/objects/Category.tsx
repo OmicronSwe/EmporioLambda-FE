@@ -1,17 +1,11 @@
-export default class Category {
+export interface CategoryJSON{
+  name: string;
+}
+
+export class Category implements CategoryJSON{
   name: string;
 
-  constructor(name: string) {
-    this.name = name;
-  }
-
-  public getName(): string {
-    return this.name;
-  }
-
-  public toJSONstring(): string {
-    return JSON.stringify({
-      name: this.name,
-    });
+  constructor(name:string){
+    this.name=name
   }
 }

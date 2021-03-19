@@ -1,10 +1,10 @@
 import React from "react";
 import NewCategoryForm from "./NewCategoryForm";
 import { insertCategory, getCategories, removeCategory } from "../../pages/api/Services/dashboard";
-import Category from "../../src/objects/Category";
+import { Category } from "../../src/objects/Category";
 import CategoryList from "./CategoryList";
 
-class CategorySection extends React.Component<{ categories }, { categories }> {
+class CategorySection extends React.Component<{ categories: Category[] }, { categories: Category[] }> {
   constructor(props) {
     super(props);
     const { categories } = this.props;
@@ -13,7 +13,7 @@ class CategorySection extends React.Component<{ categories }, { categories }> {
 
   insertCategory = async (event) => {
     event.preventDefault();
-    const category = new Category(event.target.name.value).toJSONstring();
+    const category:Category = new Category(event.target.name.value)
     await insertCategory(category);
 
     const categories = await getCategories();
@@ -21,9 +21,9 @@ class CategorySection extends React.Component<{ categories }, { categories }> {
   };
 
   removeCategory = async (name: string) => {
-    await removeCategory(JSON.stringify({ name }));
+    await removeCategory(name);
 
-    const categories = await getCategories();
+    const categories : Category[] = await getCategories();
     this.setState({ categories });
   };
 
