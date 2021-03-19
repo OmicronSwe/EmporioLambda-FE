@@ -1,4 +1,4 @@
-class Product{
+class ProductInCart{
     id: string
     name : string
     price : number
@@ -17,4 +17,4 @@ class Product{
     }
 }
 
-export default Product
+export default ProductInCart

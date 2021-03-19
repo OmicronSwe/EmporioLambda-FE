@@ -1,25 +1,25 @@
 import React from 'react'
-import CartController from '../../src/ViewController/CartViewController'
-import CartViewModel from '../../src/ViewModel/CartViewModel'
 import { GetServerSideProps } from "next"
-import CartModel from '../../src/Model/CartModel'
+import Layout from "../../components/layout";
 import { getSession } from "next-auth/client"
-//import { getlambdaResponse } from "../api/lib/lambdas"
+import CartProductList from '../../components/Cart/CartProductsList'
+import getlambdaResponse from "../api/lib/lambdas"
+import ProductInCart from '../../src/objects/ProductInCart';
+import myJson from '../../components/Cart/CartSample'
 
-class CartProvider extends React.Component<{ response; auth }, { items: string }> {
-    viewModel
-
+class Cart extends React.Component<{ response; auth }, { products: ProductInCart[] }> {
     constructor(props) {
-        super(props)
-        const cartModel = new CartModel(props)
-        this.viewModel = new CartViewModel(cartModel)
+      super(props);
     }
-
-
+  
     render() {
-        return (
-            <CartController viewModel={this.viewModel}/>
-        )
+      return (
+        <>
+          <Layout title="Cart page">
+            <CartProductList auth={this.props.auth} products={myJson}/> 
+          </Layout>
+        </>
+      );
     }
 }
 
@@ -33,11 +33,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
         return { props: { response: [], auth: session.user.email } }
       }
       return { props: { response: resp, auth: session.user.email } }
-    } else {
+    //} else {*/
       return { props: { response: [], auth: null } } //if not authenticated, return empty response and null email
-    }*/
-    return null
+    //}
   }
 
 
-export default CartProvider
+export default Cart
