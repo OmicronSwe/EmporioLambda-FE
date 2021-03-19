@@ -9,7 +9,7 @@ class CategoryList extends React.Component<{ categories; removeCategory }> {
 
   render() {
     const { categories, removeCategory } = this.props;
-    const items = categories.result;
+    const { items } = categories.result;
     return (
       <>
         <CardColumns>

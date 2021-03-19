@@ -9,7 +9,7 @@ class ProductList extends React.Component<{ products; removeProduct }> {
 
   render() {
     const { products, removeProduct } = this.props;
-    const items = products.result;
+    const { items } = products.result;
     return (
       <>
         <Table>
