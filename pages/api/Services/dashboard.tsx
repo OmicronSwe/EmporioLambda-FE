@@ -29,3 +29,12 @@ export const getCategories = async () => {
   const { response } = (await getlambdaResponse("category", "GET")).props;
   return response;
 };
+
+export const fileToBase64 = async (file) => {
+  new Promise((resolve, reject) => {
+    const reader = new FileReader()
+    reader.readAsDataURL(file)
+    reader.onload = () => resolve(reader.result)
+    reader.onerror = (e) => reject(e)
+  })
+};
