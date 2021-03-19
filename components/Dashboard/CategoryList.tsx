@@ -25,7 +25,7 @@ class CategoryList extends React.Component<{ categories : Category[]; removeCate
               </Card>
             ))
           ) : (
-            <p>Nessuna categoria presente</p>
+            <p>No category found</p>
           )}
         </CardColumns>
       </>

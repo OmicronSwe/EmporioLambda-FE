@@ -1,7 +1,8 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
+import { Product } from "../../src/objects/Product";
 
-class ProductList extends React.Component<{ products; removeProduct }> {
+class ProductList extends React.Component<{ products : Product[]; removeProduct }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -9,7 +10,6 @@ class ProductList extends React.Component<{ products; removeProduct }> {
 
   render() {
     const { products, removeProduct } = this.props;
-    const { items } = products.result;
     return (
       <>
         <Table>
@@ -24,8 +24,8 @@ class ProductList extends React.Component<{ products; removeProduct }> {
             </tr>
           </thead>
           <tbody>
-            {items ? (
-              items.map((item) => (
+            {products ? (
+              products.map((item) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>
@@ -51,7 +51,7 @@ class ProductList extends React.Component<{ products; removeProduct }> {
                 </tr>
               ))
             ) : (
-              <p>Nessun prodotto presente</p>
+              <p>No category found</p>
             )}
           </tbody>
         </Table>

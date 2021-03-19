@@ -1,6 +1,7 @@
 import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
+import { Product } from "../../src/objects/Product";
 
 import {
   insertProduct,
@@ -9,7 +10,8 @@ import {
   fileToBase64,
 } from "../../pages/api/Services/dashboard";
 
-class ProductSection extends React.Component<{ products }, { products }> {
+
+class ProductSection extends React.Component<{ products: Product[] }, { products : Product[] }> {
   constructor(props) {
     super(props);
 
