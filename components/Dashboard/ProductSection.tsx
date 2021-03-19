@@ -2,7 +2,12 @@ import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
 
-import { insertProduct, removeProduct, getProducts, fileToBase64 } from "../../pages/api/Services/dashboard";
+import {
+  insertProduct,
+  removeProduct,
+  getProducts,
+  fileToBase64,
+} from "../../pages/api/Services/dashboard";
 
 class ProductSection extends React.Component<{ products }, { products }> {
   constructor(props) {
@@ -12,7 +17,8 @@ class ProductSection extends React.Component<{ products }, { products }> {
     this.state = { products };
   }
 
-  insertProduct = async (params) => {/*
+  insertProduct = async (params) => {
+    /*
     let paramsJSON = JSON.parse(params);
     console.log(paramsJSON.image);
     const base64Image = await fileToBase64(paramsJSON.image);
@@ -24,7 +30,7 @@ class ProductSection extends React.Component<{ products }, { products }> {
     console.log(paramsJSON);
     //await insertProduct(JSON.stringify(paramsJSON));
     //const prod = await getProducts();
-    //this.setState({ products: prod });*/
+    //this.setState({ products: prod }); */
   };
 
   removeProduct = async (id: string) => {

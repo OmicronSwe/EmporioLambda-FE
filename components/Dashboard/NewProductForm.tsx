@@ -11,7 +11,7 @@ class NewProductForm extends React.Component<{ insertProduct }> {
     // conversione parametri in stringJSON
     event.preventDefault();
 
-    let stringJSON = JSON.stringify({
+    const stringJSON = JSON.stringify({
       name: event.target.productName.value,
       description: event.target.productDescription.value,
       price: event.target.productPrice.value,
