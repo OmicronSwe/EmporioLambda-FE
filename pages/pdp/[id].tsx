@@ -3,8 +3,8 @@ import { GetServerSideProps } from "next";
 
 import Layout from "../../components/layout";
 import ProductSection from "../../components/Pdp/ProductSection";
+import getProduct from "../api/Services/product";
 // import CartSection from "../../components/Pdp/CartSection";
-import { getProduct } from "../api/Services/product";
 
 class Product extends React.Component<{ product }> {
   constructor(props) {
@@ -27,7 +27,7 @@ class Product extends React.Component<{ product }> {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
     props: {
-      product: await getProduct(params.id[0]),
+      product: await getProduct(params.id.toString()),
     },
   };
 };
