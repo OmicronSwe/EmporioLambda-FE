@@ -2,10 +2,10 @@ import React from 'react'
 import { GetServerSideProps } from "next"
 import Layout from "../../components/layout";
 import { getSession } from "next-auth/client"
-import CartProductList from '../../components/Cart/CartProductsList'
 import getlambdaResponse from "../api/lib/lambdas"
 import ProductInCart from '../../src/objects/ProductInCart';
 import myJson from '../../components/Cart/CartSample'
+import CartListSection from '../../components/Cart/CartListSection';
 
 class Cart extends React.Component<{ response; auth }, { products: ProductInCart[] }> {
     constructor(props) {
@@ -16,7 +16,7 @@ class Cart extends React.Component<{ response; auth }, { products: ProductInCart
       return (
         <>
           <Layout title="Cart page">
-            <CartProductList auth={this.props.auth} products={myJson}/> 
+            <CartListSection auth={this.props.auth} products={myJson}/> 
           </Layout>
         </>
       );

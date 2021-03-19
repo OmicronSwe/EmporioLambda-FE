@@ -1,8 +1,9 @@
 import React from 'react'
 import ProductInCart from '../../src/objects/ProductInCart'
 import RemoveProductButton from './RemoveProductButton'
+import { Button } from 'react-bootstrap'
 
-class CartProductList extends React.Component<{ auth, products: ProductInCart[] }, { products: ProductInCart[] }> {
+class CartProductList extends React.Component<{ auth, products: ProductInCart[], removeOnClick }, { products: ProductInCart[] }> {
     constructor(props){
         super(props)
         this.state = { products : this.props.products }
@@ -31,11 +32,10 @@ class CartProductList extends React.Component<{ auth, products: ProductInCart[] 
                         <td>{product.description}</td>
                         <td>{product.price}</td>
                         <td>{product.quantity}</td>
-                        <td><RemoveProductButton toRemove={ product.id } auth={ this.props.auth }/></td>
+                        <td><Button variant="primary" onClick={() => this.props.removeOnClick(product.id)}>Remove</Button></td>
                         </tr>
                     ))
                 }
-                <RemoveProductButton toRemove={ null } auth={ this.props.auth }/>
                 </tbody>
             </table>
         )
