@@ -1,5 +1,5 @@
 import React from "react";
-import { Table } from "react-bootstrap";
+import { Col, Form, Row } from "react-bootstrap";
 
 class ProductSection extends React.Component<{ product }> {
   constructor(props) {
@@ -13,30 +13,48 @@ class ProductSection extends React.Component<{ product }> {
     return (
       <>
         <h1>Product Section</h1>
-        <Table>
-          <thead className="thead-light">
-            <tr>
-              <th>ID</th>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr key={item.id}>
-              <td>{item.id}</td>
-              <td>
-                <img src="Emporio_Lambda.png" className="img-thumbnail" alt="Product" />
-              </td>
-              <td>{item.name}</td>
-              <td>{item.description}</td>
-              {"category" in item ? <td>Category_test</td> : <td />}
-              {"price" in item ? <td>{item.price}</td> : <td />}
-            </tr>
-          </tbody>
-        </Table>
+        <Form>
+          <Form.Group as={Row} controlId="formPlainTextID">
+            <Form.Label column lg="3">
+              ID
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control plaintext readOnly defaultValue={item.id} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="formPlainTextName">
+            <Form.Label column lg="3">
+              Name
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control plaintext readOnly defaultValue={item.name} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="formPlainTextDescription">
+            <Form.Label column lg="3">
+              Description
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control plaintext readOnly defaultValue={item.description} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="formPlainTextCategory">
+            <Form.Label column lg="3">
+              Category
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control plaintext readOnly defaultValue={item.category} />
+            </Col>
+          </Form.Group>
+          <Form.Group as={Row} controlId="formPlainTextPrice">
+            <Form.Label column lg="3">
+              Price
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control plaintext readOnly defaultValue={item.price} />
+            </Col>
+          </Form.Group>
+        </Form>
       </>
     );
   }
