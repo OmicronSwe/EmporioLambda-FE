@@ -2,7 +2,7 @@ import React from "react";
 import { Button, CardColumns, Card } from "react-bootstrap";
 import { Category } from "../../src/objects/Category";
 
-class CategoryList extends React.Component<{ categories : Category[]; removeCategory }> {
+class CategoryList extends React.Component<{ categories: Category[]; removeCategory }> {
   constructor(props) {
     super(props);
     this.state = {};

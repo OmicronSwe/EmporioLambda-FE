@@ -10,9 +10,13 @@ export interface OrderJSON {
 
 export default class Order implements OrderJSON {
   id: string;
+
   products: ProductInCart[];
+
   totalCost: number;
+
   totalTax: number;
+
   date: Date;
 
   constructor(

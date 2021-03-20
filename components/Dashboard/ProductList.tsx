@@ -2,7 +2,7 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { Product } from "../../src/objects/Product";
 
-class ProductList extends React.Component<{ products : Product[]; removeProduct }> {
+class ProductList extends React.Component<{ products: Product[]; removeProduct }> {
   constructor(props) {
     super(props);
     this.state = {};

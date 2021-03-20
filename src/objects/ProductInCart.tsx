@@ -1,4 +1,4 @@
-export interface ProductInCartJSON{
+export interface ProductInCartJSON {
   id: string;
 
   name: string;

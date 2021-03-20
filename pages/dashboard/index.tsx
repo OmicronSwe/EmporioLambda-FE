@@ -10,7 +10,10 @@ import { getProducts, getCategories } from "../api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
 import { Product } from "../../src/objects/Product";
 
-class Dashboard extends React.Component<{ products : Product[], categories : Category[] }, { categories: Category[] }> {
+class Dashboard extends React.Component<
+  { products: Product[]; categories: Category[] },
+  { categories: Category[] }
+> {
   constructor(props) {
     super(props);
 
@@ -21,7 +24,7 @@ class Dashboard extends React.Component<{ products : Product[], categories : Cat
   refreshOnCategoryChange = async () => {
     const categories = await getCategories();
     this.setState({ categories });
-  }
+  };
 
   render() {
     const { products } = this.props;
@@ -30,7 +33,10 @@ class Dashboard extends React.Component<{ products : Product[], categories : Cat
       <>
         <Layout title="Dashboard page">
           <ProductSection products={products} categories={categories} />
-          <CategorySection categories={categories} refreshOnCategoryChange={this.refreshOnCategoryChange} />
+          <CategorySection
+            categories={categories}
+            refreshOnCategoryChange={this.refreshOnCategoryChange}
+          />
           <OrderSection />
         </Layout>
       </>
@@ -38,11 +44,11 @@ class Dashboard extends React.Component<{ products : Product[], categories : Cat
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+export const getServerSideProps: GetServerSideProps = async () => {
   return {
     props: {
       products: await getProducts(),
-      categories: await getCategories()
+      categories: await getCategories(),
     },
   };
 };
