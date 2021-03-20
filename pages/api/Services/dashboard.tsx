@@ -4,9 +4,10 @@ import { Product } from "../../../src/objects/Product";
 import getlambdaResponse from "../lib/lambdas";
 
 //TODO: to type
-export const insertProduct = async (params) => {
-  const response = await getlambdaResponse("product", "POST", params);
-  return response;
+export const insertProduct = async (params) : Promise<boolean> => {
+  const { response } = (await getlambdaResponse("product", "POST", params)).props;
+  if(response.err) return false;
+  return true;
 };
 
 //TODO: to type
@@ -38,10 +39,11 @@ export const getCategories = async () : Promise<Category[]> => {
 };
 
 export const fileToBase64 = async (file) => {
-  new Promise((resolve, reject) => {
+  return new Promise((resolve, reject) => {
+    console.log(file);
     const reader = new FileReader();
-    reader.readAsDataURL(file);
-    reader.onload = () => resolve(reader.result);
+    reader.readAsBinaryString(file);
+    reader.onload = () => resolve(btoa(reader.result.toString()));
     reader.onerror = (e) => reject(e);
   });
 };

@@ -51,7 +51,7 @@ class ProductList extends React.Component<{ products : Product[]; removeProduct 
                 </tr>
               ))
             ) : (
-              <p>No category found</p>
+              <p>No product found</p>
             )}
           </tbody>
         </Table>

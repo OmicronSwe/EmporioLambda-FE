@@ -2,37 +2,32 @@ import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
 import { Product } from "../../src/objects/Product";
+import { Category } from "../../src/objects/Category";
 
 import {
   insertProduct,
   removeProduct,
-  getProducts,
-  fileToBase64,
+  getProducts
 } from "../../pages/api/Services/dashboard";
 
 
-class ProductSection extends React.Component<{ products: Product[] }, { products : Product[] }> {
+class ProductSection extends React.Component<{ products: Product[]; categories: Category[] }, { products : Product[]; alert: boolean}> {
   constructor(props) {
     super(props);
 
-    const { products } = this.props;
-    this.state = { products };
+    const { products} = this.props;
+    this.state = { products: products, alert: null};
   }
 
   insertProduct = async (params) => {
-    /*
-    let paramsJSON = JSON.parse(params);
-    console.log(paramsJSON.image);
-    const base64Image = await fileToBase64(paramsJSON.image);
-    paramsJSON.image = base64Image;
-    paramsJSON.image = {
-      mime : "image/png",
-      imageCode : base64Image
-    }
-    console.log(paramsJSON);
-    //await insertProduct(JSON.stringify(paramsJSON));
-    //const prod = await getProducts();
-    //this.setState({ products: prod }); */
+    
+    console.log(params);
+    //let paramsJSON = JSON.parse(params);
+    //console.log(paramsJSON);
+
+    const res = await insertProduct(params);
+    const prod = await getProducts();
+    this.setState({ products: prod, alert: res });
   };
 
   removeProduct = async (id: string) => {
@@ -42,11 +37,12 @@ class ProductSection extends React.Component<{ products: Product[] }, { products
   };
 
   render() {
-    const { products } = this.state;
+    const { products, alert } = this.state;
+    const { categories } = this.props;
     return (
       <>
         <h1>Product Section</h1>
-        <NewProductForm insertProduct={this.insertProduct} />
+        <NewProductForm insertProduct={this.insertProduct} categories={categories} alert={alert} />
         <ProductList products={products} removeProduct={this.removeProduct} />
       </>
     );

@@ -1,7 +1,9 @@
 import React from "react";
 import { Button, Accordion, Card, Form } from "react-bootstrap";
+import { fileToBase64 } from "../../pages/api/Services/dashboard";
+import { Category } from "../../src/objects/Category"
 
-class NewProductForm extends React.Component<{ insertProduct }> {
+class NewProductForm extends React.Component<{ insertProduct; categories: Category[]; alert: boolean }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -11,19 +13,29 @@ class NewProductForm extends React.Component<{ insertProduct }> {
     // conversione parametri in stringJSON
     event.preventDefault();
 
+    let fileObject = event.target.productImage.files[0];
+
+    let img64 = await fileToBase64(fileObject);
+    
+    let paramImg = {
+      mime : fileObject.type,
+      imageCode : "base64,"+img64
+    };
+
     const stringJSON = JSON.stringify({
       name: event.target.productName.value,
       description: event.target.productDescription.value,
       price: event.target.productPrice.value,
-      image: event.target.productImage.value,
+      image: paramImg,
       category: event.target.productCategorySelection.value,
     });
-    const prop = this.props;
-    const result = await (await prop.insertProduct(stringJSON)).props.response;
-    document.getElementById("message").innerHTML = result.message;
+    const { insertProduct } = this.props;
+    await insertProduct(stringJSON);
+    //document.getElementById("message").innerHTML = result.message;
   };
 
   render() {
+    const { categories, alert } = this.props;
     return (
       <>
         <Accordion>
@@ -105,11 +117,13 @@ class NewProductForm extends React.Component<{ insertProduct }> {
                         id="productCategorySelection"
                         name="productCategorySelection"
                       >
-                        <option>1</option>
-                        <option>2</option>
-                        <option>3</option>
-                        <option>4</option>
-                        <option>5</option>
+                        {categories? (
+                          categories.map((item) => (
+                            <option>{item.name}</option>
+                          ))
+                        ) : (
+                          <option>no category found</option>
+                        )}
                       </select>
                     </div>
                   </div>
@@ -121,7 +135,7 @@ class NewProductForm extends React.Component<{ insertProduct }> {
             </Accordion.Collapse>
           </Card>
         </Accordion>
-        <p id="message" />
+        {alert? <p>prodotto inserito</p> : <p></p>}
       </>
     );
   }
