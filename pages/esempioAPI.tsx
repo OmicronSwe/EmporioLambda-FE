@@ -5,22 +5,16 @@ import getlambdaResponse from "./api/lib/lambdas";
 
 import Layout from "../components/layout";
 
-class Dashboard extends React.Component<{ products; session }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    return (
-      <>
-        <Layout title="Dashboard page">
-          <h1>Hello!</h1>
-        </Layout>
-      </>
-    );
-  }
-}
+const Dashboard = ({ products, session }) => {
+  return (
+    <>
+      <Layout title="Dashboard page">
+        <h1>Hello!</h1>
+        <p>{JSON.stringify(session, null, 2)}</p>
+      </Layout>
+    </>
+  );
+};
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const ses = await getSession({ req });

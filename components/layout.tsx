@@ -46,7 +46,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
               Sign in
             </Button>
           )}
-          {session && session.isAdmin && <Link href="/dashboard">Merchant Dashboard</Link>}
+          {session && session?.adm && <Link href="/dashboard">Merchant Dashboard</Link>}
           {session && (
             <Button
               variant="secondary"

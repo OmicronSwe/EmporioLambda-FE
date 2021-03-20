@@ -28,8 +28,6 @@ export default class Fetcher {
     }
 
     const data = await req.json();
-    console.log(data);
-    console.log(this.url.href);
     return data;
   }
 }
