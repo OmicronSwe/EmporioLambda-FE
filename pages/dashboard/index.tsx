@@ -9,9 +9,11 @@ import OrderSection from "../../components/Dashboard/OrderSection";
 import { getProducts, getCategories } from "../api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
 import { Product } from "../../src/objects/Product";
+import { getOrders } from "../api/Services/order";
+import { Order } from "../../src/objects/Order";
 
 class Dashboard extends React.Component<
-  { products: Product[]; categories: Category[] },
+  { products: Product[]; categories: Category[]; orders: Order[] },
   { categories: Category[] }
 > {
   constructor(props) {
@@ -27,7 +29,7 @@ class Dashboard extends React.Component<
   };
 
   render() {
-    const { products } = this.props;
+    const { products, orders } = this.props;
     const { categories } = this.state;
     return (
       <>
@@ -37,7 +39,7 @@ class Dashboard extends React.Component<
             categories={categories}
             refreshOnCategoryChange={this.refreshOnCategoryChange}
           />
-          <OrderSection />
+          <OrderSection orders={orders} />
         </Layout>
       </>
     );
@@ -49,6 +51,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       products: await getProducts(),
       categories: await getCategories(),
+      orders: await getOrders(),
     },
   };
 };
