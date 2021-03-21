@@ -1,4 +1,4 @@
-import Router from "next/router"
+import Router from "next/router";
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { Product } from "../../src/objects/Product";
@@ -39,9 +39,9 @@ class ProductList extends React.Component<{ products: Product[]; removeProduct }
                   {"category" in item ? <td>{item.category}</td> : <td />}
                   {"price" in item ? <td>{item.price}</td> : <td />}
                   <td>
-                    <Button 
-                    variant="warning"
-                    onClick={() => Router.push('/dashboard/modify/'+item.id)}
+                    <Button
+                      variant="warning"
+                      onClick={() => Router.push(`/dashboard/modify/${item.id}`)}
                     >
                       Modify
                     </Button>

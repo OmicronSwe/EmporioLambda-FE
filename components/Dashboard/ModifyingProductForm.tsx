@@ -1,5 +1,5 @@
 import React from "react";
-import Router from 'next/router'
+import Router from "next/router";
 import { Button, Form } from "react-bootstrap";
 import { fileToBase64 } from "../../pages/api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
@@ -16,28 +16,33 @@ class ModifyingProductForm extends React.Component<{
   }
 
   sendParams = async (event) => {
-
     event.preventDefault();
-    
-    //image file to base64 conversion
+
+    // image file to base64 conversion
     const fileObject = event.target.productImage.files[0];
     let img64 = null;
     let imgParam = null;
-    if(fileObject) {
+    if (fileObject) {
       img64 = await fileToBase64(fileObject);
       imgParam = {
         mime: fileObject.type,
         imageCode: `base64,${img64}`,
       };
     }
-    //sending only user's inserted input
-    let paramsJSON = {};
-    Object.assign(paramsJSON,
-      event.target.productName.value? { name: event.target.productName.value } : null,
-      event.target.productDescription.value? { description: event.target.productDescription.value } : null,
-      event.target.productPrice.value? { price: event.target.productPrice.value } : null,
-      imgParam? { image: imgParam } : null,
-      event.target.productCategorySelection.value? { category: event.target.productCategorySelection.value } : null);
+    // sending only user's inserted input
+    const paramsJSON = {};
+    Object.assign(
+      paramsJSON,
+      event.target.productName.value ? { name: event.target.productName.value } : null,
+      event.target.productDescription.value
+        ? { description: event.target.productDescription.value }
+        : null,
+      event.target.productPrice.value ? { price: event.target.productPrice.value } : null,
+      imgParam ? { image: imgParam } : null,
+      event.target.productCategorySelection.value
+        ? { category: event.target.productCategorySelection.value }
+        : null
+    );
 
     const { updateProduct } = this.props;
     await updateProduct(JSON.stringify(paramsJSON));
@@ -128,7 +133,9 @@ class ModifyingProductForm extends React.Component<{
           <Button type="submit" variant="primary">
             Submit
           </Button>
-          <Button variant="danger" onClick={() => Router.push('/dashboard')}>Cancel</Button>
+          <Button variant="danger" onClick={() => Router.push("/dashboard")}>
+            Cancel
+          </Button>
         </Form>
       </>
     );

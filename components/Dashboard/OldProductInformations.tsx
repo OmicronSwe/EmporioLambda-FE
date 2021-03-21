@@ -4,7 +4,7 @@ import { Product } from "../../src/objects/Product";
 
 // TODO: sostituire con lo stesso componente usato per la visualizzazione del prodotto nella PDP (?)
 
-class OldProductInformations extends React.Component<{ product:Product }> {
+class OldProductInformations extends React.Component<{ product: Product }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -40,7 +40,7 @@ class OldProductInformations extends React.Component<{ product:Product }> {
             </Col>
           </Form.Group>
 
-          {/*image section*/}
+          {/* image section */}
           {/*
           <Form.Group as={Row} controlId="formPlainTextCategory">
             <Form.Label column lg="3">
