@@ -1,4 +1,18 @@
-class ProductInCart {
+export interface ProductInCartJSON {
+  id: string;
+
+  name: string;
+
+  price: number;
+
+  description: string;
+
+  image: string;
+
+  quantity: number;
+}
+
+export class ProductInCart implements ProductInCartJSON {
   id: string;
 
   name: string;
@@ -20,5 +34,3 @@ class ProductInCart {
     this.quantity = quantity;
   }
 }
-
-export default ProductInCart;

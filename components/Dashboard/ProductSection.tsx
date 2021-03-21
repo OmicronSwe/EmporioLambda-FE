@@ -1,21 +1,26 @@
 import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
+import { Product } from "../../src/objects/Product";
+import { Category } from "../../src/objects/Category";
 
 import { insertProduct, removeProduct, getProducts } from "../../pages/api/Services/dashboard";
 
-class ProductSection extends React.Component<{ products }, { products }> {
+class ProductSection extends React.Component<
+  { products: Product[]; categories: Category[] },
+  { products: Product[]; alert: boolean }
+> {
   constructor(props) {
     super(props);
 
     const { products } = this.props;
-    this.state = { products };
+    this.state = { products, alert: null };
   }
 
   insertProduct = async (params) => {
-    await insertProduct(params);
+    const res = await insertProduct(params);
     const prod = await getProducts();
-    this.setState({ products: prod });
+    this.setState({ products: prod, alert: res });
   };
 
   removeProduct = async (id: string) => {
@@ -25,11 +30,12 @@ class ProductSection extends React.Component<{ products }, { products }> {
   };
 
   render() {
-    const { products } = this.state;
+    const { products, alert } = this.state;
+    const { categories } = this.props;
     return (
       <>
         <h1>Product Section</h1>
-        <NewProductForm insertProduct={this.insertProduct} />
+        <NewProductForm insertProduct={this.insertProduct} categories={categories} alert={alert} />
         <ProductList products={products} removeProduct={this.removeProduct} />
       </>
     );
