@@ -1,21 +1,64 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
+import jwt from "jsonwebtoken";
+
+async function refreshAccessToken(token) {
+  try {
+    const url = `https://${process.env.COGNITO_DOMAIN}/oauth2/token?${new URLSearchParams({
+      client_id: process.env.COGNITO_CLIENT_ID,
+      grant_type: "refresh_token",
+      refresh_token: token.refreshToken,
+    })}`;
+    const response = await fetch(url, {
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      method: "POST",
+    });
+    const refreshedTokens = await response.json();
+    if (!response.ok) {
+      throw refreshedTokens;
+    }
+    return {
+      ...token,
+      accessToken: refreshedTokens.access_token,
+      e: Date.now() + refreshedTokens.expires_in * 1000,
+      refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
+    };
+  } catch (error) {
+    return {
+      ...token,
+      error: "RefreshAccessTokenError",
+    };
+  }
+}
 
 const options = {
   site: process.env.NEXT_PUBLIC_SITE || "http://localhost:3000",
   session: { jwt: true },
+  jwt: { signingKey: process.env.JWT_SIGNING_PRIVATE_KEY },
   callbacks: {
     async jwt(token, user, account) {
-      if (account?.accessToken) {
-        // eslint-disable-next-line no-param-reassign
-        token.accessToken = account.accessToken;
+      if (account?.accessToken && user) {
+        return {
+          accessToken: account.accessToken,
+          e: Date.now() + account.expires_in * 1000,
+          refreshToken: account.refresh_token,
+        };
       }
-      return token;
+      if (Date.now() < token.e) {
+        return token;
+      }
+      return refreshAccessToken(token);
     },
     async session(session, token) {
       if (token?.accessToken) {
-        // eslint-disable-next-line no-param-reassign
         session.accessToken = token.accessToken;
+        session.e = token.e;
+        const decoded = jwt.decode(session.accessToken);
+        if (decoded["cognito:groups"]?.includes("VenditoreAdmin")) {
+          session.adm = true;
+        }
       }
       return session;
     },
