@@ -26,7 +26,7 @@ class ProductListingPage extends React.Component<{ products: Product[] }> {
 export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
     props: {
-      products: await getProductsByCategory(params.category),
+      products: await getProductsByCategory(params.category.toString()),
     },
   };
 };
