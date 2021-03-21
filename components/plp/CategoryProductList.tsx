@@ -7,6 +7,7 @@ class CategoryProductList extends React.Component<{ products: Product[] }> {
     super(props);
     this.state = {};
   }
+
   render() {
     const { products } = this.props;
     return (
@@ -17,9 +18,7 @@ class CategoryProductList extends React.Component<{ products: Product[] }> {
               <Card key={item.id}>
                 <Card.Body>
                   <Card.Title>{item.name}</Card.Title>
-                  <Button variant="danger" >
-                    Add to Cart
-                  </Button>
+                  <Button variant="warning">Add to Cart</Button>
                 </Card.Body>
               </Card>
             ))
