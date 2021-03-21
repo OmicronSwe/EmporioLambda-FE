@@ -6,8 +6,9 @@ import Layout from "../../components/layout";
 import OrderDetail from "../../components/Order/OrderDetail";
 
 import { getOrderDetails } from "../api/Services/order";
+import { Order } from "../../src/objects/Order";
 
-class OrderPage extends React.Component<{ order }> {
+class OrderPage extends React.Component<{ order: Order }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -31,7 +32,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
 
   return {
     props: {
-      order: await getOrderDetails(id),
+      order: await getOrderDetails(String(id)),
     },
   };
 };
