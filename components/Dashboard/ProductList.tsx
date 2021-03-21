@@ -1,6 +1,9 @@
+import Router from "next/router"
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 import { Product } from "../../src/objects/Product";
+
+// TODO: modificare la visualizzazione dei prodotti da tabellare a Cards (?)
 
 class ProductList extends React.Component<{ products: Product[]; removeProduct }> {
   constructor(props) {
@@ -33,10 +36,15 @@ class ProductList extends React.Component<{ products: Product[]; removeProduct }
                   </td>
                   <td>{item.name}</td>
                   <td>{item.description}</td>
-                  {"category" in item ? <td>Category_test</td> : <td />}
+                  {"category" in item ? <td>{item.category}</td> : <td />}
                   {"price" in item ? <td>{item.price}</td> : <td />}
                   <td>
-                    <Button variant="warning">Modify</Button>
+                    <Button 
+                    variant="warning"
+                    onClick={() => Router.push('/dashboard/modify/'+item.id)}
+                    >
+                      Modify
+                    </Button>
                   </td>
                   <td>
                     <Button

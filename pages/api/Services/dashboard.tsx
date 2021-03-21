@@ -20,6 +20,18 @@ export const getProducts = async (): Promise<Product[]> => {
   return response;
 };
 
+// TODO: to type
+export const updateProduct = async (id: string, params): Promise<boolean> => {
+  const { response } = ( await getlambdaResponse(`product/${id}`, "PUT", params)).props;
+  if(response.err) return false;
+  return true;
+}
+
+export const getProduct = async (id: string): Promise<Product> => {
+  const response = (await getlambdaResponse(`product/${id}`, "GET")).props.response.result;
+  return response;
+}
+
 export const insertCategory = async (category: Category): Promise<boolean> => {
   const { response } = (
     await getlambdaResponse("category", "POST", JSON.stringify(category))
