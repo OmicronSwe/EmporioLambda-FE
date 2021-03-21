@@ -1,7 +1,8 @@
 import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { Product } from "../../src/objects/Product";
 
-class ProductSection extends React.Component<{ product }> {
+class ProductSection extends React.Component<{ product:Product }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -9,7 +10,6 @@ class ProductSection extends React.Component<{ product }> {
 
   render() {
     const { product } = this.props;
-    const item = product.result;
     return (
       <>
         <h1>Product Section</h1>
@@ -19,7 +19,7 @@ class ProductSection extends React.Component<{ product }> {
               ID
             </Form.Label>
             <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={item.id} />
+              <Form.Control plaintext readOnly defaultValue={product.id} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="formPlainTextName">
@@ -27,7 +27,7 @@ class ProductSection extends React.Component<{ product }> {
               Name
             </Form.Label>
             <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={item.name} />
+              <Form.Control plaintext readOnly defaultValue={product.name} />
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="formPlainTextDescription">
@@ -35,23 +35,23 @@ class ProductSection extends React.Component<{ product }> {
               Description
             </Form.Label>
             <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={item.description} />
+              <Form.Control plaintext readOnly defaultValue={product.description} />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} controlId="formPlainTextCategory">
+          {/*<Form.Group as={Row} controlId="formPlainTextCategory">
             <Form.Label column lg="3">
               Category
             </Form.Label>
             <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={item.category} />
+              <Form.Control plaintext readOnly defaultValue={product.category.name} />
             </Col>
-          </Form.Group>
+    </Form.Group> */}
           <Form.Group as={Row} controlId="formPlainTextPrice">
             <Form.Label column lg="3">
               Price
             </Form.Label>
             <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={item.price} />
+              <Form.Control plaintext readOnly defaultValue={product.price} />
             </Col>
           </Form.Group>
         </Form>

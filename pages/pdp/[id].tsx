@@ -6,9 +6,10 @@ import Layout from "../../components/layout";
 import ProductSection from "../../components/Pdp/ProductSection";
 import { getProduct } from "../api/Services/product";
 import CartSection from "../../components/Pdp/CartSection";
+import { Product } from "../../src/objects/Product";
 // import CartSection from "../../components/Pdp/CartSection";
 
-class Product extends React.Component<{ product; session }> {
+class ProductPage extends React.Component<{ product: Product; session }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -20,7 +21,7 @@ class Product extends React.Component<{ product; session }> {
       <>
         <Layout title="Product page">
           <ProductSection product={product} />
-          <CartSection session={session} id={product.result.id} />
+          <CartSection session={session} id={product.id} />
         </Layout>
       </>
     );
@@ -36,4 +37,4 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
   };
 };
 
-export default Product;
+export default ProductPage;
