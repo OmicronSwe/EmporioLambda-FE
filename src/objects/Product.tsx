@@ -6,7 +6,7 @@ export interface ProductJSON {
   description: string;
   image: string;
   price: string;
-  categories: Category[];
+  category: Category;
 }
 
 export class Product implements ProductJSON {
@@ -20,7 +20,7 @@ export class Product implements ProductJSON {
 
   price: string;
 
-  categories: Category[];
+  category: Category;
 
   constructor(
     id: string,
@@ -28,13 +28,13 @@ export class Product implements ProductJSON {
     description: string,
     image: string,
     price: string,
-    categories: Category[]
+    category: Category
   ) {
     this.id = id;
     this.name = name;
     this.description = description;
     this.image = image;
     this.price = price;
-    this.categories = categories;
+    this.category = category;
   }
 }
