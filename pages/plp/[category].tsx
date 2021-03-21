@@ -1,54 +1,43 @@
 import React from "react";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
-
 
 import Layout from "../../components/layout";
-import ProductSection from "../../components/Dashboard/ProductSection";
-import CategorySection from "../../components/Dashboard/CategorySection";
-import OrderSection from "../../components/Dashboard/OrderSection";
 
-import CategoryProduct from "../../components/plp/CategoryProduct";
+import { Product } from "../../src/objects/Product";
+import { getProductsByCategory } from "../api/Services/plp";
+import CategoryProductList from "../../components/plp/CategoryProductList";
 
-import { getProducts, getCategories } from "../api/Services/dashboard";
-import Product from "../../src/objects/Product";
-import getlambdaResponse from "../api/lib/lambdas";
-import ProductList from "../../components/plp/CategoryProduct";
-import Category from "../../src/objects/Category";
 
-class Dashboard extends React.Component<{ products; session; categories }> {
+class ProductListingPage extends React.Component<{ products: Product[] }> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  export const getCategories=async(): Promise<Category[]> =>{
-    const response = (await getlambdaResponse("products","GET")).props.responde.result.items;
-}
-
+  testFunzione=async () => { const products= await getProductsByCategory('test4') 
+    return products.values}products= await getProductsByCategory('test4')
 
   render() {
-    const { products, categories } = this.props;
+    //const { products } = this.props;
+    const products= this.testFunzione()
     return (
       <>
         <Layout title="Category Products">
-          <ProductSection products={products} />
-          <CategorySection categories={categories} />
-          <OrderSection />
+          <CategoryProductList products={products} />
         </Layout>
       </>
     );
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+/*
+export const getServerSideProps: GetServerSideProps = async ({ params }) => {
   return {
     props: {
-      products: await getProducts(),
-      categories: await getCategories(),
-      session: await getSession({ req }),
+      products: await getProductsByCategory(params.category.toString())
     },
   };
 };
+*/
 
-export default Dashboard;
+export default ProductListingPage;
