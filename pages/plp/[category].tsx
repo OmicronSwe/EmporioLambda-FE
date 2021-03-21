@@ -2,7 +2,7 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import Layout from "../../components/layout";
 import { Product } from "../../src/objects/Product";
-import { getProductsByCategory } from "../api/Services/plp";
+import getProductsByCategory from "../api/Services/plp";
 import CategoryProductList from "../../components/plp/CategoryProductList";
 
 class ProductListingPage extends React.Component<{ products: Product[] }> {
