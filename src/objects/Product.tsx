@@ -1,4 +1,17 @@
-export default class Product {
+import { Category } from "./Category";
+
+export interface ProductJSON {
+  id: string;
+  name: string;
+  description: string;
+  image: string;
+  price: string;
+  categories: Category[];
+}
+
+export class Product implements ProductJSON {
+  id: string;
+
   name: string;
 
   description: string;
@@ -7,19 +20,21 @@ export default class Product {
 
   price: string;
 
-  public getName(): string {
-    return this.name;
-  }
+  categories: Category[];
 
-  public getDescription(): string {
-    return this.description;
-  }
-
-  public getImage(): string {
-    return this.image;
-  }
-
-  public getPrice(): string {
-    return this.price;
+  constructor(
+    id: string,
+    name: string,
+    description: string,
+    image: string,
+    price: string,
+    categories: Category[]
+  ) {
+    this.id = id;
+    this.name = name;
+    this.description = description;
+    this.image = image;
+    this.price = price;
+    this.categories = categories;
   }
 }

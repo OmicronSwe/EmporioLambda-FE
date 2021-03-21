@@ -1,87 +1,39 @@
 import React from "react";
-import { Accordion, Button, Card, CardColumns, Col, Form, Row } from "react-bootstrap";
+import NewCategoryForm from "./NewCategoryForm";
+import { insertCategory, removeCategory } from "../../pages/api/Services/dashboard";
+import { Category } from "../../src/objects/Category";
+import CategoryList from "./CategoryList";
 
-class CategorySection extends React.Component<{}> {
+class CategorySection extends React.Component<{
+  categories: Category[];
+  refreshOnCategoryChange;
+}> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
+  insertCategory = async (event) => {
+    event.preventDefault();
+    const { refreshOnCategoryChange } = this.props;
+    const category: Category = new Category(event.target.name.value);
+    await insertCategory(category);
+    refreshOnCategoryChange();
+  };
+
+  removeCategory = async (name: string) => {
+    const { refreshOnCategoryChange } = this.props;
+    await removeCategory(name);
+    refreshOnCategoryChange();
+  };
+
   render() {
+    const { categories } = this.props;
     return (
       <>
         <h1>Category Section</h1>
-        <Accordion style={{ width: "50%" }}>
-          <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} eventKey="0">
-                Add new category
-              </Accordion.Toggle>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <Form>
-                  <Form.Group as={Row}>
-                    <Form.Label column sm="4">
-                      Category name
-                    </Form.Label>
-                    <Col sm="8">
-                      {" "}
-                      <Form.Control placeholder="Name" />
-                    </Col>
-                  </Form.Group>
-                  <Button variant="primary" type="submit">
-                    Submit
-                  </Button>
-                </Form>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
-        <CardColumns>
-          <Card>
-            <Card.Body>
-              <Card.Title>Name</Card.Title>
-              <Button variant="danger">Remove</Button>
-              <Button variant="warning">Modify</Button>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Name</Card.Title>
-              <Button variant="danger">Remove</Button>
-              <Button variant="warning">Modify</Button>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Name</Card.Title>
-              <Button variant="danger">Remove</Button>
-              <Button variant="warning">Modify</Button>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Name</Card.Title>
-              <Button variant="danger">Remove</Button>
-              <Button variant="warning">Modify</Button>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Name</Card.Title>
-              <Button variant="danger">Remove</Button>
-              <Button variant="warning">Modify</Button>
-            </Card.Body>
-          </Card>
-          <Card>
-            <Card.Body>
-              <Card.Title>Name</Card.Title>
-              <Button variant="danger">Remove</Button>
-              <Button variant="warning">Modify</Button>
-            </Card.Body>
-          </Card>
-        </CardColumns>
+        <NewCategoryForm insertCategory={this.insertCategory} />
+        <CategoryList categories={categories} removeCategory={this.removeCategory} />
       </>
     );
   }

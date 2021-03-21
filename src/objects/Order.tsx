@@ -1,9 +1,17 @@
-export default class Order {
-  id: number;
+import { ProductInCart } from "./ProductInCart";
 
-  products: string[];
+export interface OrderJSON {
+  id: string;
+  products: ProductInCart[];
+  totalCost: number;
+  totalTax: number;
+  date: Date;
+}
 
-  quantity: string[];
+export default class Order implements OrderJSON {
+  id: string;
+
+  products: ProductInCart[];
 
   totalCost: number;
 
@@ -11,27 +19,17 @@ export default class Order {
 
   date: Date;
 
-  public getId(): number {
-    return this.id;
-  }
-
-  public getProducts(): string[] {
-    return this.products;
-  }
-
-  public getQuantity(): string[] {
-    return this.quantity;
-  }
-
-  public getTotalCost(): number {
-    return this.totalCost;
-  }
-
-  public getTotalTax(): number {
-    return this.totalTax;
-  }
-
-  public getDate(): Date {
-    return this.date;
+  constructor(
+    id: string,
+    products: ProductInCart[],
+    totalCost: number,
+    totalTax: number,
+    date: Date
+  ) {
+    this.id = id;
+    this.products = products;
+    this.totalCost = totalCost;
+    this.totalTax = totalTax;
+    this.date = date;
   }
 }
