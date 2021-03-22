@@ -13,7 +13,8 @@ class CartListSection extends React.Component<{ products : ProductInCart[], auth
     }
     
     componentDidMount() {
-        localStorage.setItem('cart', JSON.stringify(CartSample))
+      let ids : string = ProductInCart.toStringForLocalStorage(this.state.products)
+      localStorage.setItem('cart', ids)
     }
 
     removeAllProductOnClick = async () => {
@@ -32,7 +33,7 @@ class CartListSection extends React.Component<{ products : ProductInCart[], auth
         //not authenticated -> empty the localStorage
         if(localStorage)
         {
-            localStorage.removeItem('cart')
+            localStorage.setItem('cart', '[]')
             this.setState({ products : [] })
         }
       }
@@ -71,11 +72,10 @@ class CartListSection extends React.Component<{ products : ProductInCart[], auth
     };
 
   render() {
-    const { products } = this.state;
     return (
       <>
         <h1>Cart Section</h1>
-        <CartProductList auth={this.props.auth} products={products} removeOnClick={this.removeProductOnClick}/>
+        <CartProductList auth={this.props.auth} products={this.state.products} removeOnClick={this.removeProductOnClick}/>
         <Button variant="primary" onClick={()=>this.removeAllProductOnClick()}>Remove All</Button>
       </>
     );

@@ -1,6 +1,5 @@
 import React from 'react'
 import ProductInCart from '../../src/objects/ProductInCart'
-import RemoveProductButton from './RemoveProductButton'
 import { Button } from 'react-bootstrap'
 
 class CartProductList extends React.Component<{ auth, products: ProductInCart[], removeOnClick }, { products: ProductInCart[] }> {
@@ -26,11 +25,12 @@ class CartProductList extends React.Component<{ auth, products: ProductInCart[],
                 <tbody>
                 {
                     this.state.products.map(product => (
+                        
                         <tr key={product.id}>
                         <td>{product.image}</td>
                         <td>{product.name}</td>
                         <td>{product.description}</td>
-                        <td>{product.price}</td>
+                        <td id={product.id + "price"}>{product.price}</td>
                         <td>{product.quantity}</td>
                         <td><Button variant="primary" onClick={() => this.props.removeOnClick(product.id)}>Remove</Button></td>
                         </tr>
