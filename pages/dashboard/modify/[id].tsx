@@ -17,8 +17,8 @@ class ModifyProductPage extends React.Component<{ product: Product; categories: 
 
   updateProduct = async (params) => {
     const { product } = this.props;
-    if(Object.keys(JSON.parse(params)).length !== 0){
-      //calls update only if there is at least one change to the product
+    if (Object.keys(JSON.parse(params)).length !== 0) {
+      // calls update only if there is at least one change to the product
       await updateProduct(product.id, params);
     }
     // redirect to dashboard

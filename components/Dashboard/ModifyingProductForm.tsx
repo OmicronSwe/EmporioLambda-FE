@@ -1,6 +1,15 @@
 import React from "react";
 import Router from "next/router";
-import { Button, Form, Row, Col, InputGroup, FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import {
+  Button,
+  Form,
+  Row,
+  Col,
+  InputGroup,
+  FormControl,
+  FormGroup,
+  FormLabel,
+} from "react-bootstrap";
 import { fileToBase64 } from "../../pages/api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
 
@@ -39,7 +48,7 @@ class ModifyingProductForm extends React.Component<{
         : null,
       event.target.productPrice.value ? { price: event.target.productPrice.value } : null,
       imgParam !== null ? { image: imgParam } : null,
-      event.target.productCategorySelection.value != "Choose..."
+      event.target.productCategorySelection.value !== "Choose..."
         ? { category: event.target.productCategorySelection.value }
         : null
     );
@@ -52,79 +61,88 @@ class ModifyingProductForm extends React.Component<{
     return (
       <>
         <Form onSubmit={this.sendParams}>
-          <FormGroup as={Row} >
-            <FormLabel column sm="5" htmlFor="productName" >
+          <FormGroup as={Row}>
+            <FormLabel column sm="5" htmlFor="productName">
               New Name
             </FormLabel>
-            <Col sm="6" >
-              <FormControl 
-                type="text" 
-                className="sm" 
-                id="productName" 
-                name="productName" 
-                placeholder="Name" />
+            <Col sm="6">
+              <FormControl
+                type="text"
+                className="sm"
+                id="productName"
+                name="productName"
+                placeholder="Name"
+              />
             </Col>
           </FormGroup>
-          <FormGroup as={Row} >
-            <FormLabel column sm="5" htmlFor="productDescription" >
+          <FormGroup as={Row}>
+            <FormLabel column sm="5" htmlFor="productDescription">
               New Description
             </FormLabel>
-            <Col sm="6" >
-              <FormControl 
-                as="textarea" 
+            <Col sm="6">
+              <FormControl
+                as="textarea"
                 className="sm"
                 id="productDescription"
                 name="productDescription"
                 placeholder="Description"
                 rows={3}
-                aria-describedby="productDescriptionHelpBlock" />
-                <small id="productDescriptionHelpBlock" className="form-text text-muted">
+                aria-describedby="productDescriptionHelpBlock"
+              />
+              <small id="productDescriptionHelpBlock" className="form-text text-muted">
                 Maximum x characters.
               </small>
             </Col>
           </FormGroup>
-          <FormGroup as={Row} >
-            <FormLabel column sm="5" htmlFor="productPrice" >
+          <FormGroup as={Row}>
+            <FormLabel column sm="5" htmlFor="productPrice">
               New Price
             </FormLabel>
             <Col sm="3">
               <InputGroup className="sm-4">
-                  <FormControl className="sm-4" name="productPrice" id="productPrice" placeholder="Price" />
-                  <InputGroup.Append>
+                <FormControl
+                  className="sm-4"
+                  name="productPrice"
+                  id="productPrice"
+                  placeholder="Price"
+                />
+                <InputGroup.Append>
                   <InputGroup.Text>€</InputGroup.Text>
                 </InputGroup.Append>
               </InputGroup>
             </Col>
           </FormGroup>
-          <FormGroup as={Row} >
-            <FormLabel column sm="5" htmlFor="productImage" >
+          <FormGroup as={Row}>
+            <FormLabel column sm="5" htmlFor="productImage">
               New Image
             </FormLabel>
             <Col sm="6">
-              <FormControl 
-                type="file" 
+              <FormControl
+                type="file"
                 className="form-control-sm"
                 id="productImage"
-                name="productImage" />
+                name="productImage"
+              />
             </Col>
           </FormGroup>
-          <FormGroup as={Row} >
-            <FormLabel column sm="5" htmlFor="productCategorySelection" >
+          <FormGroup as={Row}>
+            <FormLabel column sm="5" htmlFor="productCategorySelection">
               New Category
             </FormLabel>
             <Col sm="6">
-              <FormControl 
+              <FormControl
                 as="select"
                 defaultValue="Choose..."
                 className="form-control-sm"
                 id="productCategorySelection"
-                name="productCategorySelection" >
-                  <option>Choose...</option>
-                  {categories ? (
-                    categories.map((item) => <option>{item.name}</option>)
-                    ) : (
-                    <option>no category found</option>)
-                  }
+                name="productCategorySelection"
+              >
+                <option>Choose...</option>
+                {categories ? (
+                  categories.map((item) => <option>{item.name}</option>)
+                ) : (
+                  <option>no category found</option>
+                )}
               </FormControl>
             </Col>
           </FormGroup>

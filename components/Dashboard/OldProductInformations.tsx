@@ -44,7 +44,11 @@ class OldProductInformations extends React.Component<{ product: Product }> {
               Actual Image
             </Form.Label>
             <Col sm="9">
-              <img src={product.image? product.image : ""} className="img-thumbnail" alt={product.name} />
+              <img
+                src={product.image ? product.image : ""}
+                className="img-thumbnail"
+                alt={product.name}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="formPlainTextCategory">
@@ -52,7 +56,11 @@ class OldProductInformations extends React.Component<{ product: Product }> {
               Actual Category
             </Form.Label>
             <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={product.category? String(product.category) : ""} />
+              <Form.Control
+                plaintext
+                readOnly
+                defaultValue={product.category ? String(product.category) : ""}
+              />
             </Col>
           </Form.Group>
           <Form.Group as={Row} controlId="formPlainTextID">

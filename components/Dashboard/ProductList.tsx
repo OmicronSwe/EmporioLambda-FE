@@ -32,12 +32,16 @@ class ProductList extends React.Component<{ products: Product[]; removeProduct }
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>
-                    <img src={item.image? item.image : ""} className="img-thumbnail" alt={item.name} />
+                    <img
+                      src={item.image ? item.image : ""}
+                      className="img-thumbnail"
+                      alt={item.name}
+                    />
                   </td>
                   <td>{item.name}</td>
                   <td>{item.description}</td>
                   {"category" in item ? <td>{item.category}</td> : <td />}
-                  {"price" in item ? <td>{item.price+"€"}</td> : <td />}
+                  {"price" in item ? <td>{`${item.price}€`}</td> : <td />}
                   <td>
                     <Button
                       variant="warning"
