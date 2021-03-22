@@ -1,6 +1,6 @@
 import React from "react";
 import Router from "next/router";
-import { Button, Form } from "react-bootstrap";
+import { Button, Form, Row, Col, InputGroup, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 import { fileToBase64 } from "../../pages/api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
 
@@ -22,7 +22,7 @@ class ModifyingProductForm extends React.Component<{
     const fileObject = event.target.productImage.files[0];
     let img64 = null;
     let imgParam = null;
-    if (fileObject) {
+    if (fileObject !== undefined) {
       img64 = await fileToBase64(fileObject);
       imgParam = {
         mime: fileObject.type,
@@ -38,12 +38,11 @@ class ModifyingProductForm extends React.Component<{
         ? { description: event.target.productDescription.value }
         : null,
       event.target.productPrice.value ? { price: event.target.productPrice.value } : null,
-      imgParam ? { image: imgParam } : null,
-      event.target.productCategorySelection.value
+      imgParam !== null ? { image: imgParam } : null,
+      event.target.productCategorySelection.value != "Choose..."
         ? { category: event.target.productCategorySelection.value }
         : null
     );
-
     const { updateProduct } = this.props;
     await updateProduct(JSON.stringify(paramsJSON));
   };
@@ -53,83 +52,82 @@ class ModifyingProductForm extends React.Component<{
     return (
       <>
         <Form onSubmit={this.sendParams}>
-          <div className="form-group row">
-            <label className="col-form-label col-sm-4" htmlFor="productName">
-              Product name
-            </label>
-            <div className="col-sm-4">
-              <input
-                type="text"
-                className="form-control form-control-sm"
-                id="productName"
-                name="productName"
-                placeholder="Name"
-              />
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-form-label col-sm-4" htmlFor="productDescription">
-              Product description
-            </label>
-            <div className="col-sm-4">
-              <textarea
-                className="form-control form-control-sm"
+          <FormGroup as={Row} >
+            <FormLabel column sm="5" htmlFor="productName" >
+              New Name
+            </FormLabel>
+            <Col sm="6" >
+              <FormControl 
+                type="text" 
+                className="sm" 
+                id="productName" 
+                name="productName" 
+                placeholder="Name" />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row} >
+            <FormLabel column sm="5" htmlFor="productDescription" >
+              New Description
+            </FormLabel>
+            <Col sm="6" >
+              <FormControl 
+                as="textarea" 
+                className="sm"
                 id="productDescription"
                 name="productDescription"
                 placeholder="Description"
                 rows={3}
-                aria-describedby="productDescriptionHelpBlock"
-              />
-              <small id="productDescriptionHelpBlock" className="form-text text-muted">
+                aria-describedby="productDescriptionHelpBlock" />
+                <small id="productDescriptionHelpBlock" className="form-text text-muted">
                 Maximum x characters.
               </small>
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-form-label col-sm-4" htmlFor="productPrice">
-              Product price
-            </label>
-            <div className="col-sm-4">
-              <input
-                type="text"
-                className="form-control form-control-sm"
-                id="productPrice"
-                name="productPrice"
-                placeholder="Price"
-              />
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-form-label col-sm-4" htmlFor="productImage">
-              Product image
-            </label>
-            <div className="col-sm-4">
-              <input
-                type="file"
-                className="form-control-file form-control-sm"
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row} >
+            <FormLabel column sm="5" htmlFor="productPrice" >
+              New Price
+            </FormLabel>
+            <Col sm="3">
+              <InputGroup className="sm-4">
+                  <FormControl className="sm-4" name="productPrice" id="productPrice" placeholder="Price" />
+                  <InputGroup.Append>
+                  <InputGroup.Text>€</InputGroup.Text>
+                </InputGroup.Append>
+              </InputGroup>
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row} >
+            <FormLabel column sm="5" htmlFor="productImage" >
+              New Image
+            </FormLabel>
+            <Col sm="6">
+              <FormControl 
+                type="file" 
+                className="form-control-sm"
                 id="productImage"
-                name="productImage"
-              />
-            </div>
-          </div>
-          <div className="form-group row">
-            <label className="col-form-label col-sm-4" htmlFor="productCategorySelection">
-              Product category
-            </label>
-            <div className="col-sm-4">
-              <select
-                className="form-control form-control-sm"
+                name="productImage" />
+            </Col>
+          </FormGroup>
+          <FormGroup as={Row} >
+            <FormLabel column sm="5" htmlFor="productCategorySelection" >
+              New Category
+            </FormLabel>
+            <Col sm="6">
+              <FormControl 
+                as="select"
+                defaultValue="Choose..."
+                className="form-control-sm"
                 id="productCategorySelection"
-                name="productCategorySelection"
-              >
-                {categories ? (
-                  categories.map((item) => <option>{item.name}</option>)
-                ) : (
-                  <option>no category found</option>
-                )}
-              </select>
-            </div>
-          </div>
+                name="productCategorySelection" >
+                  <option>Choose...</option>
+                  {categories ? (
+                    categories.map((item) => <option>{item.name}</option>)
+                    ) : (
+                    <option>no category found</option>)
+                  }
+              </FormControl>
+            </Col>
+          </FormGroup>
           <Button type="submit" variant="primary">
             Submit
           </Button>

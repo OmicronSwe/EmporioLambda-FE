@@ -17,7 +17,7 @@ class OldProductInformations extends React.Component<{ product: Product }> {
         <Form>
           <Form.Group as={Row} controlId="formPlainTextName">
             <Form.Label column lg="3">
-              Name
+              Actual Name
             </Form.Label>
             <Col sm="9">
               <Form.Control plaintext readOnly defaultValue={product.name} />
@@ -25,7 +25,7 @@ class OldProductInformations extends React.Component<{ product: Product }> {
           </Form.Group>
           <Form.Group as={Row} controlId="formPlainTextDescription">
             <Form.Label column lg="3">
-              Description
+              Actual Description
             </Form.Label>
             <Col sm="9">
               <Form.Control plaintext readOnly defaultValue={product.description} />
@@ -33,24 +33,28 @@ class OldProductInformations extends React.Component<{ product: Product }> {
           </Form.Group>
           <Form.Group as={Row} controlId="formPlainTextPrice">
             <Form.Label column lg="3">
-              Price
+              Actual Price
             </Form.Label>
             <Col sm="9">
               <Form.Control plaintext readOnly defaultValue={product.price} />
             </Col>
           </Form.Group>
-
-          {/* image section */}
-          {/*
-          <Form.Group as={Row} controlId="formPlainTextCategory">
+          <Form.Group as={Row} controlId="formPlainTextID">
             <Form.Label column lg="3">
-              Category
+              Actual Image
             </Form.Label>
             <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={product.category.name} />
+              <img src={product.image? product.image : ""} className="img-thumbnail" alt={product.name} />
             </Col>
           </Form.Group>
-          */}
+          <Form.Group as={Row} controlId="formPlainTextCategory">
+            <Form.Label column lg="3">
+              Actual Category
+            </Form.Label>
+            <Col sm="9">
+              <Form.Control plaintext readOnly defaultValue={product.category? String(product.category) : ""} />
+            </Col>
+          </Form.Group>
           <Form.Group as={Row} controlId="formPlainTextID">
             <Form.Label column lg="3">
               ID
