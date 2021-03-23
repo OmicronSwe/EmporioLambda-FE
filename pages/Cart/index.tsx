@@ -1,42 +1,41 @@
-import React from 'react'
-import { GetServerSideProps } from "next"
+import React from "react";
+import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
-import { getSession } from "next-auth/client"
-import getlambdaResponse from "../api/lib/lambdas"
-import ProductInCart from '../../src/objects/ProductInCart';
-import myJson from '../../components/Cart/CartSample'
-import CartListSection from '../../components/Cart/CartListSection';
+import getlambdaResponse from "../api/lib/lambdas";
+import ProductInCart from "../../src/objects/ProductInCart";
+import myJson from "../../components/Cart/CartSample";
+import CartListSection from "../../components/Cart/CartListSection";
 
 class Cart extends React.Component<{ response; auth }, { products: ProductInCart[] }> {
-    constructor(props) {
-      super(props);
-    }
-  
-    render() {
-      return (
-        <>
-          <Layout title="Cart page">
-            <CartListSection auth={this.props.auth} products={myJson}/> 
-          </Layout>
-        </>
-      );
-    }
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+      <>
+        <Layout title="Cart page">
+          <CartListSection auth={this.props.auth} products={myJson} />
+        </Layout>
+      </>
+    );
+  }
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-    /*const session = await getSession({ req }) //get session data
+   const session = await getSession({ req }) //get session data
     if (session) {
-      const resp = await (await getlambdaResponse("cart/" + session.user.email)).props.response //external API call to get cart's product ids
+      const resp = await getlambdaResponse("GET","cart/" + session.user.email) //external API call to get cart's product ids
   
-      if (resp.message == "Element not found") {
+      if (resp.props.response == "Element not found") {
         //if no cart is found, return empty response
         return { props: { response: [], auth: session.user.email } }
       }
       return { props: { response: resp, auth: session.user.email } }
-    //} else {*/
-      return { props: { response: [], auth: null } } //if not authenticated, return empty response and null email
-    //}
-  }
+    } else { 
+  return { props: { response: [], auth: null } }; // if not authenticated, return empty response and null email
+ }
+};
 
-
-export default Cart
+export default Cart;
