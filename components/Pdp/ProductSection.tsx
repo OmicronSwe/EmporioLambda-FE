@@ -2,7 +2,7 @@ import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
 import { Product } from "../../src/objects/Product";
 
-class ProductSection extends React.Component<{ product:Product }> {
+class ProductSection extends React.Component<{ product: Product }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -38,7 +38,7 @@ class ProductSection extends React.Component<{ product:Product }> {
               <Form.Control plaintext readOnly defaultValue={product.description} />
             </Col>
           </Form.Group>
-          {/*<Form.Group as={Row} controlId="formPlainTextCategory">
+          {/* <Form.Group as={Row} controlId="formPlainTextCategory">
             <Form.Label column lg="3">
               Category
             </Form.Label>

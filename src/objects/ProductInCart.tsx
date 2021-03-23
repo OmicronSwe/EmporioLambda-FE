@@ -34,3 +34,12 @@ export class ProductInCart implements ProductInCartJSON {
     this.quantity = quantity;
   }
 }
+
+export class ProductSend extends ProductInCart {
+  email: string;
+
+  constructor(id, name, price, description, image, quantity, email) {
+    super(id, name, price, description, image, quantity);
+    this.email = email;
+  }
+}
