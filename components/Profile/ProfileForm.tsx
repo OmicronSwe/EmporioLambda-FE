@@ -1,5 +1,6 @@
 import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
+import { getProfile } from "../../pages/api/Services/profile";
 
 class ProfileForm extends React.Component<{ session }> {
   constructor(props) {
@@ -9,7 +10,10 @@ class ProfileForm extends React.Component<{ session }> {
 
   render() {
     const { session } = this.props;
-    //const item = product.result;
+    profile = async() => {
+      await getProfile(session);
+
+    }  
     return (
       <>
         <h1>Profile Section</h1>
@@ -19,7 +23,7 @@ class ProfileForm extends React.Component<{ session }> {
               Name
             </Form.Label>
             <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={session.user.name} />
+              <Form.Control plaintext readOnly defaultValue={profile.name} />
             </Col>
           </Form.Group>
         </Form>

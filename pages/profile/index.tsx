@@ -24,7 +24,7 @@ class ProfilePage extends React.Component<{ session }> {
     return (
       <>
         <Layout title="Profile page">
-          <ProfileForm session={session} />
+          <ProfileForm session={session}/>
         </Layout>
       </>
     );
@@ -34,7 +34,7 @@ class ProfilePage extends React.Component<{ session }> {
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
-      session: await getSession({ req }),
+      session: await getSession({ req })
     },
   };
 };
