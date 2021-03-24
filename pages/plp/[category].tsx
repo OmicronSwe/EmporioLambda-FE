@@ -1,21 +1,41 @@
 import React from "react";
 import { GetServerSideProps } from "next";
+import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import { Product } from "../../src/objects/Product";
-import getProductsByCategory from "../api/Services/product";
+import getProductsByCategory, { insertCart, insertCartList } from "../api/Services/plp";
 import CategoryProductList from "../../components/plp/CategoryProductList";
-import { getSession } from "next-auth/client";
+import AddToCartList from "../../components/plp/AddToCartList";
 
-class ProductListingPage extends React.Component<{ products: Product[], session }> {
+class ProductListingPage extends React.Component<
+  { products: Product[]; session },
+  { idProducts: string[] }
+> {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { idProducts: [] };
   }
 
-  addCart = async (id) => {
-    // conversione parametri in stringJSON
+  addToCart = async (id: string) => {
     const { session } = this.props;
-    await insertCart(session, id, 1);
+    await insertCart(id, session);
+  };
+
+  toggleSelect = async (id: string) => {
+    const { idProducts } = this.state;
+    const index = idProducts.indexOf(id);
+    if (index !== -1) idProducts.splice(index, 1);
+    else idProducts.push(id);
+
+    console.log(idProducts);
+    this.setState({ idProducts });
+  };
+
+  addToCartList = async () => {
+    const { session } = this.props;
+    const { idProducts } = this.state;
+
+    await insertCartList(idProducts, session);
   };
 
   render() {
@@ -23,7 +43,12 @@ class ProductListingPage extends React.Component<{ products: Product[], session 
     return (
       <>
         <Layout title="Category Products">
-          <CategoryProductList products={products} addToCart={this.addToCart} />
+          <AddToCartList addToCartList={this.addToCartList} />
+          <CategoryProductList
+            products={products}
+            addToCart={this.addToCart}
+            toggleSelect={this.toggleSelect}
+          />
         </Layout>
       </>
     );
@@ -32,11 +57,11 @@ class ProductListingPage extends React.Component<{ products: Product[], session 
 
 export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
   const session = await getSession({ req });
-  
+
   return {
     props: {
-      products: await getProductsByCategory(params.category.toString()),
-      session: session
+      products: await getProductsByCategory(params.category.toString(), session),
+      session,
     },
   };
 };

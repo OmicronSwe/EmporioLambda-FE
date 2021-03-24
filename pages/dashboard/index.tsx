@@ -19,7 +19,7 @@ class Dashboard extends React.Component<
     super(props);
 
     const { categories } = this.props;
-    this.state = { categories, session };
+    this.state = { categories };
   }
 
   refreshOnCategoryChange = async () => {
