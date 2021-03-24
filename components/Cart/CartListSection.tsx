@@ -3,8 +3,7 @@ import { Button } from "react-bootstrap";
 import CartProductList from "./CartProductsList";
 import CartSample from "./CartSample";
 import ProductInCart from "../../src/objects/ProductInCart";
-import { removeProductFromCart, removeAllProductsFromCart, getProductsInCart, getProduct } from "../../pages/api/Services/cart";
-import { decode } from 'jsonwebtoken';
+import { removeProductFromCart, removeAllProductsFromCart, getProductsInCart } from "../../pages/api/Services/cart";
 
 class CartListSection extends React.Component<
   { products: ProductInCart[]; auth },

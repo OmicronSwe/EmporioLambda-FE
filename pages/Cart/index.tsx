@@ -6,6 +6,7 @@ import getlambdaResponse from "../api/lib/lambdas";
 import ProductInCart from "../../src/objects/ProductInCart";
 import myJson from "../../components/Cart/CartSample";
 import CartListSection from "../../components/Cart/CartListSection";
+import { decode } from 'jsonwebtoken'
 
 class Cart extends React.Component<{ response; auth }, { products: ProductInCart[] }> {
   constructor(props) {
@@ -25,14 +26,15 @@ class Cart extends React.Component<{ response; auth }, { products: ProductInCart
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
    const session = await getSession({ req }) //get session data
+   const username = decode(session.accessToken).sub;
     if (session) {
-      const resp = await getlambdaResponse("GET","cart/" + session.user.email) //external API call to get cart's product ids
+      const resp = await getlambdaResponse("GET","cart/" + username) //external API call to get cart's product ids
   
       if (resp.props.response == "Element not found") {
         //if no cart is found, return empty response
-        return { props: { response: [], auth: session.user.email } }
+        return { props: { response: [], auth: username } }
       }
-      return { props: { response: resp, auth: session.user.email } }
+      return { props: { response: resp, auth: username } }
     } else { 
   return { props: { response: [], auth: null } }; // if not authenticated, return empty response and null email
  }
