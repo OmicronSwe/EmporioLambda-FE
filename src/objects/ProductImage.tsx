@@ -3,7 +3,7 @@ export interface ProductImageJSON {
     imageCode: string;
 }
 
-export class ProductImage implements ProductImageJSON {
+export default class ProductImage implements ProductImageJSON {
     mime: string;
 
     imageCode: string;
