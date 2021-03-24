@@ -13,19 +13,13 @@ export const insertCart = async (session, product: Product, quantity: number) =>
  
   if (session) {
     // authenticated
-    decode(session.accessToken).sub;
-    console.log(session);
-    console.log(decode(session.accessToken).sub);
+    
     const stringJSON = JSON.stringify({
       id: product.id,
-      name: product.name,
-      price: product.price,
-      description: product.description,
-      image: product.image,
       quantity: quantity
     });
     
-    //const response  = (await getlambdaResponse(`cart/addProduct/${session.user.email}`, "PUT", session, stringJSON));
+    const response  = (await getlambdaResponse(`cart/addProduct/${decode(session.accessToken).sub}`, "PUT", session, stringJSON));
   } else {
     // not authenticated -> add product to localstorage
     const cart = localStorage.getItem("cart"); // retrieve cart
