@@ -1,10 +1,11 @@
 import { Category } from "./Category";
+import { ProductImage } from "./ProductImage";
 
 export interface ProductJSON {
   id: string;
   name: string;
   description: string;
-  image: string;
+  image: ProductImage;
   price: string;
   category: Category;
 }
@@ -16,7 +17,7 @@ export class Product implements ProductJSON {
 
   description: string;
 
-  image: string;
+  image: ProductImage;
 
   price: string;
 
@@ -26,7 +27,7 @@ export class Product implements ProductJSON {
     id: string,
     name: string,
     description: string,
-    image: string,
+    image: ProductImage,
     price: string,
     category: Category
   ) {
