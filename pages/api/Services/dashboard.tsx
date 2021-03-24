@@ -4,7 +4,9 @@ import StoredProduct from "../../../src/objects/StoredProduct";
 import getlambdaResponse from "../lib/lambdas";
 
 export const insertProduct = async (product: JustCreatedProduct, ses): Promise<boolean> => {
-  const { response } = (await getlambdaResponse("product", "POST", ses.accessToken, JSON.stringify(product))).props;
+  const { response } = (
+    await getlambdaResponse("product", "POST", ses.accessToken, JSON.stringify(product))
+  ).props;
   if (response.err !== null) return false;
   return true;
 };

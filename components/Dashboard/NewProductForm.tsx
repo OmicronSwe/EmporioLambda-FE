@@ -10,7 +10,7 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
-  Alert
+  Alert,
 } from "react-bootstrap";
 import { Category } from "../../src/objects/Category";
 
@@ -130,18 +130,20 @@ class NewProductForm extends React.Component<{
             </Accordion.Collapse>
           </Card>
         </Accordion>
-        {(productInsertedAlert !== null) && (productInsertedAlert === true) ? (
+        {productInsertedAlert !== null && productInsertedAlert === true ? (
           <Alert variant="success">
             <Alert.Heading>Product created successfully!</Alert.Heading>
           </Alert>
-         ) : <p />
-        }
-        {(productInsertedAlert !== null) && (productInsertedAlert === false) ? (
+        ) : (
+          <p />
+        )}
+        {productInsertedAlert !== null && productInsertedAlert === false ? (
           <Alert variant="danger">
             <Alert.Heading>Error occurred creating the product, please retry!</Alert.Heading>
           </Alert>
-         ) : <p />
-        }
+        ) : (
+          <p />
+        )}
       </>
     );
   }

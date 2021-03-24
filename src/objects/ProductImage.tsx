@@ -1,18 +1,15 @@
 export interface ProductImageJSON {
-    mime: string;
-    imageCode: string;
+  mime: string;
+  imageCode: string;
 }
 
 export default class ProductImage implements ProductImageJSON {
-    mime: string;
+  mime: string;
 
-    imageCode: string;
+  imageCode: string;
 
-    constructor(
-        mime: string,
-        imageCode: string
-    ) {
-        this.mime = mime;
-        this.imageCode = imageCode;
-    }
+  constructor(mime: string, imageCode: string) {
+    this.mime = mime;
+    this.imageCode = imageCode;
+  }
 }
