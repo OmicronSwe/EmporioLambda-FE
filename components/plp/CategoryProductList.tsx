@@ -2,14 +2,14 @@ import React from "react";
 import { Button, CardColumns, Card } from "react-bootstrap";
 import { Product } from "../../src/objects/Product";
 
-class CategoryProductList extends React.Component<{ products: Product[] }> {
+class CategoryProductList extends React.Component<{ products: Product[], addToCart }> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const { products } = this.props;
+    const { products, addToCart } = this.props;
     return (
       <>
       <Button variant="warning">Add to Cart</Button>
@@ -17,12 +17,12 @@ class CategoryProductList extends React.Component<{ products: Product[] }> {
           {products ? (
             products.map((item) => (
               <Card key={item.id}>
+                {item.image ? <Card.Img src={item.image}/> : ""}
                 <Card.Body>
-                  <Card.Img>{item.image}</Card.Img>
                   <Card.Title>{item.name}</Card.Title>
                   <Card.Subtitle>{item.price}</Card.Subtitle>
                   <td><input type="checkbox" value="{{item.id}}" /></td>
-                  <Button variant="warning">Add to Cart</Button>
+                  <Button variant="warning" onClick={()=>addToCart(item.id)} >Add to Cart</Button>
                 </Card.Body>
               </Card>
             ))
