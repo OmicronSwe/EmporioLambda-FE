@@ -13,6 +13,7 @@ module.exports = {
   },
   rules: {
     // suppress errors for missing 'import React' in files
+   "no-param-reassign": ['error', { "props": false }],
    "react/react-in-jsx-scope": "off",
    "react/jsx-props-no-spreading": "off",
    'prettier/prettier': ['error', {}, { usePrettierrc: true }], // Includes .prettierrc.js rules
