@@ -5,6 +5,7 @@ import Layout from "../../components/layout";
 import ProductSection from "../../components/Dashboard/ProductSection";
 import CategorySection from "../../components/Dashboard/CategorySection";
 import OrderSection from "../../components/Dashboard/OrderSection";
+import DashboardLinks from "../../components/Dashboard/DashboardLinks";
 
 import { getProducts, getCategories } from "../api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
@@ -40,6 +41,7 @@ class Dashboard extends React.Component<
             refreshOnCategoryChange={this.refreshOnCategoryChange}
           />
           <OrderSection orders={orders} />
+          <DashboardLinks />
         </Layout>
       </>
     );
