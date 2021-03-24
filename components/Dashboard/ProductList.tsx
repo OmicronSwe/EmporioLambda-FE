@@ -1,11 +1,11 @@
 import Router from "next/router";
 import React from "react";
 import { Table, Button } from "react-bootstrap";
-import { Product } from "../../src/objects/Product";
+import StoredProduct from "../../src/objects/StoredProduct";
 
 // TODO: modificare la visualizzazione dei prodotti da tabellare a Cards (?)
 
-class ProductList extends React.Component<{ products: Product[]; removeProduct }> {
+class ProductList extends React.Component<{ products: StoredProduct[]; removeProduct }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -33,7 +33,7 @@ class ProductList extends React.Component<{ products: Product[]; removeProduct }
                   <td>{item.id}</td>
                   <td>
                     <img
-                      src={item.image ? item.image : ""}
+                      src={item.imageUrl ? item.imageUrl : ""}
                       className="img-thumbnail"
                       alt={item.name}
                     />

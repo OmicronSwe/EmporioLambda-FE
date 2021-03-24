@@ -1,15 +1,17 @@
 import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
-import { Product } from "../../src/objects/Product";
-import { ProductImage } from "../../src/objects/ProductImage";
+import ProductImage from "../../src/objects/ProductImage";
 import { Category } from "../../src/objects/Category";
 import { fileToBase64 } from "../../pages/api/Services/dashboard";
 import { insertProduct, removeProduct, getProducts } from "../../pages/api/Services/dashboard";
+//import Product  from "../../src/objects/Product";
+import StoredProduct from "../../src/objects/StoredProduct";
+import JustCreatedProduct from "../../src/objects/JustCreatedProduct";
 
 class ProductSection extends React.Component<
-  { products: Product[]; categories: Category[]; session },
-  { products: Product[]; productInsertedAlert: boolean | null }
+  { products: StoredProduct[]; categories: Category[]; session },
+  { products: StoredProduct[]; productInsertedAlert: boolean | null }
 > {
   constructor(props) {
     super(props);
@@ -32,10 +34,9 @@ class ProductSection extends React.Component<
     const description: string = event.target.productDescription.value;
     const price: string = event.target.productPrice.value;
     const image: ProductImage = new ProductImage(fileObject.type, `base64,${base64StringImage}`);
-    const category: Category = new Category(event.target.productCategorySelection.value);
+    const category: string = event.target.productCategorySelection.value;
 
-    const product: Product = new Product(null,name,description,image,price,category);
-    console.log(product);
+    const product: JustCreatedProduct = new JustCreatedProduct(name,description,image,price,category);
     const res = await insertProduct(product, session);
     const prod = await getProducts(session);
     this.setState({ products: prod, productInsertedAlert: res });

@@ -1,20 +1,21 @@
 import { Category } from "../../../src/objects/Category";
-import { Product } from "../../../src/objects/Product";
+import JustCreatedProduct from "../../../src/objects/JustCreatedProduct";
+import StoredProduct from "../../../src/objects/StoredProduct";
 import getlambdaResponse from "../lib/lambdas";
 
-export const insertProduct = async (product: Product, session): Promise<boolean> => {
-  const { response } = (await getlambdaResponse("product", "POST", session.accessToken, JSON.stringify(product))).props;
+export const insertProduct = async (product: JustCreatedProduct, ses): Promise<boolean> => {
+  const { response } = (await getlambdaResponse("product", "POST", ses.accessToken, JSON.stringify(product))).props;
   if (response.err !== null) return false;
   return true;
 };
 
-export const removeProduct = async (id: string, session) => {
-  const { response } = (await getlambdaResponse(`product/${id}`, "DELETE", session.accessToken)).props;
+export const removeProduct = async (id: string, ses) => {
+  const { response } = (await getlambdaResponse(`product/${id}`, "DELETE", ses.accessToken)).props;
   if (response.err !== null) return false;
   return true;
 };
 
-export const getProducts = async (ses): Promise<Product[]> => {
+export const getProducts = async (ses): Promise<StoredProduct[]> => {
   const response = (await getlambdaResponse("product", "GET", ses.accessToken)).props.response
     .result.items;
   return response;
@@ -29,7 +30,7 @@ export const updateProduct = async (id: string, params, ses): Promise<boolean> =
   return true;
 };
 
-export const getProduct = async (id: string, ses): Promise<Product> => {
+export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
   const response = (await getlambdaResponse(`product/${id}`, "GET", ses.accessToken)).props.response
     .result;
   return response;

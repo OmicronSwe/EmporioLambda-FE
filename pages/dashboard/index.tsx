@@ -10,12 +10,12 @@ import DashboardLinks from "../../components/Dashboard/DashboardLinks";
 
 import { getProducts, getCategories } from "../api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
-import { Product } from "../../src/objects/Product";
 import { getOrders } from "../api/Services/order";
 import { Order } from "../../src/objects/Order";
+import StoredProduct from "../../src/objects/StoredProduct";
 
 class Dashboard extends React.Component<
-  { products: Product[]; categories: Category[]; orders: Order[]; session },
+  { products: StoredProduct[]; categories: Category[]; orders: Order[]; session },
   { categories: Category[] }
 > {
   constructor(props) {

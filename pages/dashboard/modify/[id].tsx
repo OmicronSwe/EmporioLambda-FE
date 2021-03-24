@@ -4,14 +4,14 @@ import { GetServerSideProps } from "next";
 import Router from "next/router";
 import { getSession } from "next-auth/client";
 import Layout from "../../../components/layout";
-import { Product } from "../../../src/objects/Product";
 import { getCategories, getProduct, updateProduct } from "../../api/Services/dashboard";
 import OldProductInformations from "../../../components/Dashboard/OldProductInformations";
 import ModifyingProductForm from "../../../components/Dashboard/ModifyingProductForm";
 import { Category } from "../../../src/objects/Category";
+import StoredProduct from "../../../src/objects/StoredProduct";
 
 class ModifyProductPage extends React.Component<{
-  product: Product;
+  product: StoredProduct;
   categories: Category[];
   session;
 }> {

@@ -1,10 +1,8 @@
 import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { Product } from "../../src/objects/Product";
+import StoredProduct from "../../src/objects/StoredProduct";
 
-// TODO: sostituire con lo stesso componente usato per la visualizzazione del prodotto nella PDP (?)
-
-class OldProductInformations extends React.Component<{ product: Product }> {
+class OldProductInformations extends React.Component<{ product: StoredProduct }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -45,7 +43,7 @@ class OldProductInformations extends React.Component<{ product: Product }> {
             </Form.Label>
             <Col sm="9">
               <img
-                src={product.image ? product.image : ""}
+                src={product.imageUrl ? product.imageUrl : ""}
                 className="img-thumbnail"
                 alt={product.name}
               />
@@ -59,7 +57,7 @@ class OldProductInformations extends React.Component<{ product: Product }> {
               <Form.Control
                 plaintext
                 readOnly
-                defaultValue={product.category ? String(product.category) : ""}
+                defaultValue={product.category ? product.category : ""}
               />
             </Col>
           </Form.Group>
