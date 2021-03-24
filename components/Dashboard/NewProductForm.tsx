@@ -10,46 +10,23 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
+  Alert
 } from "react-bootstrap";
-import { fileToBase64 } from "../../pages/api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
 
 class NewProductForm extends React.Component<{
   insertProduct;
   categories: Category[];
-  alert: boolean;
+  productInsertedAlert: boolean;
 }> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  sendParams = async (event) => {
-    // conversione parametri in stringJSON
-    event.preventDefault();
-
-    const fileObject = event.target.productImage.files[0];
-
-    const img64 = await fileToBase64(fileObject);
-
-    const paramImg = {
-      mime: fileObject.type,
-      imageCode: `base64,${img64}`,
-    };
-
-    const stringJSON = JSON.stringify({
-      name: event.target.productName.value,
-      description: event.target.productDescription.value,
-      price: event.target.productPrice.value,
-      image: paramImg,
-      category: event.target.productCategorySelection.value,
-    });
-    const { insertProduct } = this.props;
-    await insertProduct(stringJSON);
-  };
-
   render() {
-    const { categories, alert } = this.props;
+    const { categories, productInsertedAlert, insertProduct } = this.props;
+
     return (
       <>
         <Accordion>
@@ -61,7 +38,7 @@ class NewProductForm extends React.Component<{
             </Card.Header>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <Form onSubmit={this.sendParams}>
+                <Form onSubmit={insertProduct}>
                   <FormGroup as={Row}>
                     <FormLabel column sm="4" htmlFor="productName">
                       Product Name
@@ -153,7 +130,18 @@ class NewProductForm extends React.Component<{
             </Accordion.Collapse>
           </Card>
         </Accordion>
-        {alert ? <p>prodotto inserito</p> : <p />}
+        {(productInsertedAlert !== null) && (productInsertedAlert === true) ? (
+          <Alert variant="success">
+            <Alert.Heading>Product created successfully!</Alert.Heading>
+          </Alert>
+         ) : <p />
+        }
+        {(productInsertedAlert !== null) && (productInsertedAlert === false) ? (
+          <Alert variant="danger">
+            <Alert.Heading>Error occurred creating the product, please retry!</Alert.Heading>
+          </Alert>
+         ) : <p />
+        }
       </>
     );
   }

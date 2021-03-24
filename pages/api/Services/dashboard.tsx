@@ -2,17 +2,16 @@ import { Category } from "../../../src/objects/Category";
 import { Product } from "../../../src/objects/Product";
 import getlambdaResponse from "../lib/lambdas";
 
-// TODO: to type
-export const insertProduct = async (params): Promise<boolean> => {
-  const { response } = (await getlambdaResponse("product", "POST", params)).props;
-  if (response.err) return false;
+export const insertProduct = async (product: Product): Promise<boolean> => {
+  const { response } = (await getlambdaResponse("product", "POST", JSON.stringify(product))).props;
+  if (response.err !== null) return false;
   return true;
 };
 
-// TODO: to type
 export const removeProduct = async (id: string) => {
-  const response = await getlambdaResponse(`product/${id}`, "DELETE");
-  return response;
+  const { response } = (await getlambdaResponse(`product/${id}`, "DELETE")).props;
+  if (response.err !== null) return false;
+  return true;
 };
 
 export const getProducts = async (): Promise<Product[]> => {
@@ -51,7 +50,7 @@ export const getCategories = async (): Promise<Category[]> => {
   return response;
 };
 
-export const fileToBase64 = async (file) => {
+export const fileToBase64 = async (file): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsBinaryString(file);

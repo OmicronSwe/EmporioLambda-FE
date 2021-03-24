@@ -63,14 +63,6 @@ class OldProductInformations extends React.Component<{ product: Product }> {
               />
             </Col>
           </Form.Group>
-          <Form.Group as={Row} controlId="formPlainTextID">
-            <Form.Label column lg="3">
-              ID
-            </Form.Label>
-            <Col sm="9">
-              <Form.Control plaintext readOnly defaultValue={product.id} />
-            </Col>
-          </Form.Group>
         </Form>
       </>
     );
