@@ -7,6 +7,7 @@ import CategoryList from "./CategoryList";
 class CategorySection extends React.Component<{
   categories: Category[];
   refreshOnCategoryChange;
+  session;
 }> {
   constructor(props) {
     super(props);
@@ -15,15 +16,15 @@ class CategorySection extends React.Component<{
 
   insertCategory = async (event) => {
     event.preventDefault();
-    const { refreshOnCategoryChange } = this.props;
+    const { refreshOnCategoryChange, session } = this.props;
     const category: Category = new Category(event.target.name.value);
-    await insertCategory(category);
+    await insertCategory(category, session);
     refreshOnCategoryChange();
   };
 
   removeCategory = async (name: string) => {
-    const { refreshOnCategoryChange } = this.props;
-    await removeCategory(name);
+    const { refreshOnCategoryChange, session } = this.props;
+    await removeCategory(name, session);
     refreshOnCategoryChange();
   };
 

@@ -2,6 +2,7 @@ import { ProductInCart } from "./ProductInCart";
 
 export interface OrderJSON {
   id: string;
+  username: string;
   products: ProductInCart[];
   totalCost: number;
   totalTax: number;
@@ -11,6 +12,8 @@ export interface OrderJSON {
 
 export class Order implements OrderJSON {
   id: string;
+
+  username: string;
 
   products: ProductInCart[];
 
@@ -24,6 +27,7 @@ export class Order implements OrderJSON {
 
   constructor(
     id: string,
+    username: string,
     products: ProductInCart[],
     totalCost: number,
     totalTax: number,
@@ -31,6 +35,7 @@ export class Order implements OrderJSON {
     email: string
   ) {
     this.id = id;
+    this.username = username;
     this.products = products;
     this.totalCost = totalCost;
     this.totalTax = totalTax;

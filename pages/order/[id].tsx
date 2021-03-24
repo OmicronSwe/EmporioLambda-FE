@@ -1,7 +1,7 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 
-import { useRouter } from "next/dist/client/router";
+import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import OrderDetail from "../../components/Order/OrderDetail";
 
@@ -26,13 +26,12 @@ class OrderPage extends React.Component<{ order: Order }> {
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const router = useRouter();
-  const { id } = router.query;
+export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
+  const session = await getSession({ req });
 
   return {
     props: {
-      order: await getOrderDetails(String(id)),
+      order: await getOrderDetails(params.id.toString(), session),
     },
   };
 };

@@ -1,10 +1,12 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 
+import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import ProductSection from "../../components/Dashboard/ProductSection";
 import CategorySection from "../../components/Dashboard/CategorySection";
 import OrderSection from "../../components/Dashboard/OrderSection";
+import DashboardLinks from "../../components/Dashboard/DashboardLinks";
 
 import { getProducts, getCategories } from "../api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
@@ -13,7 +15,7 @@ import { getOrders } from "../api/Services/order";
 import { Order } from "../../src/objects/Order";
 
 class Dashboard extends React.Component<
-  { products: Product[]; categories: Category[]; orders: Order[] },
+  { products: Product[]; categories: Category[]; orders: Order[]; session },
   { categories: Category[] }
 > {
   constructor(props) {
@@ -24,34 +26,48 @@ class Dashboard extends React.Component<
   }
 
   refreshOnCategoryChange = async () => {
-    const categories = await getCategories();
+    const { session } = this.props;
+    const categories = await getCategories(session);
     this.setState({ categories });
   };
 
   render() {
-    const { products, orders } = this.props;
+    const { products, orders, session } = this.props;
     const { categories } = this.state;
     return (
       <>
         <Layout title="Dashboard page">
-          <ProductSection products={products} categories={categories} />
+          <ProductSection products={products} categories={categories} session={session} />
           <CategorySection
             categories={categories}
             refreshOnCategoryChange={this.refreshOnCategoryChange}
+            session={session}
           />
           <OrderSection orders={orders} />
+          <DashboardLinks />
         </Layout>
       </>
     );
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+
+  if (!session?.adm) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
-      products: await getProducts(),
-      categories: await getCategories(),
-      orders: await getOrders(),
+      products: await getProducts(session.accessToken),
+      categories: await getCategories(session.accessToken),
+      orders: await getOrders(session.accessToken),
+      session,
     },
   };
 };

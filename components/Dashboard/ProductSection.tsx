@@ -8,7 +8,7 @@ import { fileToBase64 } from "../../pages/api/Services/dashboard";
 import { insertProduct, removeProduct, getProducts } from "../../pages/api/Services/dashboard";
 
 class ProductSection extends React.Component<
-  { products: Product[]; categories: Category[] },
+  { products: Product[]; categories: Category[]; session },
   { products: Product[]; productInsertedAlert: boolean | null }
 > {
   constructor(props) {
@@ -21,6 +21,7 @@ class ProductSection extends React.Component<
   insertProduct = async (event) => {
 
     event.preventDefault();
+    const { session } = this.props;
 
     // TODO: validation
 
@@ -35,14 +36,15 @@ class ProductSection extends React.Component<
 
     const product: Product = new Product(null,name,description,image,price,category);
     console.log(product);
-    const res = await insertProduct(product);
-    const prod = await getProducts();
+    const res = await insertProduct(product, session);
+    const prod = await getProducts(session);
     this.setState({ products: prod, productInsertedAlert: res });
   };
 
   removeProduct = async (id: string) => {
-    await removeProduct(id);
-    const prod = await getProducts();
+    const { session } = this.props;
+    await removeProduct(id, session);
+    const prod = await getProducts(session);
     this.setState({ products: prod });
   };
 
