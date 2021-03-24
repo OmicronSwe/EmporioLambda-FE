@@ -15,7 +15,7 @@ import { getOrders } from "../api/Services/order";
 import { Order } from "../../src/objects/Order";
 
 class Dashboard extends React.Component<
-  { products: Product[]; categories: Category[]; orders: Order[] },
+  { products: Product[]; categories: Category[]; orders: Order[]; session },
   { categories: Category[] }
 > {
   constructor(props) {
@@ -26,20 +26,22 @@ class Dashboard extends React.Component<
   }
 
   refreshOnCategoryChange = async () => {
-    const categories = await getCategories();
+    const { session } = this.props;
+    const categories = await getCategories(session);
     this.setState({ categories });
   };
 
   render() {
-    const { products, orders } = this.props;
+    const { products, orders, session } = this.props;
     const { categories } = this.state;
     return (
       <>
         <Layout title="Dashboard page">
-          <ProductSection products={products} categories={categories} />
+          <ProductSection products={products} categories={categories} session={session} />
           <CategorySection
             categories={categories}
             refreshOnCategoryChange={this.refreshOnCategoryChange}
+            session={session}
           />
           <OrderSection orders={orders} />
           <DashboardLinks />
@@ -62,9 +64,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
   return {
     props: {
-      products: await getProducts(),
-      categories: await getCategories(),
-      orders: await getOrders(),
+      products: await getProducts(session.accessToken),
+      categories: await getCategories(session.accessToken),
+      orders: await getOrders(session.accessToken),
+      session,
     },
   };
 };

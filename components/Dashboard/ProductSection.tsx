@@ -7,7 +7,7 @@ import { Category } from "../../src/objects/Category";
 import { insertProduct, removeProduct, getProducts } from "../../pages/api/Services/dashboard";
 
 class ProductSection extends React.Component<
-  { products: Product[]; categories: Category[] },
+  { products: Product[]; categories: Category[]; session },
   { products: Product[]; alert: boolean }
 > {
   constructor(props) {
@@ -18,14 +18,16 @@ class ProductSection extends React.Component<
   }
 
   insertProduct = async (params) => {
-    const res = await insertProduct(params);
-    const prod = await getProducts();
+    const { session } = this.props;
+    const res = await insertProduct(params, session);
+    const prod = await getProducts(session);
     this.setState({ products: prod, alert: res });
   };
 
   removeProduct = async (id: string) => {
-    await removeProduct(id);
-    const prod = await getProducts();
+    const { session } = this.props;
+    await removeProduct(id, session);
+    const prod = await getProducts(session);
     this.setState({ products: prod });
   };
 
