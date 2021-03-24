@@ -57,7 +57,7 @@ const options = {
         return {
           accessToken: token.accessToken,
           e: token.e,
-          adm: (decoded["cognito:groups"]?.includes("VenditoreAdmin")) ? true : undefined,
+          adm: decoded["cognito:groups"]?.includes("VenditoreAdmin") ? true : undefined,
           expires: session.expires,
         };
       }
