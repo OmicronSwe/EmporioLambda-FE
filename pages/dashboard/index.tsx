@@ -1,6 +1,7 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 
+import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import ProductSection from "../../components/Dashboard/ProductSection";
 import CategorySection from "../../components/Dashboard/CategorySection";
@@ -48,7 +49,17 @@ class Dashboard extends React.Component<
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
+export const getServerSideProps: GetServerSideProps = async ({ req }) => {
+  const session = await getSession({ req });
+
+  if (!session?.adm) {
+    return {
+      redirect: {
+        destination: "/",
+        permanent: false,
+      },
+    };
+  }
   return {
     props: {
       products: await getProducts(),
