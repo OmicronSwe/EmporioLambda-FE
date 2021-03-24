@@ -53,12 +53,13 @@ const options = {
     },
     async session(session, token) {
       if (token?.accessToken) {
-        session.accessToken = token.accessToken;
-        session.e = token.e;
-        const decoded = jwt.decode(session.accessToken);
-        if (decoded["cognito:groups"]?.includes("VenditoreAdmin")) {
-          session.adm = true;
-        }
+        const decoded = jwt.decode(token.accessToken);
+        return {
+          accessToken: token.accessToken,
+          e: token.e,
+          adm: (decoded["cognito:groups"]?.includes("VenditoreAdmin")) ? true : undefined,
+          expires: session.expires,
+        };
       }
       return session;
     },
