@@ -1,6 +1,7 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 
+import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import ProductSection from "../../components/Dashboard/ProductSection";
 import CategorySection from "../../components/Dashboard/CategorySection";
@@ -11,14 +12,14 @@ import { Category } from "../../src/objects/Category";
 import { Product } from "../../src/objects/Product";
 
 class Dashboard extends React.Component<
-  { products: Product[]; categories: Category[] },
+  { products: Product[]; categories: Category[]; session },
   { categories: Category[] }
 > {
   constructor(props) {
     super(props);
 
     const { categories } = this.props;
-    this.state = { categories };
+    this.state = { categories, session };
   }
 
   refreshOnCategoryChange = async () => {
@@ -49,6 +50,7 @@ export const getServerSideProps: GetServerSideProps = async () => {
     props: {
       products: await getProducts(),
       categories: await getCategories(),
+      session: await getSession(),
     },
   };
 };
