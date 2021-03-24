@@ -2,8 +2,7 @@ import { Order } from "../../../src/objects/Order";
 import getlambdaResponse from "../lib/lambdas";
 
 export const getOrderDetails = async (id: string): Promise<Order> => {
-  const response = await (await getlambdaResponse(`order/${id}`, "GET")).props.response.result
-    .items;
+  const response = await (await getlambdaResponse(`order/${id}`, "GET")).props.response.result;
   return response;
 };
 
