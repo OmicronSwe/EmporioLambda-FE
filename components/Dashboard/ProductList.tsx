@@ -3,8 +3,6 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 import StoredProduct from "../../src/objects/StoredProduct";
 
-// TODO: modificare la visualizzazione dei prodotti da tabellare a Cards (?)
-
 class ProductList extends React.Component<{ products: StoredProduct[]; removeProduct }> {
   constructor(props) {
     super(props);

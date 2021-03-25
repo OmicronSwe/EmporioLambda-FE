@@ -1,11 +1,10 @@
 import React from "react";
 import NewCategoryForm from "./NewCategoryForm";
 import { insertCategory, removeCategory } from "../../pages/api/Services/dashboard";
-import { Category } from "../../src/objects/Category";
 import CategoryList from "./CategoryList";
 
 class CategorySection extends React.Component<{
-  categories: Category[];
+  categories: string[];
   refreshOnCategoryChange;
   session;
 }> {
@@ -17,7 +16,7 @@ class CategorySection extends React.Component<{
   insertCategory = async (event) => {
     event.preventDefault();
     const { refreshOnCategoryChange, session } = this.props;
-    const category: Category = new Category(event.target.name.value);
+    const category: string = event.target.name.value;
     await insertCategory(category, session);
     refreshOnCategoryChange();
   };

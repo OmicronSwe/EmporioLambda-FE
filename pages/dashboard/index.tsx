@@ -1,7 +1,7 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 
-import { getSession } from "next-auth/client";
+import { getSession, Session } from "next-auth/client";
 import Layout from "../../components/layout";
 import ProductSection from "../../components/Dashboard/ProductSection";
 import CategorySection from "../../components/Dashboard/CategorySection";
@@ -9,14 +9,13 @@ import OrderSection from "../../components/Dashboard/OrderSection";
 import DashboardLinks from "../../components/Dashboard/DashboardLinks";
 
 import { getProducts, getCategories } from "../api/Services/dashboard";
-import { Category } from "../../src/objects/Category";
 import { getOrders } from "../api/Services/order";
 import { Order } from "../../src/objects/Order";
 import StoredProduct from "../../src/objects/StoredProduct";
 
 class Dashboard extends React.Component<
-  { products: StoredProduct[]; categories: Category[]; orders: Order[]; session },
-  { categories: Category[] }
+  { products: StoredProduct[]; categories: string[]; orders: Order[]; session },
+  { categories: string[] }
 > {
   constructor(props) {
     super(props);
@@ -52,7 +51,7 @@ class Dashboard extends React.Component<
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
+  const session: Session = await getSession({ req });
 
   if (!session?.adm) {
     return {

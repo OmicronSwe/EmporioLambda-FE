@@ -13,8 +13,6 @@ import {
 import { fileToBase64 } from "../../pages/api/Services/dashboard";
 import { Category } from "../../src/objects/Category";
 
-// TODO: sostituire con un componente comune usato per inserire e modificare un prodotto (?)
-
 class ModifyingProductForm extends React.Component<{
   updateProduct;
   categories: Category[];
@@ -139,7 +137,7 @@ class ModifyingProductForm extends React.Component<{
               >
                 <option>Choose...</option>
                 {categories ? (
-                  categories.map((item) => <option>{item.name}</option>)
+                  categories.map((item) => <option>{item}</option>)
                 ) : (
                   <option>no category found</option>
                 )}

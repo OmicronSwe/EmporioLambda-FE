@@ -2,7 +2,6 @@ import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
 import ProductImage from "../../src/objects/ProductImage";
-import { Category } from "../../src/objects/Category";
 import {
   fileToBase64,
   insertProduct,
@@ -10,12 +9,11 @@ import {
   getProducts,
 } from "../../pages/api/Services/dashboard";
 
-// import Product  from "../../src/objects/Product";
 import StoredProduct from "../../src/objects/StoredProduct";
 import JustCreatedProduct from "../../src/objects/JustCreatedProduct";
 
 class ProductSection extends React.Component<
-  { products: StoredProduct[]; categories: Category[]; session },
+  { products: StoredProduct[]; categories: string[]; session },
   { products: StoredProduct[]; productInsertedAlert: boolean | null }
 > {
   constructor(props) {

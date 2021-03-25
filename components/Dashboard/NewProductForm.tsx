@@ -12,11 +12,10 @@ import {
   FormLabel,
   Alert,
 } from "react-bootstrap";
-import { Category } from "../../src/objects/Category";
 
 class NewProductForm extends React.Component<{
   insertProduct;
-  categories: Category[];
+  categories: string[];
   productInsertedAlert: boolean;
 }> {
   constructor(props) {
@@ -115,7 +114,7 @@ class NewProductForm extends React.Component<{
                         name="productCategorySelection"
                       >
                         {categories ? (
-                          categories.map((item) => <option>{item.name}</option>)
+                          categories.map((item) => <option>{item}</option>)
                         ) : (
                           <option>no category found</option>
                         )}
