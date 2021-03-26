@@ -43,10 +43,15 @@ class ModifyProductPage extends React.Component<{
     }
 
     const name = event.target.productName.value ? event.target.productName.value : product.name;
-    const description = event.target.productDescription.value ? event.target.productDescription.value : product.description;
+    const description = event.target.productDescription.value
+      ? event.target.productDescription.value
+      : product.description;
     const price = event.target.productPrice.value ? event.target.productPrice.value : product.price;
     const imageFile = imgParam !== null ? imgParam : null;
-    const category = event.target.productCategorySelection.value !== "Choose..." ? event.target.productCategorySelection.value : product.category;
+    const category =
+      event.target.productCategorySelection.value !== "Choose..."
+        ? event.target.productCategorySelection.value
+        : product.category;
 
     const modifiedProduct: JustCreatedProduct = new JustCreatedProduct(
       name,
