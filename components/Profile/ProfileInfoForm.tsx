@@ -9,12 +9,10 @@ class ProfileForm extends React.Component<{ profile: Profile }> {
   }
 
   render() {
-    const { profile } = this.props;
+    const { profile} = this.props;
 
-    console.log(profile); 
     return (
       <>
-        <h1>Profile Section</h1>
         <Form>
           <Form.Group as={Row} controlId="formPlainTextName">
             <Form.Label column lg="3">

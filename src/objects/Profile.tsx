@@ -1,5 +1,5 @@
 export interface ProfileJSON {
-  sub: string;
+  username: string;
   address: string;
   name: string;
   family_name: string;
@@ -7,7 +7,7 @@ export interface ProfileJSON {
 }
 
 export class Profile implements ProfileJSON {
-  sub: string;
+  username: string;
 
   address: string;
 
@@ -18,13 +18,13 @@ export class Profile implements ProfileJSON {
   email: string;
 
   constructor(
-    sub: string,
+    username: string,
     address: string,
     name: string,
     family_name: string,
     email: string
   ) {
-    this.sub = sub;
+    this.username = username;
     this.address = address;
     this.name = name;
     this.family_name = family_name;
