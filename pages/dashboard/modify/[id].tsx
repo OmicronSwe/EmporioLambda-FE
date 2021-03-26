@@ -4,22 +4,27 @@ import { GetServerSideProps } from "next";
 import Router from "next/router";
 import { getSession, Session } from "next-auth/client";
 import Layout from "../../../components/layout";
-import { getCategories, getProduct, updateProduct } from "../../api/Services/dashboard";
+import {
+  getCategories,
+  getProduct,
+  updateProduct,
+  fileToBase64,
+} from "../../api/Services/dashboard";
 import OldProductInformations from "../../../components/Dashboard/OldProductInformations";
 import ModifyingProductForm from "../../../components/Dashboard/ModifyingProductForm";
 import StoredProduct from "../../../src/objects/StoredProduct";
-import { fileToBase64 } from "../../api/Services/dashboard";
 
-class ModifyProductPage extends React.Component<
-{ product: StoredProduct; categories: string[]; session }
-> {
+class ModifyProductPage extends React.Component<{
+  product: StoredProduct;
+  categories: string[];
+  session;
+}> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  updateProduct = async ( event ) => {
-
+  updateProduct = async (event) => {
     event.preventDefault();
     const { product, session } = this.props;
 
@@ -49,7 +54,7 @@ class ModifyProductPage extends React.Component<
         ? { category: event.target.productCategorySelection.value }
         : null
     );
-  
+
     // calls update only if there is at least one change to the product
     if (Object.keys(paramsJSON).length !== 0) {
       await updateProduct(product.id, session, paramsJSON);
@@ -57,7 +62,6 @@ class ModifyProductPage extends React.Component<
     // redirect to dashboard
     Router.push("/dashboard");
     // TODO: success/error alert
-
   };
 
   render() {
@@ -85,7 +89,7 @@ class ModifyProductPage extends React.Component<
 }
 
 export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const session = await getSession({ req });
+  const session: Session = await getSession({ req });
   if (session === undefined || !session?.adm) {
     return {
       redirect: {
@@ -98,7 +102,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
     props: {
       product: await getProduct(params.id.toString(), session),
       categories: await getCategories(session),
-      session
+      session,
     },
   };
 };

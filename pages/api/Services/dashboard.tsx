@@ -6,8 +6,7 @@ export const insertProduct = async (product: JustCreatedProduct, ses): Promise<b
   const { response } = (
     await getlambdaResponse("product", "POST", ses.accessToken, JSON.stringify(product))
   ).props;
-  if (response.err !== undefined){
-    console.log(response.err);
+  if (response.err !== undefined) {
     return false;
   }
   return true;
@@ -57,7 +56,8 @@ export const removeCategory = async (name: string, ses): Promise<boolean> => {
 };
 
 export const getCategories = async (ses): Promise<string[]> => {
-  const response = (await getlambdaResponse("category", "GET", ses.accessToken)).props.response.result.items;
+  const response = (await getlambdaResponse("category", "GET", ses.accessToken)).props.response
+    .result.items;
   return response;
 };
 
