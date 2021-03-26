@@ -24,8 +24,7 @@ export const getProducts = async (ses): Promise<StoredProduct[]> => {
   return response;
 };
 
-// TODO: to type
-export const updateProduct = async (id: string, session, product): Promise<boolean> => {
+export const updateProduct = async (id: string, session, product: JustCreatedProduct): Promise<boolean> => {
   const { response } = (
     await getlambdaResponse(`product/${id}`, "PUT", session.accessToken, JSON.stringify(product))
   ).props;

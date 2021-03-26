@@ -13,6 +13,7 @@ import {
 import OldProductInformations from "../../../components/Dashboard/OldProductInformations";
 import ModifyingProductForm from "../../../components/Dashboard/ModifyingProductForm";
 import StoredProduct from "../../../src/objects/StoredProduct";
+import JustCreatedProduct from "../../../src/objects/JustCreatedProduct";
 
 class ModifyProductPage extends React.Component<{
   product: StoredProduct;
@@ -40,25 +41,22 @@ class ModifyProductPage extends React.Component<{
         imageCode: `base64,${img64}`,
       };
     }
-    // sending only user's inserted input
-    const paramsJSON = {};
-    Object.assign(
-      paramsJSON,
-      event.target.productName.value ? { name: event.target.productName.value } : null,
-      event.target.productDescription.value
-        ? { description: event.target.productDescription.value }
-        : null,
-      event.target.productPrice.value ? { price: event.target.productPrice.value } : null,
-      imgParam !== null ? { image: imgParam } : null,
-      event.target.productCategorySelection.value !== "Choose..."
-        ? { category: event.target.productCategorySelection.value }
-        : null
+
+    const name = event.target.productName.value ? event.target.productName.value : product.name;
+    const description = event.target.productDescription.value ? event.target.productDescription.value : product.description;
+    const price = event.target.productPrice.value ? event.target.productPrice.value : product.price;
+    const imageFile = imgParam !== null ? imgParam : null;
+    const category = event.target.productCategorySelection.value !== "Choose..." ? event.target.productCategorySelection.value : product.category;
+
+    const modifiedProduct: JustCreatedProduct = new JustCreatedProduct(
+      name,
+      description,
+      imageFile,
+      price,
+      category
     );
 
-    // calls update only if there is at least one change to the product
-    if (Object.keys(paramsJSON).length !== 0) {
-      await updateProduct(product.id, session, paramsJSON);
-    }
+    await updateProduct(product.id, session, modifiedProduct);
     // redirect to dashboard
     Router.push("/dashboard");
     // TODO: success/error alert
