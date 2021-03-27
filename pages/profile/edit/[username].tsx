@@ -9,9 +9,7 @@ import { Profile } from "../../../src/objects/Profile";
 import ProfileInfoForm from "../../../components/Profile/ProfileInfoForm";
 import ModifyingProfileForm from "../../../components/Profile/ModifyingProfileForm";
 
-class EditProfile extends React.Component<{ profile: Profile,
-  session
-}> {
+class EditProfile extends React.Component<{ profile: Profile; session }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -23,14 +21,18 @@ class EditProfile extends React.Component<{ profile: Profile,
 
     // TODO: validation
 
-    const name = event.target.profileName.value ? event.target.profileName.value : profile.name ;
-    const familyName = event.target.profileFamilyName.value ? event.target.profileFamilyName.value : profile.family_name;
+    const name = event.target.profileName.value ? event.target.profileName.value : profile.name;
+    const familyName = event.target.profileFamilyName.value
+      ? event.target.profileFamilyName.value
+      : profile.family_name;
     const email = event.target.profileEmail.value ? event.target.profileEmail.value : profile.email;
-    const address = event.target.profileAddress.value ? event.target.profileAddress.value : profile.address;
-    const modifyedProfile = new Profile(profile.username, address, name, familyName, email); 
-    
+    const address = event.target.profileAddress.value
+      ? event.target.profileAddress.value
+      : profile.address;
+    const modifyedProfile = new Profile(profile.username, address, name, familyName, email);
+
     await updateProfile(modifyedProfile, session);
-    
+
     // redirect to profile
     Router.push("/profile");
     // TODO: success/error alert

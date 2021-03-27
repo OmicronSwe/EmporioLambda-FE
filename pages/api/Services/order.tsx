@@ -9,7 +9,9 @@ export const getOrderDetails = async (id: string, ses): Promise<Order> => {
 };
 
 export const getOrders = async (ses, profile: Profile): Promise<Order[]> => {
-  const response = await (await getlambdaResponse(`order/getByUsername/${profile.username}`, "GET", ses.accessToken)).props.response;
+  const response = await (
+    await getlambdaResponse(`order/getByUsername/${profile.username}`, "GET", ses.accessToken)
+  ).props.response;
   if (response.error) return null;
   return response.result.items;
 };

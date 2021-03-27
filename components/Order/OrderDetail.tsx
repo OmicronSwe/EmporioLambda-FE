@@ -81,7 +81,9 @@ class OrderSection extends React.Component<{ order: Order }> {
             </tr>
           </tbody>
         </Table>
-        <Button variant="primary" onClick={() => Router.push("/profile")}>Back</Button>
+        <Button variant="primary" onClick={() => Router.push("/profile")}>
+          Back
+        </Button>
       </>
     );
   }

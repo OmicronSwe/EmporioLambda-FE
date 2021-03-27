@@ -9,7 +9,7 @@ class ProfileForm extends React.Component<{ profile: Profile }> {
   }
 
   render() {
-    const { profile} = this.props;
+    const { profile } = this.props;
 
     return (
       <>

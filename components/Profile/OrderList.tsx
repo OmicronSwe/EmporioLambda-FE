@@ -29,7 +29,12 @@ class ProductList extends React.Component<{ orders: Order[] }> {
                   <td>{item.date}</td>
                   <td>{item.totalCost}</td>
                   <td>
-                    <Button variant="primary" onClick={() => Router.push(`/profile/order/${item.id}`)}>Details</Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => Router.push(`/profile/order/${item.id}`)}
+                    >
+                      Details
+                    </Button>
                   </td>
                 </tr>
               ))}

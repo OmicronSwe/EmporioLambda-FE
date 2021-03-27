@@ -1,17 +1,9 @@
 import React from "react";
 import Router from "next/router";
-import {
-  Button,
-  Form,
-  Row,
-  Col,
-  FormControl,
-  FormGroup,
-  FormLabel,
-} from "react-bootstrap";
+import { Button, Form, Row, Col, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 
 class ModifyingProfileForm extends React.Component<{
-  updateProfile
+  updateProfile;
 }> {
   constructor(props) {
     super(props);
@@ -49,7 +41,7 @@ class ModifyingProfileForm extends React.Component<{
                 placeholder="FamilyName"
               />
             </Col>
-          </FormGroup>         
+          </FormGroup>
           <FormGroup as={Row}>
             <FormLabel column sm="5" htmlFor="profileEmail">
               New Email
@@ -78,7 +70,7 @@ class ModifyingProfileForm extends React.Component<{
           </FormGroup>
           <Button type="submit" variant="primary">
             Submit
-          </Button> {' '}
+          </Button>
           <Button variant="danger" onClick={() => Router.push("/profile")}>
             Cancel
           </Button>
