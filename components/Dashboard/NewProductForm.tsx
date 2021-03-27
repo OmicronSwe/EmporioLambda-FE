@@ -1,45 +1,31 @@
 import React from "react";
-import { Button, Accordion, Card, Form } from "react-bootstrap";
-import { fileToBase64 } from "../../pages/api/Services/dashboard";
-import { Category } from "../../src/objects/Category";
+import {
+  Button,
+  Accordion,
+  Card,
+  Form,
+  Row,
+  Col,
+  InputGroup,
+  FormControl,
+  FormGroup,
+  FormLabel,
+  Alert,
+} from "react-bootstrap";
 
 class NewProductForm extends React.Component<{
   insertProduct;
-  categories: Category[];
-  alert: boolean;
+  categories: string[];
+  productInsertedAlert: boolean;
 }> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
-  sendParams = async (event) => {
-    // conversione parametri in stringJSON
-    event.preventDefault();
-
-    const fileObject = event.target.productImage.files[0];
-
-    const img64 = await fileToBase64(fileObject);
-
-    const paramImg = {
-      mime: fileObject.type,
-      imageCode: `base64,${img64}`,
-    };
-
-    const stringJSON = JSON.stringify({
-      name: event.target.productName.value,
-      description: event.target.productDescription.value,
-      price: event.target.productPrice.value,
-      image: paramImg,
-      category: event.target.productCategorySelection.value,
-    });
-    const { insertProduct } = this.props;
-    await insertProduct(stringJSON);
-    // document.getElementById("message").innerHTML = result.message;
-  };
-
   render() {
-    const { categories, alert } = this.props;
+    const { categories, productInsertedAlert, insertProduct } = this.props;
+
     return (
       <>
         <Accordion>
@@ -51,28 +37,29 @@ class NewProductForm extends React.Component<{
             </Card.Header>
             <Accordion.Collapse eventKey="1">
               <Card.Body>
-                <Form onSubmit={this.sendParams}>
-                  <div className="form-group row">
-                    <label className="col-form-label col-sm-4" htmlFor="productName">
-                      Product name
-                    </label>
-                    <div className="col-sm-4">
-                      <input
+                <Form onSubmit={insertProduct}>
+                  <FormGroup as={Row}>
+                    <FormLabel column sm="4" htmlFor="productName">
+                      Product Name
+                    </FormLabel>
+                    <Col sm="4">
+                      <FormControl
                         type="text"
-                        className="form-control form-control-sm"
+                        className="sm"
                         id="productName"
                         name="productName"
                         placeholder="Name"
                       />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-form-label col-sm-4" htmlFor="productDescription">
-                      Product description
-                    </label>
-                    <div className="col-sm-4">
-                      <textarea
-                        className="form-control form-control-sm"
+                    </Col>
+                  </FormGroup>
+                  <FormGroup as={Row}>
+                    <FormLabel column sm="4" htmlFor="productDescription">
+                      Product Description
+                    </FormLabel>
+                    <Col sm="4">
+                      <FormControl
+                        as="textarea"
+                        className="sm"
                         id="productDescription"
                         name="productDescription"
                         placeholder="Description"
@@ -82,53 +69,58 @@ class NewProductForm extends React.Component<{
                       <small id="productDescriptionHelpBlock" className="form-text text-muted">
                         Maximum x characters.
                       </small>
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-form-label col-sm-4" htmlFor="productPrice">
-                      Product price
-                    </label>
-                    <div className="col-sm-4">
-                      <input
-                        type="text"
-                        className="form-control form-control-sm"
-                        id="productPrice"
-                        name="productPrice"
-                        placeholder="Price"
-                      />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-form-label col-sm-4" htmlFor="productImage">
-                      Product image
-                    </label>
-                    <div className="col-sm-4">
-                      <input
+                    </Col>
+                  </FormGroup>
+                  <FormGroup as={Row}>
+                    <FormLabel column sm="4" htmlFor="productPrice">
+                      Product Price
+                    </FormLabel>
+                    <Col sm="4">
+                      <InputGroup className="sm-4">
+                        <FormControl
+                          className="sm-4"
+                          name="productPrice"
+                          id="productPrice"
+                          placeholder="Price"
+                        />
+                        <InputGroup.Append>
+                          <InputGroup.Text>€</InputGroup.Text>
+                        </InputGroup.Append>
+                      </InputGroup>
+                    </Col>
+                  </FormGroup>
+                  <FormGroup as={Row}>
+                    <FormLabel column sm="4" htmlFor="productImage">
+                      Product Image
+                    </FormLabel>
+                    <Col sm="4">
+                      <FormControl
                         type="file"
-                        className="form-control-file form-control-sm"
+                        className="form-control-sm"
                         id="productImage"
                         name="productImage"
                       />
-                    </div>
-                  </div>
-                  <div className="form-group row">
-                    <label className="col-form-label col-sm-4" htmlFor="productCategorySelection">
-                      Product category
-                    </label>
-                    <div className="col-sm-4">
-                      <select
-                        className="form-control form-control-sm"
+                    </Col>
+                  </FormGroup>
+                  <FormGroup as={Row}>
+                    <FormLabel column sm="4" htmlFor="productCategorySelection">
+                      Product Category
+                    </FormLabel>
+                    <Col sm="4">
+                      <FormControl
+                        as="select"
+                        className="form-control-sm"
                         id="productCategorySelection"
                         name="productCategorySelection"
                       >
                         {categories ? (
-                          categories.map((item) => <option>{item.name}</option>)
+                          categories.map((item) => <option>{item}</option>)
                         ) : (
                           <option>no category found</option>
                         )}
-                      </select>
-                    </div>
-                  </div>
+                      </FormControl>
+                    </Col>
+                  </FormGroup>
                   <Button type="submit" variant="primary">
                     Submit
                   </Button>
@@ -137,7 +129,20 @@ class NewProductForm extends React.Component<{
             </Accordion.Collapse>
           </Card>
         </Accordion>
-        {alert ? <p>prodotto inserito</p> : <p />}
+        {productInsertedAlert !== null && productInsertedAlert === true ? (
+          <Alert variant="success">
+            <Alert.Heading>Product created successfully!</Alert.Heading>
+          </Alert>
+        ) : (
+          <p />
+        )}
+        {productInsertedAlert !== null && productInsertedAlert === false ? (
+          <Alert variant="danger">
+            <Alert.Heading>Error occurred creating the product, please retry!</Alert.Heading>
+          </Alert>
+        ) : (
+          <p />
+        )}
       </>
     );
   }

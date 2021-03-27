@@ -1,8 +1,9 @@
+import Router from "next/router";
 import React from "react";
 import { Table, Button } from "react-bootstrap";
-import { Product } from "../../src/objects/Product";
+import StoredProduct from "../../src/objects/StoredProduct";
 
-class ProductList extends React.Component<{ products: Product[]; removeProduct }> {
+class ProductList extends React.Component<{ products: StoredProduct[]; removeProduct }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -29,14 +30,23 @@ class ProductList extends React.Component<{ products: Product[]; removeProduct }
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>
-                    <img src="Emporio_Lambda.png" className="img-thumbnail" alt="Product" />
+                    <img
+                      src={item.imageUrl ? item.imageUrl : ""}
+                      className="img-thumbnail"
+                      alt={item.name}
+                    />
                   </td>
                   <td>{item.name}</td>
                   <td>{item.description}</td>
-                  {"category" in item ? <td>Category_test</td> : <td />}
-                  {"price" in item ? <td>{item.price}</td> : <td />}
+                  {"category" in item ? <td>{item.category}</td> : <td />}
+                  {"price" in item ? <td>{`${item.price}€`}</td> : <td />}
                   <td>
-                    <Button variant="warning">Modify</Button>
+                    <Button
+                      variant="warning"
+                      onClick={() => Router.push(`/dashboard/modify/${item.id}`)}
+                    >
+                      Modify
+                    </Button>
                   </td>
                   <td>
                     <Button

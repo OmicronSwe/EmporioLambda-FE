@@ -1,13 +1,14 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 
-import { useRouter } from "next/dist/client/router";
+import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import OrderDetail from "../../components/Order/OrderDetail";
 
 import { getOrderDetails } from "../api/Services/order";
+import { Order } from "../../src/objects/Order";
 
-class OrderPage extends React.Component<{ order }> {
+class OrderPage extends React.Component<{ order: Order }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -25,13 +26,12 @@ class OrderPage extends React.Component<{ order }> {
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async () => {
-  const router = useRouter();
-  const { id } = router.query;
+export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
+  const session = await getSession({ req });
 
   return {
     props: {
-      order: await getOrderDetails(id),
+      order: await getOrderDetails(params.id.toString(), session),
     },
   };
 };

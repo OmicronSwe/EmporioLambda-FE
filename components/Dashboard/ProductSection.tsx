@@ -1,41 +1,73 @@
 import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
-import { Product } from "../../src/objects/Product";
-import { Category } from "../../src/objects/Category";
+import ProductImage from "../../src/objects/ProductImage";
+import {
+  fileToBase64,
+  insertProduct,
+  removeProduct,
+  getProducts,
+} from "../../pages/api/Services/dashboard";
 
-import { insertProduct, removeProduct, getProducts } from "../../pages/api/Services/dashboard";
+import StoredProduct from "../../src/objects/StoredProduct";
+import JustCreatedProduct from "../../src/objects/JustCreatedProduct";
 
 class ProductSection extends React.Component<
-  { products: Product[]; categories: Category[] },
-  { products: Product[]; alert: boolean }
+  { products: StoredProduct[]; categories: string[]; session },
+  { products: StoredProduct[]; productInsertedAlert: boolean | null }
 > {
   constructor(props) {
     super(props);
 
     const { products } = this.props;
-    this.state = { products, alert: null };
+    this.state = { products, productInsertedAlert: null };
   }
 
-  insertProduct = async (params) => {
-    const res = await insertProduct(params);
-    const prod = await getProducts();
-    this.setState({ products: prod, alert: res });
+  insertProduct = async (event) => {
+    event.preventDefault();
+    const { session } = this.props;
+
+    // TODO: validation
+
+    const fileObject = event.target.productImage.files[0];
+    const base64StringImage: string = await fileToBase64(fileObject);
+
+    const name: string = event.target.productName.value;
+    const description: string = event.target.productDescription.value;
+    const price: string = event.target.productPrice.value;
+    const image: ProductImage = new ProductImage(fileObject.type, `base64,${base64StringImage}`);
+    const category: string = event.target.productCategorySelection.value;
+
+    const product: JustCreatedProduct = new JustCreatedProduct(
+      name,
+      description,
+      image,
+      price,
+      category
+    );
+    const res = await insertProduct(product, session);
+    const prod = await getProducts(session);
+    this.setState({ products: prod, productInsertedAlert: res });
   };
 
   removeProduct = async (id: string) => {
-    await removeProduct(id);
-    const prod = await getProducts();
+    const { session } = this.props;
+    await removeProduct(id, session);
+    const prod = await getProducts(session);
     this.setState({ products: prod });
   };
 
   render() {
-    const { products, alert } = this.state;
+    const { products, productInsertedAlert } = this.state;
     const { categories } = this.props;
     return (
       <>
         <h1>Product Section</h1>
-        <NewProductForm insertProduct={this.insertProduct} categories={categories} alert={alert} />
+        <NewProductForm
+          insertProduct={this.insertProduct}
+          categories={categories}
+          productInsertedAlert={productInsertedAlert}
+        />
         <ProductList products={products} removeProduct={this.removeProduct} />
       </>
     );

@@ -1,12 +1,13 @@
-import { Category } from "./Category";
+import ProductImage from "./ProductImage";
 
-export interface ProductJSON {
-  id: string;
+export default interface Product {
+  id?: string;
   name: string;
   description: string;
-  image: string;
+  imageFile?: ProductImage;
+  imageUrl?: string;
   price: string;
-  category: Category;
+  category?: string;
 }
 
 export class Product implements ProductJSON {
@@ -20,7 +21,7 @@ export class Product implements ProductJSON {
 
   price: string;
 
-  category: Category;
+  category?: string;
 
   constructor(
     id: string,
@@ -28,7 +29,7 @@ export class Product implements ProductJSON {
     description: string,
     image: string,
     price: string,
-    category: Category
+    category?: string
   ) {
     this.id = id;
     this.name = name;
