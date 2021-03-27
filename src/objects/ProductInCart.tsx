@@ -1,4 +1,4 @@
-class ProductInCart {
+export interface ProductInCartJSON{
   id: string;
 
   name: string;
@@ -7,7 +7,22 @@ class ProductInCart {
 
   description: string;
 
-  image: string;
+  imageUrl: string;
+
+  quantity: number;
+}
+
+
+export default class ProductInCart implements ProductInCartJSON{
+  id: string;
+
+  name: string;
+
+  price: number;
+
+  description: string;
+
+  imageUrl: string;
 
   quantity: number;
 
@@ -16,7 +31,7 @@ class ProductInCart {
     this.name = name;
     this.price = price;
     this.description = description;
-    this.image = image;
+    this.imageUrl = image;
     this.quantity = quantity;
   }
 
@@ -41,5 +56,3 @@ class ProductInCart {
     return sum;
   }
 }
-
-export default ProductInCart;

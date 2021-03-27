@@ -26,15 +26,15 @@ class Cart extends React.Component<{ response; auth }, { products: ProductInCart
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
    const session = await getSession({ req }) //get session data
-   const username = decode(session.accessToken).sub;
-    if (session) {
-      const resp = await getlambdaResponse("GET","cart/" + username) //external API call to get cart's product ids
+   if (session) {
+      const username = decode(session.accessToken).sub;
+      const resp = await getlambdaResponse("cart/" + username, "GET", session.accessToken) //external API call to get cart's product ids
   
       if (resp.props.response == "Element not found") {
         //if no cart is found, return empty response
-        return { props: { response: [], auth: username } }
+        return { props: { response: [], auth: session } }
       }
-      return { props: { response: resp, auth: username } }
+      return { props: { response: resp, auth: session } }
     } else { 
   return { props: { response: [], auth: null } }; // if not authenticated, return empty response and null email
  }
