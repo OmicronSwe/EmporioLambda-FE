@@ -29,7 +29,6 @@ class ProductPage extends React.Component<{ product: StoredProduct; session }> {
 
 export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
   const session = await getSession({ req });
-  console.log(session);
   return {
     props: {
       product: await getProduct(params.id.toString(), session),

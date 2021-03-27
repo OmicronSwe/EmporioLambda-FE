@@ -1,5 +1,5 @@
-import { decode } from 'jsonwebtoken';
-import StoredProduct from '../../../src/objects/StoredProduct';
+import { decode } from "jsonwebtoken";
+import StoredProduct from "../../../src/objects/StoredProduct";
 import getlambdaResponse from "../lib/lambdas";
 
 export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
@@ -10,16 +10,20 @@ export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
 };
 
 export const insertCart = async (session, product: StoredProduct, quantity: number) => {
- 
   if (session) {
     // authenticated
-    
+
     const stringJSON = JSON.stringify({
       id: product.id,
-      quantity: quantity
+      quantity,
     });
-    
-    const response  = (await getlambdaResponse(`cart/addProduct/${decode(session.accessToken).sub}`, "PUT", session, stringJSON));
+
+    await getlambdaResponse(
+      `cart/addProduct/${decode(session.accessToken).sub}`,
+      "PUT",
+      session,
+      stringJSON
+    );
   } else {
     // not authenticated -> add product to localstorage
     const cart = localStorage.getItem("cart"); // retrieve cart
@@ -36,16 +40,14 @@ export const insertCart = async (session, product: StoredProduct, quantity: numb
     let change: boolean = false;
     for (let i = 0; i < jsonCart.items.length; i += 1) {
       // look for the entry with a matching code value
-      if (jsonCart.items[i].id == product.id) {
+      if (jsonCart.items[i].id === product.id) {
         jsonCart.items[i].quantity += quantity;
         change = true;
       }
     }
-    console.log(change);
     if (!change) {
       jsonCart.items.push({ id: product.id, quantity }); // push new id to the cart
     }
-    console.log(jsonCart);
     localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
   }
 };
