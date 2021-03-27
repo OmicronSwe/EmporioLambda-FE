@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
 import { insertCart } from "../../pages/api/Services/product";
-import { Product } from "../../src/objects/Product";
+import StoredProduct from "../../src/objects/StoredProduct";
 
-class CartSection extends React.Component<{ session; product: Product }> {
+class CartSection extends React.Component<{ session; product: StoredProduct }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -32,7 +32,7 @@ class CartSection extends React.Component<{ session; product: Product }> {
             <option value="2">2</option>
             <option value="3">3</option>
             <option value="4">4</option>
-          </Form.Control>
+          </Form.Control> {' '}
           <Button type="submit" className="add">
             Aggiungi al carrello
           </Button>

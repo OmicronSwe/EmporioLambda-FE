@@ -6,9 +6,9 @@ import Layout from "../../components/layout";
 import ProductSection from "../../components/Pdp/ProductSection";
 import { getProduct } from "../api/Services/product";
 import CartSection from "../../components/Pdp/CartSection";
-import { Product } from "../../src/objects/Product";
+import StoredProduct from "../../src/objects/StoredProduct";
 
-class ProductPage extends React.Component<{ product: Product; session }> {
+class ProductPage extends React.Component<{ product: StoredProduct; session }> {
   constructor(props) {
     super(props);
     this.state = {};

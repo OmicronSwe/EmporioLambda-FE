@@ -9,33 +9,3 @@ export default interface Product {
   price: string;
   category?: string;
 }
-
-export class Product implements ProductJSON {
-  id: string;
-
-  name: string;
-
-  description: string;
-
-  image: string;
-
-  price: string;
-
-  category?: string;
-
-  constructor(
-    id: string,
-    name: string,
-    description: string,
-    image: string,
-    price: string,
-    category?: string
-  ) {
-    this.id = id;
-    this.name = name;
-    this.description = description;
-    this.image = image;
-    this.price = price;
-    this.category = category;
-  }
-}

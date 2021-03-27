@@ -1,15 +1,15 @@
 import { decode } from 'jsonwebtoken';
-import { Product } from "../../../src/objects/Product";
+import StoredProduct from '../../../src/objects/StoredProduct';
 import getlambdaResponse from "../lib/lambdas";
 
-export const getProduct = async (id: string, ses): Promise<Product> => {
+export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
   const response = (
     await getlambdaResponse(`product/${id}`, "GET", ses ? ses.accessToken : undefined)
   ).props.response.result;
   return response;
 };
 
-export const insertCart = async (session, product: Product, quantity: number) => {
+export const insertCart = async (session, product: StoredProduct, quantity: number) => {
  
   if (session) {
     // authenticated
