@@ -12,3 +12,9 @@ export const updateProfile = async (profile: Profile, session): Promise<boolean>
     if (response.err !== undefined) return false;
     return true;
 }
+
+export const removeProfile = async (profile: Profile, session): Promise<boolean> => {
+    const {response} = (await getlambdaResponse(`user/${profile.username}/delete`, "DELETE", session)).props;
+    if (response.err !== undefined) return false;
+    return true;
+}
