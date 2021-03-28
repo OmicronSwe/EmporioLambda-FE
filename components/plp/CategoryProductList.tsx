@@ -1,5 +1,6 @@
 import React from "react";
 import { Button, CardColumns, Card } from "react-bootstrap";
+import { getProducts } from "../../pages/api/Services/dashboard";
 import { Product } from "../../src/objects/Product";
 
 class CategoryProductList extends React.Component<{
@@ -19,8 +20,8 @@ class CategoryProductList extends React.Component<{
         <CardColumns>
           {products ? (
             products.map((item) => (
-              <Card key={item.id}>
-                {item.image ? <Card.Img src={item.image} /> : ""}
+              <Card key={item.id} onClick={() => getProducts()}>
+                {item.image ? <Card.Img src={item.image}/> : ""}
                 <Card.Body>
                   <Card.Title>{item.name}</Card.Title>
                   <Card.Subtitle>{item.price}</Card.Subtitle>
@@ -31,7 +32,10 @@ class CategoryProductList extends React.Component<{
                       onChange={() => toggleSelect(item.id)}
                     />
                   </td>
-                  <Button variant="warning" onClick={() => addToCart(item.id)}>
+                  <Button variant="warning" onClick={() => getProducts()} style={{ alignItems: "left"}}>
+                    View Product
+                  </Button>
+                  <Button variant="warning" onClick={() => addToCart(item.id)} style={{ alignItems: "right"}}>
                     Add to Cart
                   </Button>
                 </Card.Body>

@@ -8,7 +8,7 @@ import CategoryProductList from "../../components/plp/CategoryProductList";
 import AddToCartList from "../../components/plp/AddToCartList";
 
 class ProductListingPage extends React.Component<
-  { products: Product[]; session },
+  { products: Product[]; session; filterByPrice },
   { idProducts: string[] }
 > {
   constructor(props) {
@@ -38,6 +38,11 @@ class ProductListingPage extends React.Component<
     await insertCartList(idProducts, session);
   };
 
+  filterByPrice = async(min, max)=>{
+    //codice per filtrare in base al prezzo
+    this.props
+  }
+
   render() {
     const { products } = this.props;
     return (
@@ -48,6 +53,7 @@ class ProductListingPage extends React.Component<
             products={products}
             addToCart={this.addToCart}
             toggleSelect={this.toggleSelect}
+            filterByPrice={this.filterByPrice}
           />
         </Layout>
       </>

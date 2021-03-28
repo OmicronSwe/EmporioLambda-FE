@@ -63,4 +63,12 @@ export const insertCartList = async (ids: string[], session) => {
   });
 };
 
+export const filterByPrice = async (id: string[], min, max)=>{
+
+
+}
+
+
+
+
 export default getProductsByCategory;
