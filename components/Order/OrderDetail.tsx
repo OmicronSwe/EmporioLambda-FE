@@ -23,9 +23,15 @@ class OrderSection extends React.Component<{ order: Order }> {
             </tr>
             <tr>
               <td>
-                <h3>Client&apos;s email</h3>
+                <h3>Email used</h3>
               </td>
               <td>{order.email}</td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Client's username</h3>
+              </td>
+              <td>{order.username}</td>
             </tr>
             <tr>
               <td>
