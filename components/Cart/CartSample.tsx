@@ -1,10 +1,10 @@
-const myJson = [
+/*const myJson = [
   {
     id: "12345",
     name: "chiodi",
     price: 2,
     description: "dei chiodi",
-    image: null,
+    imageUrl: null,
     quantity: 4,
   },
   {
@@ -12,9 +12,10 @@ const myJson = [
     name: "esempio",
     price: 1,
     description: "esempio",
-    image: null,
+    imageUrl: null,
     quantity: 1,
   },
 ];
 
 export default myJson;
+*/

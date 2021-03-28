@@ -1,39 +1,31 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import CartProductList from "./CartProductsList";
-import CartSample from "./CartSample";
 import ProductInCart from "../../src/objects/ProductInCart";
-import { removeProductFromCart, removeAllProductsFromCart, getProductsInCart } from "../../pages/api/Services/cart";
-import CartModifiableButton from "./CartModifiableButton";
-import {decode} from 'jsonwebtoken'
+import { removeProductFromCart, removeAllProductsFromCart, getProductsInCart, insertProductInCart } from "../../pages/api/Services/cart";
 
 class CartListSection extends React.Component<
   { products: ProductInCart[]; auth },
-  { products: ProductInCart[]; modifiable : boolean }
+  { products: ProductInCart[]; }
 > {
   tax;
 
   constructor(props) {
     super(props);
-    const products: ProductInCart[] = CartSample;
-    const modifiable = false
-    this.state = { products, modifiable };
     this.tax = 0.2;
+    const { products } = this.props;
+    //const products = [{"id" : "12345", "name" : "dddddd", "price" : 33, "description" : " ", "imageUrl" : null, "quantity" : 3},{"id" : "123456", "name" : "ccccc", "price" : 33, "description" : " ", "imageUrl" : null, "quantity" : 3}]; 
+    this.state={products}; 
   }
 
   componentDidMount() {
-    const { products } = this.state;
     const { auth } = this.props;
     if(!auth)
     {
+      const { products } = this.state;
       const ids: string = ProductInCart.toStringForLocalStorage(products);
       localStorage.setItem("cart", ids);
     }
-  }
-
-  setModifiable = () => {
-    const {modifiable} = this.state
-    modifiable ? this.setState({modifiable : false}) : this.setState({modifiable : true});
   }
 
   removeAllProductOnClick = async () => {
@@ -59,13 +51,13 @@ class CartListSection extends React.Component<
     const { products } = this.state 
     if (id) {
       if (auth) {
-        const resp = await removeProductFromCart(auth, {"id" : id })
+        const resp = await removeProductFromCart({auth : auth, body : {"id" : id }})
         if(resp)
         {
           const respGetCart = await getProductsInCart(auth);
           if(respGetCart != null)
           {
-            this.setState({ products : JSON.parse(respGetCart["products"]) })
+            this.setState({ products : respGetCart["products"] })
           }else
           {
               //Mostra messaggio di errore
@@ -92,49 +84,81 @@ class CartListSection extends React.Component<
     }
   };
 
-  setModifiableButton = async () => {
+  changeProductQuantity = async (id : string, event) => {
+  if(event.target.value > 0)
+  {
     const {auth} = this.props;
-    const {products} = this.state;
-    const {modifiable} = this.state;
-    if(modifiable)
-    {
-      this.setState({modifiable : false});
-    } else
-    {
-      this.setState({modifiable : true});
-    }
     if(auth)
     {
-      const dbProducts = await getProductsInCart(auth);
-      if(dbProducts != null)
+    this.state.products.forEach(async (product)=>{
+      if(product.id === id)
       {
-          JSON.parse(dbProducts["products"]).forEach((dbProduct) => {
-            products.forEach((product) => {
-              if(dbProduct["id"]===product.id)
-              {
-                
-              }
-            })
-          })
+        if(product.quantity > event.target.value)
+        {
+          const quantityToRemove = product.quantity-event.target.value;
+          const response = await removeProductFromCart({auth : auth, body : {"id" : id, "quantity" : quantityToRemove}});
+          if(response)
+          {
+            const productsList = await getProductsInCart(auth);
+            if(productsList != null)
+            this.setState({products : productsList["products"]});
+            else {
+              //Mostra messaggio di errore
+            }
+          } 
+          else
+          {
+            //Mostra messaggio di errore
+          }
+        }
+        else
+        {
+          const quantityToAdd = event.target.value-product.quantity;
+          const response = await insertProductInCart({auth : auth, body : {"id" : id, "quantity" : quantityToAdd}});
+          if(response)
+          {
+            const productsList = await getProductsInCart(auth);
+            if(productsList != null)
+            this.setState({products : productsList["products"]});
+            else{
+              //Mostra messaggio di errore
+            }
+          }
+          else
+          {
+            //Mostra messaggio di errore
+          }
+        }
+        product.quantity = event.target.value;
       }
-    }
-    else
+    })
+    }else
     {
-
+      let jsonCart: string;
+      jsonCart = localStorage.getItem("cart");
+      const jsonObj: ProductInCart[] = this.state.products;
+      for(let element of jsonObj)
+      {
+        if (element.id === id) {
+        element.quantity = event.target.value;
+        break;
+        }
+      }
+      jsonCart = ProductInCart.toStringForLocalStorage(jsonObj);
+      localStorage.setItem("cart", jsonCart);
     }
-    return modifiable;
   }
+}
 
-
-  getRemoveAllButton = (modifiable : boolean) => {
-    return modifiable ?
-    <Button variant="primary" onClick={() => this.removeAllProductOnClick()}>Remove All</Button> :
-    <Button variant="primary" onClick={() => this.removeAllProductOnClick()} disabled>Remove All</Button>
+  getRemoveAllButton = (products : ProductInCart[]) => {
+    if(products.length > 0)
+    return <Button variant="primary" onClick={() => this.removeAllProductOnClick()}>Remove All</Button>;
+    else return;
   }
 
   render() {
     const { auth } = this.props
-    const { products, modifiable } = this.state
+    const { products } = this.state
     return (
       <>
         <h1>Cart Section</h1>
@@ -142,13 +166,12 @@ class CartListSection extends React.Component<
           auth={auth}
           products={products}
           removeOnClick={this.removeProductOnClick}
-          modifiable ={modifiable}
+          changeProductQuantity={this.changeProductQuantity}
         />
-        {this.getRemoveAllButton(modifiable)}
-        <CartModifiableButton active={modifiable} onClickFunction={()=>this.setModifiableButton()}/> <br/>
-        <label>Products cost: {ProductInCart.getProductsSum(products)}</label> <br/>
-        <label>Tax cost: {this.tax*100} %</label> <br/>
-        <label>Total cost: {ProductInCart.getProductsSum(products)+ProductInCart.getProductsSum(products)*this.tax}</label>
+        {this.getRemoveAllButton(products)} <br/>
+        <label>Products cost: {ProductInCart.getProductsSum(products)}€</label> <br/>
+        <label>Tax cost: {this.tax*100}%</label> <br/>
+        <label>Total cost: {ProductInCart.getProductsSum(products)+ProductInCart.getProductsSum(products)*this.tax}€</label>
       </>
     );
   }
