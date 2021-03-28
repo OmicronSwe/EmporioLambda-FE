@@ -43,8 +43,11 @@ export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
 };
 
 export const insertCategory = async (category: string, ses): Promise<boolean> => {
+  const body = {
+    name: category,
+  };
   const { response } = (
-    await getlambdaResponse("category", "POST", ses.accessToken, JSON.stringify(category))
+    await getlambdaResponse("category", "POST", ses.accessToken, JSON.stringify(body))
   ).props;
   if (response.err) return false;
   return true;
