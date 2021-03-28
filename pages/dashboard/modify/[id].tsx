@@ -17,11 +17,12 @@ import JustCreatedProduct from "../../../src/objects/JustCreatedProduct";
 import ProductImage from "../../../src/objects/ProductImage";
 
 class ModifyProductPage extends React.Component<
-{ product: StoredProduct; categories: string[]; session },
-{ productModifiedAlert: boolean | null}> {
+  { product: StoredProduct; categories: string[]; session },
+  { productModifiedAlert: boolean | null }
+> {
   constructor(props) {
     super(props);
-    this.state = { productModifiedAlert: null};
+    this.state = { productModifiedAlert: null };
   }
 
   updateProduct = async (event) => {
@@ -32,34 +33,41 @@ class ModifyProductPage extends React.Component<
 
     const fileObject = event.target.productImage.files[0];
     let base64StringImage: string = "";
-    if(fileObject) {
+    if (fileObject) {
       base64StringImage = await fileToBase64(fileObject);
     }
 
     const name = event.target.productName.value ? event.target.productName.value : "";
-    const description = event.target.productDescription.value ? event.target.productDescription.value : "";
+    const description = event.target.productDescription.value
+      ? event.target.productDescription.value
+      : "";
     const price = event.target.productPrice.value ? event.target.productPrice.value : "";
-    const image: ProductImage = base64StringImage !== "" ? new ProductImage(fileObject.type, `base64,${base64StringImage}`) : undefined;
-    const category = event.target.productCategorySelection.value !== "Choose..." ? event.target.productCategorySelection.value : "";
+    const image: ProductImage =
+      base64StringImage !== ""
+        ? new ProductImage(fileObject.type, `base64,${base64StringImage}`)
+        : undefined;
+    const category =
+      event.target.productCategorySelection.value !== "Choose..."
+        ? event.target.productCategorySelection.value
+        : "";
 
-    const atLeastOneInfoInserted: boolean = name !== "" || description !== "" || price !== "" || image !== undefined || category !== "";
+    const atLeastOneInfoInserted: boolean =
+      name !== "" || description !== "" || price !== "" || image !== undefined || category !== "";
 
-    if(atLeastOneInfoInserted){
+    if (atLeastOneInfoInserted) {
       const modifiedProduct: JustCreatedProduct = new JustCreatedProduct(
-        (name !== "" ? name : product.name),
-        (description !== "" ? description : product.description),
+        name !== "" ? name : product.name,
+        description !== "" ? description : product.description,
         image,
-        (price !== "" ? parseInt(price) : product.price),
-        (category !== "" ? category : product.category)
+        price !== "" ? parseInt(price, 10) : product.price,
+        category !== "" ? category : product.category
       );
       await updateProduct(product.id, session, modifiedProduct);
       // redirect to dashboard
       Router.push("/dashboard");
-    }
-    else{
+    } else {
       this.setState({ productModifiedAlert: atLeastOneInfoInserted });
     }
-
   };
 
   render() {
@@ -77,7 +85,11 @@ class ModifyProductPage extends React.Component<
                 <OldProductInformations product={product} />
               </Col>
               <Col>
-                <ModifyingProductForm updateProduct={this.updateProduct} categories={categories} productModifiedAlert={productModifiedAlert} />
+                <ModifyingProductForm
+                  updateProduct={this.updateProduct}
+                  categories={categories}
+                  productModifiedAlert={productModifiedAlert}
+                />
               </Col>
             </Row>
           </Container>

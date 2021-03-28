@@ -11,7 +11,6 @@ import {
   FormGroup,
   FormLabel,
   Alert,
-  Collapse
 } from "react-bootstrap";
 
 class NewProductForm extends React.Component<{
@@ -124,7 +123,7 @@ class NewProductForm extends React.Component<{
                         Submit
                       </Button>
                     </Col>
-                  </Form.Row>   
+                  </Form.Row>
                 </Form>
                 {productInsertedAlert !== null && productInsertedAlert === true ? (
                   <Alert variant="success">
@@ -135,7 +134,9 @@ class NewProductForm extends React.Component<{
                 )}
                 {productInsertedAlert !== null && productInsertedAlert === false ? (
                   <Alert variant="danger">
-                    <Alert.Heading>All fields must be filled in to create a new product</Alert.Heading>
+                    <Alert.Heading>
+                      All fields must be filled in to create a new product
+                    </Alert.Heading>
                   </Alert>
                 ) : (
                   <p />

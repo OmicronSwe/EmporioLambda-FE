@@ -9,13 +9,13 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
-  Alert
+  Alert,
 } from "react-bootstrap";
 
 class ModifyingProductForm extends React.Component<{
   updateProduct;
   categories: string[];
-  productModifiedAlert: boolean
+  productModifiedAlert: boolean;
 }> {
   constructor(props) {
     super(props);
@@ -121,11 +121,13 @@ class ModifyingProductForm extends React.Component<{
                 Cancel
               </Button>
             </Col>
-          </Form.Row>   
+          </Form.Row>
         </Form>
         {productModifiedAlert !== null && productModifiedAlert === false ? (
           <Alert variant="danger">
-            <Alert.Heading>At least one field must be filled in to modify the product</Alert.Heading>
+            <Alert.Heading>
+              At least one field must be filled in to modify the product
+            </Alert.Heading>
           </Alert>
         ) : (
           <p />

@@ -31,31 +31,38 @@ class ProductSection extends React.Component<
 
     const fileObject = event.target.productImage.files[0];
     let base64StringImage: string = "";
-    if(fileObject) {
+    if (fileObject) {
       base64StringImage = await fileToBase64(fileObject);
     }
 
     const name: string = event.target.productName.value ? event.target.productName.value : "";
-    const description: string = event.target.productDescription.value ? event.target.productDescription.value : "";
+    const description: string = event.target.productDescription.value
+      ? event.target.productDescription.value
+      : "";
     const price: string = event.target.productPrice.value ? event.target.productPrice.value : "";
-    const image: ProductImage = base64StringImage !== "" ? new ProductImage(fileObject.type, `base64,${base64StringImage}`) : undefined;
-    const category: string = event.target.productCategorySelection.value ? event.target.productCategorySelection.value : "";
+    const image: ProductImage =
+      base64StringImage !== ""
+        ? new ProductImage(fileObject.type, `base64,${base64StringImage}`)
+        : undefined;
+    const category: string = event.target.productCategorySelection.value
+      ? event.target.productCategorySelection.value
+      : "";
 
-    const allInfoInserted: boolean = name !== "" && description !== "" && price !== "" && image !== undefined && category !== "";
+    const allInfoInserted: boolean =
+      name !== "" && description !== "" && price !== "" && image !== undefined && category !== "";
 
-    if(allInfoInserted) {
+    if (allInfoInserted) {
       const product: JustCreatedProduct = new JustCreatedProduct(
         name,
         description,
         image,
-        parseInt(price),
+        parseInt(price, 10),
         category
       );
       await insertProduct(product, session);
-    const updatedProducts = await getProducts(session);
-    this.setState({ products: updatedProducts, productInsertedAlert: allInfoInserted });
-    }
-    else{
+      const updatedProducts = await getProducts(session);
+      this.setState({ products: updatedProducts, productInsertedAlert: allInfoInserted });
+    } else {
       this.setState({ productInsertedAlert: allInfoInserted });
     }
   };
