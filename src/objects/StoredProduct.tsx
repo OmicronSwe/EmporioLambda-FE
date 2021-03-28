@@ -9,7 +9,7 @@ export default class StoredProduct implements Product {
 
   imageUrl: string;
 
-  price: string;
+  price: number;
 
   category: string;
 
@@ -18,7 +18,7 @@ export default class StoredProduct implements Product {
     name: string,
     description: string,
     imageUrl: string,
-    price: string,
+    price: number,
     category: string
   ) {
     this.id = id;

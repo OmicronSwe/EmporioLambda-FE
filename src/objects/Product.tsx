@@ -6,6 +6,6 @@ export default interface Product {
   description: string;
   imageFile?: ProductImage;
   imageUrl?: string;
-  price: string;
+  price: number;
   category?: string;
 }

@@ -8,7 +8,7 @@ export default class JustCreatedProduct implements Product {
 
   imageFile: ProductImage;
 
-  price: string;
+  price: number;
 
   category: string;
 
@@ -16,7 +16,7 @@ export default class JustCreatedProduct implements Product {
     name: string,
     description: string,
     imageFile: ProductImage,
-    price: string,
+    price: number,
     category: string
   ) {
     this.name = name;
