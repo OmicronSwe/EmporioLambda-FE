@@ -1,4 +1,4 @@
-export interface ProductInCartJSON{
+export interface ProductInCartJSON {
   id: string;
 
   name: string;
@@ -12,8 +12,7 @@ export interface ProductInCartJSON{
   quantity: number;
 }
 
-
-export default class ProductInCart implements ProductInCartJSON{
+export default class ProductInCart implements ProductInCartJSON {
   id: string;
 
   name: string;
@@ -35,24 +34,23 @@ export default class ProductInCart implements ProductInCartJSON{
     this.quantity = quantity;
   }
 
-  public static toStringForLocalStorage(cartArray: ProductInCart[]) : string {
-    
-    let ids : string = "[";
-    let containElements : boolean = false;
-    cartArray.forEach((element)=>{
+  public static toStringForLocalStorage(cartArray: ProductInCart[]): string {
+    let ids: string = "[";
+    let containElements: boolean = false;
+    cartArray.forEach((element) => {
       ids = `${ids}{ "id" : "${element.id}", "quantity" : "${element.quantity}" },`;
       containElements = true;
-    })
-    if(containElements) ids = ids.slice(0, -1);
+    });
+    if (containElements) ids = ids.slice(0, -1);
     ids += "]";
     return ids;
   }
-  
-  public static getProductsSum(cartArray: ProductInCart[]) : number {
+
+  public static getProductsSum(cartArray: ProductInCart[]): number {
     let sum = 0;
-    cartArray.forEach((element) =>{
-      sum = sum + element.price*element.quantity;
-    })
+    cartArray.forEach((element) => {
+      sum += element.price * element.quantity;
+    });
     return sum;
   }
 }
