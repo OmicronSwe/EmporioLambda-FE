@@ -14,15 +14,14 @@ import OldProductInformations from "../../../components/Dashboard/OldProductInfo
 import ModifyingProductForm from "../../../components/Dashboard/ModifyingProductForm";
 import StoredProduct from "../../../src/objects/StoredProduct";
 import JustCreatedProduct from "../../../src/objects/JustCreatedProduct";
+import ProductImage from "../../../src/objects/ProductImage";
 
-class ModifyProductPage extends React.Component<{
-  product: StoredProduct;
-  categories: string[];
-  session;
-}> {
+class ModifyProductPage extends React.Component<
+{ product: StoredProduct; categories: string[]; session },
+{ productModifiedAlert: boolean | null}> {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { productModifiedAlert: null};
   }
 
   updateProduct = async (event) => {
@@ -32,43 +31,40 @@ class ModifyProductPage extends React.Component<{
     // TODO: validation
 
     const fileObject = event.target.productImage.files[0];
-    let img64 = null;
-    let imgParam = null;
-    if (fileObject !== undefined) {
-      img64 = await fileToBase64(fileObject);
-      imgParam = {
-        mime: fileObject.type,
-        imageCode: `base64,${img64}`,
-      };
+    let base64StringImage: string = "";
+    if(fileObject) {
+      base64StringImage = await fileToBase64(fileObject);
     }
 
-    const name = event.target.productName.value ? event.target.productName.value : product.name;
-    const description = event.target.productDescription.value
-      ? event.target.productDescription.value
-      : product.description;
-    const price = event.target.productPrice.value ? event.target.productPrice.value : product.price;
-    const imageFile = imgParam !== null ? imgParam : null;
-    const category =
-      event.target.productCategorySelection.value !== "Choose..."
-        ? event.target.productCategorySelection.value
-        : product.category;
+    const name = event.target.productName.value ? event.target.productName.value : "";
+    const description = event.target.productDescription.value ? event.target.productDescription.value : "";
+    const price = event.target.productPrice.value ? event.target.productPrice.value : "";
+    const image: ProductImage = base64StringImage !== "" ? new ProductImage(fileObject.type, `base64,${base64StringImage}`) : undefined;
+    const category = event.target.productCategorySelection.value !== "Choose..." ? event.target.productCategorySelection.value : "";
 
-    const modifiedProduct: JustCreatedProduct = new JustCreatedProduct(
-      name,
-      description,
-      imageFile,
-      price,
-      category
-    );
+    const atLeastOneInfoInserted: boolean = name !== "" || description !== "" || price !== "" || image !== undefined || category !== "";
 
-    await updateProduct(product.id, session, modifiedProduct);
-    // redirect to dashboard
-    Router.push("/dashboard");
-    // TODO: success/error alert
+    if(atLeastOneInfoInserted){
+      const modifiedProduct: JustCreatedProduct = new JustCreatedProduct(
+        (name !== "" ? name : product.name),
+        (description !== "" ? description : product.description),
+        image,
+        (price !== "" ? parseInt(price) : product.price),
+        (category !== "" ? category : product.category)
+      );
+      await updateProduct(product.id, session, modifiedProduct);
+      // redirect to dashboard
+      Router.push("/dashboard");
+    }
+    else{
+      this.setState({ productModifiedAlert: atLeastOneInfoInserted });
+    }
+
   };
 
   render() {
     const { product, categories } = this.props;
+    const { productModifiedAlert } = this.state;
     return (
       <>
         <Layout title="Product modifying page">
@@ -81,7 +77,7 @@ class ModifyProductPage extends React.Component<{
                 <OldProductInformations product={product} />
               </Col>
               <Col>
-                <ModifyingProductForm updateProduct={this.updateProduct} categories={categories} />
+                <ModifyingProductForm updateProduct={this.updateProduct} categories={categories} productModifiedAlert={productModifiedAlert} />
               </Col>
             </Row>
           </Container>

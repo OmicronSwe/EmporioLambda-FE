@@ -11,6 +11,7 @@ import {
   FormGroup,
   FormLabel,
   Alert,
+  Collapse
 } from "react-bootstrap";
 
 class NewProductForm extends React.Component<{
@@ -64,11 +65,7 @@ class NewProductForm extends React.Component<{
                         name="productDescription"
                         placeholder="Description"
                         rows={3}
-                        aria-describedby="productDescriptionHelpBlock"
                       />
-                      <small id="productDescriptionHelpBlock" className="form-text text-muted">
-                        Maximum x characters.
-                      </small>
                     </Col>
                   </FormGroup>
                   <FormGroup as={Row}>
@@ -121,28 +118,32 @@ class NewProductForm extends React.Component<{
                       </FormControl>
                     </Col>
                   </FormGroup>
-                  <Button type="submit" variant="primary">
-                    Submit
-                  </Button>
+                  <Form.Row className="text-center">
+                    <Col sm="12">
+                      <Button type="submit" variant="primary">
+                        Submit
+                      </Button>
+                    </Col>
+                  </Form.Row>   
                 </Form>
+                {productInsertedAlert !== null && productInsertedAlert === true ? (
+                  <Alert variant="success">
+                    <Alert.Heading>Product created successfully!</Alert.Heading>
+                  </Alert>
+                ) : (
+                  <p />
+                )}
+                {productInsertedAlert !== null && productInsertedAlert === false ? (
+                  <Alert variant="danger">
+                    <Alert.Heading>All fields must be filled in to create a new product</Alert.Heading>
+                  </Alert>
+                ) : (
+                  <p />
+                )}
               </Card.Body>
             </Accordion.Collapse>
           </Card>
         </Accordion>
-        {productInsertedAlert !== null && productInsertedAlert === true ? (
-          <Alert variant="success">
-            <Alert.Heading>Product created successfully!</Alert.Heading>
-          </Alert>
-        ) : (
-          <p />
-        )}
-        {productInsertedAlert !== null && productInsertedAlert === false ? (
-          <Alert variant="danger">
-            <Alert.Heading>Error occurred creating the product, please retry!</Alert.Heading>
-          </Alert>
-        ) : (
-          <p />
-        )}
       </>
     );
   }

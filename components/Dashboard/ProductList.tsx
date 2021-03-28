@@ -55,7 +55,7 @@ class ProductList extends React.Component<{ products: StoredProduct[]; removePro
                         removeProduct(item.id);
                       }}
                     >
-                      Delete
+                      Remove
                     </Button>
                   </td>
                 </tr>

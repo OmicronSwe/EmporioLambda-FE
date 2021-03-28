@@ -27,10 +27,10 @@ export const getProducts = async (ses): Promise<StoredProduct[]> => {
 export const updateProduct = async (
   id: string,
   session,
-  product: JustCreatedProduct
+  modifiedProduct: JustCreatedProduct
 ): Promise<boolean> => {
   const { response } = (
-    await getlambdaResponse(`product/${id}`, "PUT", session.accessToken, JSON.stringify(product))
+    await getlambdaResponse(`product/${id}`, "PUT", session.accessToken, JSON.stringify(modifiedProduct))
   ).props;
   if (response.err !== undefined) return false;
   return true;

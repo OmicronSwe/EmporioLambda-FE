@@ -12,7 +12,7 @@ class OldProductInformations extends React.Component<{ product: StoredProduct }>
     const { product } = this.props;
     return (
       <>
-        <Form>
+        <Form className="border border-dark p-3">
           <Form.Group as={Row} controlId="formPlainTextName">
             <Form.Label column lg="3">
               Actual Name

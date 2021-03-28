@@ -9,11 +9,13 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
+  Alert
 } from "react-bootstrap";
 
 class ModifyingProductForm extends React.Component<{
   updateProduct;
   categories: string[];
+  productModifiedAlert: boolean
 }> {
   constructor(props) {
     super(props);
@@ -21,10 +23,10 @@ class ModifyingProductForm extends React.Component<{
   }
 
   render() {
-    const { categories, updateProduct } = this.props;
+    const { categories, updateProduct, productModifiedAlert } = this.props;
     return (
       <>
-        <Form onSubmit={updateProduct}>
+        <Form onSubmit={updateProduct} className="border border-dark p-3">
           <FormGroup as={Row}>
             <FormLabel column sm="5" htmlFor="productName">
               New Name
@@ -110,13 +112,24 @@ class ModifyingProductForm extends React.Component<{
               </FormControl>
             </Col>
           </FormGroup>
-          <Button type="submit" variant="primary">
-            Submit
-          </Button>
-          <Button variant="danger" onClick={() => Router.push("/dashboard")}>
-            Cancel
-          </Button>
+          <Form.Row className="text-center">
+            <Col sm="12">
+              <Button type="submit" variant="primary">
+                Submit
+              </Button>
+              <Button variant="danger" onClick={() => Router.push("/dashboard")}>
+                Cancel
+              </Button>
+            </Col>
+          </Form.Row>   
         </Form>
+        {productModifiedAlert !== null && productModifiedAlert === false ? (
+          <Alert variant="danger">
+            <Alert.Heading>At least one field must be filled in to modify the product</Alert.Heading>
+          </Alert>
+        ) : (
+          <p />
+        )}
       </>
     );
   }
