@@ -1,3 +1,4 @@
+import Router from "next/router";
 import React from "react";
 import { Button, CardColumns, Card } from "react-bootstrap";
 import { getProducts } from "../../pages/api/Services/dashboard";
@@ -21,7 +22,7 @@ class CategoryProductList extends React.Component<{
           {products ? (
             products.map((item) => (
               <Card key={item.id} onClick={() => getProducts()}>
-                {item.image ? <Card.Img src={item.image}/> : ""}
+                {item.imageUrl ? <Card.Img src={item.imageUrl} /> : ""}
                 <Card.Body>
                   <Card.Title>{item.name}</Card.Title>
                   <Card.Subtitle>{item.price}</Card.Subtitle>
@@ -32,10 +33,20 @@ class CategoryProductList extends React.Component<{
                       onChange={() => toggleSelect(item.id)}
                     />
                   </td>
-                  <Button variant="warning" onClick={() => getProducts()} style={{ alignItems: "left"}}>
+                  <Button
+                    variant="warning"
+                    onClick={() => {
+                      Router.push(`/pdp/${item.id}`);
+                    }}
+                    style={{ alignItems: "left" }}
+                  >
                     View Product
                   </Button>
-                  <Button variant="warning" onClick={() => addToCart(item.id)} style={{ alignItems: "right"}}>
+                  <Button
+                    variant="warning"
+                    onClick={() => addToCart(item.id)}
+                    style={{ alignItems: "right" }}
+                  >
                     Add to Cart
                   </Button>
                 </Card.Body>

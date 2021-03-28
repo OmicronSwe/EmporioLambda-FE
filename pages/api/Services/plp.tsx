@@ -63,12 +63,27 @@ export const insertCartList = async (ids: string[], session) => {
   });
 };
 
-export const filterByPrice = async (id: string[], min, max)=>{
+export const filterByPrice = async (category: string, session, min: number, max: number) => {
+  let response = null;
+  if (max === -1) {
+    response = (
+      await getlambdaResponse(
+        `product/search/category=${category}&minprice=${min}`,
+        "GET",
+        session ? session.accessToken : null
+      )
+    ).props.response.result.items;
+  } else {
+    response = (
+      await getlambdaResponse(
+        `product/search/category=${category}&minprice=${min}&maxprice=${max}`,
+        "GET",
+        session ? session.accessToken : null
+      )
+    ).props.response.result.items;
+  }
 
-
-}
-
-
-
+  return response;
+};
 
 export default getProductsByCategory;

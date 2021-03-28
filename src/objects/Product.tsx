@@ -4,7 +4,7 @@ export interface ProductJSON {
   id: string;
   name: string;
   description: string;
-  image: string;
+  imageUrl: string;
   price: string;
   categories: Category[];
 }
@@ -16,7 +16,7 @@ export class Product implements ProductJSON {
 
   description: string;
 
-  image: string;
+  imageUrl: string;
 
   price: string;
 
@@ -26,14 +26,14 @@ export class Product implements ProductJSON {
     id: string,
     name: string,
     description: string,
-    image: string,
+    imageUrl: string,
     price: string,
     categories: Category[]
   ) {
     this.id = id;
     this.name = name;
     this.description = description;
-    this.image = image;
+    this.imageUrl = imageUrl;
     this.price = price;
     this.categories = categories;
   }
