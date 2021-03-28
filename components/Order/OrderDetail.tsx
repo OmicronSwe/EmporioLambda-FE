@@ -82,13 +82,13 @@ class OrderSection extends React.Component<{ order: Order }> {
               <td>
                 <h3>Tax applied</h3>
               </td>
-              <td>{order.totalTax}</td>
+              <td>{order.taxesApplied}</td>
             </tr>
             <tr>
               <td>
                 <h3>Total cost</h3>
               </td>
-              <td>{order.totalCost}</td>
+              <td>{order.totalPrice}</td>
             </tr>
           </tbody>
         </Table>

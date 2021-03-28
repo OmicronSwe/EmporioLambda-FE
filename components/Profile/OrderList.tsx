@@ -11,6 +11,7 @@ class ProductList extends React.Component<{ orders: Order[] }> {
 
   render() {
     const { orders } = this.props;
+    
     return (
       <>
         {orders ? (
@@ -27,7 +28,7 @@ class ProductList extends React.Component<{ orders: Order[] }> {
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.date}</td>
-                  <td>{item.totalCost}</td>
+                  <td>{item.totalPrice}</td>
                   <td>
                     <Button
                       variant="primary"
