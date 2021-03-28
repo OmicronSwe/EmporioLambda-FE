@@ -19,7 +19,9 @@ class CartListSection extends React.Component<
     super(props);
     this.tax = 0.2;
     const { products } = this.props;
-    //const products = [{"id" : "12345", "name" : "dddddd", "price" : 33, "description" : " ", "imageUrl" : null, "quantity" : 3},{"id" : "123456", "name" : "ccccc", "price" : 33, "description" : " ", "imageUrl" : null, "quantity" : 3}];
+    /*
+    const products = [{"id" : "12345", "name" : "dddddd", "price" : 33, "description" : " ", "imageUrl" : null, "quantity" : 3},{"id" : "123456", "name" : "ccccc", "price" : 33, "description" : " ", "imageUrl" : null, "quantity" : 3}];
+    */
     this.state = { products };
   }
 

@@ -20,9 +20,10 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req }); // get session data
   if (session) {
     // Le seguenti righe sono fatte per riempire il carrelo in fase di testing
-    //await insertProductInCart({auth : session, body:{"id":"2dc2d8fa-9ded-4370-8d4e-426b38cd15e5","quantity":3}})
-    //await insertProductInCart({auth : session, body:{"id":"2dc2d8fa-9ded-4370-8d4e-426b38cd15e4","quantity":3}})
-    //
+    /*
+    await insertProductInCart({auth : session, body:{"id":"2dc2d8fa-9ded-4370-8d4e-426b38cd15e5","quantity":3}})
+    await insertProductInCart({auth : session, body:{"id":"2dc2d8fa-9ded-4370-8d4e-426b38cd15e4","quantity":3}})
+    */
 
     const resp: any = await getProductsInCart(session); // external API call to get cart's product ids
     return { props: { response: resp.products, auth: session } };
