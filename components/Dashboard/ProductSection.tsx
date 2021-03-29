@@ -56,7 +56,7 @@ class ProductSection extends React.Component<
         name,
         description,
         image,
-        parseInt(price, 10),
+        Number(price),
         category
       );
       await insertProduct(product, session);

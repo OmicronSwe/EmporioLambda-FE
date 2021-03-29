@@ -61,7 +61,7 @@ class OrderSection extends React.Component<{ order: Order }> {
                           <td>{item.id}</td>
                           <td>
                             <img
-                              src={item.image ? item.image : ""}
+                              src={item.imageUrl ? item.imageUrl : ""}
                               className="img-thumbnail"
                               alt={item.name}
                             />

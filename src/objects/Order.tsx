@@ -1,4 +1,4 @@
-import { ProductInCart } from "./ProductInCart";
+import ProductInCart from "./ProductInCart";
 
 export interface OrderJSON {
   id: string;

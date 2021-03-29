@@ -35,7 +35,6 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
         <nav>
           <Link href="/">Home</Link>
           <Link href="/Cart">Cart</Link>
-          <Button>Test button</Button>
           {!session && (
             <Button
               variant="primary"
