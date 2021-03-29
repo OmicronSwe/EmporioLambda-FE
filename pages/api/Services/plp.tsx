@@ -1,8 +1,8 @@
 import { decode } from "jsonwebtoken";
-import { Product } from "../../../src/objects/Product";
+import StoredProduct from "../../../src/objects/StoredProduct";
 import getlambdaResponse from "../lib/lambdas";
 
-const getProductsByCategory = async (category: string, session): Promise<Product[]> => {
+const getProductsByCategory = async (category: string, session): Promise<StoredProduct[]> => {
   const response = (
     await getlambdaResponse(
       `product/search/category=${category}`,
@@ -25,6 +25,7 @@ export const insertCart = async (id: string, session) => {
     await getlambdaResponse(
       `cart/addProduct/${decode(session.accessToken).sub}`,
       "PUT",
+      session ? session.accessToken : null,
       stringJSON
     );
   } else {
@@ -48,11 +49,9 @@ export const insertCart = async (id: string, session) => {
         change = true;
       }
     }
-    console.log(change);
     if (!change) {
       jsonCart.items.push({ id, quantity: 1 }); // push new id to the cart
     }
-    console.log(jsonCart);
     localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
   }
 };

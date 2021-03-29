@@ -21,7 +21,7 @@ export const insertCart = async (session, product: StoredProduct, quantity: numb
     await getlambdaResponse(
       `cart/addProduct/${decode(session.accessToken).sub}`,
       "PUT",
-      session,
+      session ? session.accessToken : null,
       stringJSON
     );
   } else {

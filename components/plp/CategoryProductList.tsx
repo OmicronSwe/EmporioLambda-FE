@@ -1,11 +1,10 @@
 import Router from "next/router";
 import React from "react";
 import { Button, CardColumns, Card } from "react-bootstrap";
-import { getProducts } from "../../pages/api/Services/dashboard";
-import { Product } from "../../src/objects/Product";
+import StoredProduct from "../../src/objects/StoredProduct";
 
 class CategoryProductList extends React.Component<{
-  products: Product[];
+  products: StoredProduct[];
   addToCart;
   toggleSelect;
 }> {
@@ -21,18 +20,16 @@ class CategoryProductList extends React.Component<{
         <CardColumns>
           {products ? (
             products.map((item) => (
-              <Card key={item.id} onClick={() => getProducts()}>
+              <Card key={item.id}>
                 {item.imageUrl ? <Card.Img src={item.imageUrl} /> : ""}
                 <Card.Body>
                   <Card.Title>{item.name}</Card.Title>
                   <Card.Subtitle>{item.price}</Card.Subtitle>
-                  <td>
-                    <input
-                      type="checkbox"
-                      value="{{item.id}}"
-                      onChange={() => toggleSelect(item.id)}
-                    />
-                  </td>
+                  <input
+                    type="checkbox"
+                    value="{{item.id}}"
+                    onChange={() => toggleSelect(item.id)}
+                  />
                   <Button
                     variant="warning"
                     onClick={() => {

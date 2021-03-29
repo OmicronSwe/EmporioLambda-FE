@@ -3,17 +3,14 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import StoredProduct from "../../src/objects/StoredProduct";
-import getProductsByCategory, {
-  filterByPrice,
-  insertCart,
-  insertCartList,
-} from "../api/Services/plp";
+import getProductsByCategory, { insertCart, insertCartList } from "../api/Services/plp";
 import CategoryProductList from "../../components/plp/CategoryProductList";
 import AddToCartList from "../../components/plp/AddToCartList";
-import FilterByPrice from "../../components/plp/FilterByPrice";
+import SearchBar from "../../components/SearchBar/SearchBar";
+import { getCategories } from "../api/Services/dashboard";
 
 class ProductListingPage extends React.Component<
-  { products: StoredProduct[]; session; category: string },
+  { products: StoredProduct[]; session; category: string; categories: string[] },
   { idProducts: string[]; products: StoredProduct[] }
 > {
   constructor(props) {
@@ -33,7 +30,6 @@ class ProductListingPage extends React.Component<
     if (index !== -1) idProducts.splice(index, 1);
     else idProducts.push(id);
 
-    console.log(idProducts);
     this.setState({ idProducts });
   };
 
@@ -44,26 +40,14 @@ class ProductListingPage extends React.Component<
     await insertCartList(idProducts, session);
   };
 
-  filterByPrice = async (event) => {
-    event.preventDefault();
-    const { category, session } = this.props;
-    const products = await filterByPrice(
-      category,
-      session,
-      event.target.PriceMin.value ? event.target.PriceMin.value : 0,
-      event.target.PriceMax.value ? event.target.PriceMax.value : -1
-    );
-
-    this.setState({ products });
-  };
-
   render() {
+    const { category, categories } = this.props;
     const { products } = this.state;
     return (
       <>
         <Layout title="Category Products">
+          <SearchBar categories={categories} category={category} />
           <AddToCartList addToCartList={this.addToCartList} />
-          <FilterByPrice filterByPrice={this.filterByPrice} />
           <CategoryProductList
             products={products}
             addToCart={this.addToCart}
@@ -81,6 +65,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
   return {
     props: {
       products: await getProductsByCategory(decodeURI(params.category.toString()), session),
+      categories: await getCategories(session),
       category: decodeURI(params.category.toString()),
       session,
     },

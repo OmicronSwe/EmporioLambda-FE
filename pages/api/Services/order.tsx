@@ -12,7 +12,7 @@ export const getOrders = async (ses): Promise<Order[]> => {
   const response = await (await getlambdaResponse("order", "GET", ses.accessToken)).props.response;
   if (response.error) return null;
   return response.result.items;
-}
+};
 
 export const getOrdersProfile = async (ses, profile: Profile): Promise<Order[]> => {
   const response = await (

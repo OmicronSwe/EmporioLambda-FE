@@ -11,7 +11,7 @@ class ProductList extends React.Component<{ orders: Order[] }> {
 
   render() {
     const { orders } = this.props;
-    
+
     return (
       <>
         {orders ? (

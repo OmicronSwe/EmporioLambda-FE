@@ -7,20 +7,12 @@ export interface ProductInCartJSON {
 
   description: string;
 
-<<<<<<< HEAD
-  image: string;
-=======
   imageUrl: string;
->>>>>>> origin/cart
 
   quantity: number;
 }
 
-<<<<<<< HEAD
-export class ProductInCart implements ProductInCartJSON {
-=======
 export default class ProductInCart implements ProductInCartJSON {
->>>>>>> origin/cart
   id: string;
 
   name: string;
@@ -29,11 +21,7 @@ export default class ProductInCart implements ProductInCartJSON {
 
   description: string;
 
-<<<<<<< HEAD
-  image: string;
-=======
   imageUrl: string;
->>>>>>> origin/cart
 
   quantity: number;
 
@@ -42,11 +30,6 @@ export default class ProductInCart implements ProductInCartJSON {
     this.name = name;
     this.price = price;
     this.description = description;
-<<<<<<< HEAD
-    this.image = image;
-    this.quantity = quantity;
-  }
-=======
     this.imageUrl = image;
     this.quantity = quantity;
   }
@@ -70,5 +53,4 @@ export default class ProductInCart implements ProductInCartJSON {
     });
     return sum;
   }
->>>>>>> origin/cart
 }

@@ -29,7 +29,7 @@ class OrderSection extends React.Component<{ order: Order }> {
             </tr>
             <tr>
               <td>
-                <h3>Client's username</h3>
+                <h3>Client&apos;s username</h3>
               </td>
               <td>{order.username}</td>
             </tr>

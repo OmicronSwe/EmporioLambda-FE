@@ -11,9 +11,8 @@ class SearchBar extends React.Component<
     super(props);
 
     const { category } = this.props;
-
     this.state = {
-      category,
+      category: category || "All categories",
     };
   }
 
