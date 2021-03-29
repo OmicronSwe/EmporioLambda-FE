@@ -11,7 +11,7 @@ class AddToCartList extends React.Component<{ addToCartList }> {
     const { addToCartList } = this.props;
     return (
       <>
-        <Button variant="warning" onClick={() => addToCartList()} style={{ alignItems: "right" }}>
+        <Button variant="warning" onClick={() => addToCartList()}>
           Add to Cart
         </Button>
       </>
