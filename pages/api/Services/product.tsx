@@ -51,3 +51,41 @@ export const insertCart = async (session, product: StoredProduct, quantity: numb
     localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
   }
 };
+
+export const getProductsFiltered = async (
+  name,
+  category,
+  minPrice,
+  maxPrice,
+  ses
+): Promise<StoredProduct[]> => {
+  let searchInput: string = "";
+
+  if (name) {
+    searchInput += `name=${encodeURI(name)}&`;
+  }
+
+  if (minPrice) {
+    searchInput += `minprice=${minPrice}&`;
+  }
+
+  if (maxPrice) {
+    searchInput += `maxprice=${maxPrice}&`;
+  }
+
+  if (category) {
+    searchInput += `category=${encodeURI(category)}&`;
+  }
+
+  searchInput = searchInput.slice(0, -1);
+
+  const { response } = (
+    await getlambdaResponse(
+      `product/search/${searchInput}`,
+      "GET",
+      ses ? ses.accessToken : undefined
+    )
+  ).props;
+  if (response.error) return null;
+  return response.result.items;
+};

@@ -2,7 +2,10 @@ import { decode } from "jsonwebtoken";
 import StoredProduct from "../../../src/objects/StoredProduct";
 import getlambdaResponse from "../lib/lambdas";
 
-const getProductsByCategory = async (category: string, session): Promise<StoredProduct[]> => {
+export const getProductsByCategory = async (
+  category: string,
+  session
+): Promise<StoredProduct[]> => {
   const response = (
     await getlambdaResponse(
       `product/search/category=${category}`,
@@ -61,28 +64,3 @@ export const insertCartList = async (ids: string[], session) => {
     insertCart(id, session);
   });
 };
-
-export const filterByPrice = async (category: string, session, min: number, max: number) => {
-  let response = null;
-  if (max === -1) {
-    response = (
-      await getlambdaResponse(
-        `product/search/category=${category}&minprice=${min}`,
-        "GET",
-        session ? session.accessToken : null
-      )
-    ).props.response.result.items;
-  } else {
-    response = (
-      await getlambdaResponse(
-        `product/search/category=${category}&minprice=${min}&maxprice=${max}`,
-        "GET",
-        session ? session.accessToken : null
-      )
-    ).props.response.result.items;
-  }
-
-  return response;
-};
-
-export default getProductsByCategory;

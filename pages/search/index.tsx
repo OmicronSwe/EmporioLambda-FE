@@ -3,16 +3,19 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import StoredProduct from "../../src/objects/StoredProduct";
-import { getProductsByCategory } from "../api/Services/plp";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 import { getCategories } from "../api/Services/dashboard";
 import ListingSection from "../../components/plp/ListingSection";
+import { getProductsFiltered } from "../api/Services/product";
 
-class ProductListingPage extends React.Component<{
+class SearchPage extends React.Component<{
   products: StoredProduct[];
   session;
   category: string;
   categories: string[];
+  name: string;
+  minPrice: number;
+  maxPrice: number;
 }> {
   constructor(props) {
     super(props);
@@ -20,16 +23,16 @@ class ProductListingPage extends React.Component<{
   }
 
   render() {
-    const { products, category, categories, session } = this.props;
+    const { products, category, categories, session, minPrice, maxPrice, name } = this.props;
     return (
       <>
         <Layout title="Category Products">
           <SearchBarSection
             categories={categories}
             category={category}
-            minPrice={null}
-            maxPrice={null}
-            name=""
+            minPrice={minPrice}
+            maxPrice={maxPrice}
+            name={name}
           />
           <ListingSection products={products} session={session} />
         </Layout>
@@ -38,17 +41,25 @@ class ProductListingPage extends React.Component<{
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ query, req }) => {
   const session = await getSession({ req });
+
+  const category = query.category ? decodeURI(String(query.category)) : null;
+  const name = query.name ? decodeURI(String(query.name)) : null;
+  const minPrice = query.minprice ? query.minprice : null;
+  const maxPrice = query.maxprice ? query.maxprice : null;
 
   return {
     props: {
-      products: await getProductsByCategory(decodeURI(params.category.toString()), session),
+      products: await getProductsFiltered(name, category, minPrice, maxPrice, session),
       categories: await getCategories(session),
-      category: decodeURI(params.category.toString()),
+      category,
+      name: name || "",
+      minPrice,
+      maxPrice,
       session,
     },
   };
 };
 
-export default ProductListingPage;
+export default SearchPage;

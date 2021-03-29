@@ -1,31 +1,23 @@
 import React from "react";
-import Router from "next/router";
 import { Button, InputGroup, DropdownButton, FormControl, Dropdown } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 
-class SearchBar extends React.Component<
-  { categories: string[]; category: string },
-  { category: string }
-> {
+class SearchBar extends React.Component<{
+  categories: string[];
+  category: string;
+  name: string;
+  maxPrice: number;
+  minPrice: number;
+  changeCategory;
+  onSearch;
+}> {
   constructor(props) {
     super(props);
-
-    const { category } = this.props;
-    this.state = {
-      category: category || "All categories",
-    };
-  }
-
-  changeCategory(event) {
-    // Intended to run on the change of every form element
-    this.setState({
-      category: event.target.textContent,
-    });
+    this.state = {};
   }
 
   render() {
-    const { categories } = this.props;
-    const { category } = this.state;
+    const { categories, category, changeCategory, onSearch, minPrice, maxPrice, name } = this.props;
     return (
       <>
         <InputGroup>
@@ -37,9 +29,10 @@ class SearchBar extends React.Component<
             name="category"
           >
             <Dropdown.Item
+              key="All categories"
               href="#"
-              onClick={(e) => {
-                this.changeCategory(e);
+              onClick={() => {
+                changeCategory("All categories");
               }}
             >
               All categories
@@ -47,9 +40,10 @@ class SearchBar extends React.Component<
 
             {categories.map((item) => (
               <Dropdown.Item
+                key={item}
                 href="#"
-                onClick={(e) => {
-                  this.changeCategory(e);
+                onClick={() => {
+                  changeCategory(item);
                 }}
               >
                 {item}
@@ -64,6 +58,7 @@ class SearchBar extends React.Component<
             aria-describedby="search-bar-for-product"
             id="productValue"
             name="productValue"
+            defaultValue={name}
           />
 
           <InputGroup.Prepend>
@@ -75,6 +70,7 @@ class SearchBar extends React.Component<
             aria-label="Amount (to the nearest dollar)"
             type="number"
             placeholder="Min price"
+            defaultValue={minPrice}
           />
 
           <InputGroup.Prepend>
@@ -86,43 +82,10 @@ class SearchBar extends React.Component<
             aria-label="Amount (to the nearest dollar)"
             type="number"
             placeholder="Max price"
+            defaultValue={maxPrice}
           />
 
-          <Button
-            onClick={() => {
-              let searchInput: string = "";
-
-              const productValue: string = (document.getElementById(
-                "productValue"
-              ) as HTMLInputElement).value;
-              const minPriceValue: string = (document.getElementById(
-                "minPriceValue"
-              ) as HTMLInputElement).value;
-              const maxPriceValue: string = (document.getElementById(
-                "maxPriceValue"
-              ) as HTMLInputElement).value;
-
-              if (productValue) {
-                searchInput += `name=${productValue}&`;
-              }
-
-              if (minPriceValue) {
-                searchInput += `minprice=${minPriceValue}&`;
-              }
-
-              if (maxPriceValue) {
-                searchInput += `maxprice=${maxPriceValue}&`;
-              }
-
-              if (category && category !== "All categories") {
-                searchInput += `category=${category}&`;
-              }
-
-              searchInput = searchInput.slice(0, -1); // remove last &
-
-              Router.push(`/product/search/${encodeURI(searchInput)}`);
-            }}
-          >
+          <Button onClick={() => onSearch()}>
             <BsSearch />
           </Button>
         </InputGroup>

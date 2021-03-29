@@ -30,6 +30,7 @@ class CategoryProductList extends React.Component<{
                     value="{{item.id}}"
                     onChange={() => toggleSelect(item.id)}
                   />
+                  <br />
                   <Button
                     variant="primary"
                     onClick={() => {
@@ -38,10 +39,7 @@ class CategoryProductList extends React.Component<{
                   >
                     View Product
                   </Button>
-                  <Button
-                    variant="warning"
-                    onClick={() => addToCart(item.id)}
-                  >
+                  <Button variant="warning" onClick={() => addToCart(item.id)}>
                     Add to Cart
                   </Button>
                 </Card.Body>

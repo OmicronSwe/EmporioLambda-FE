@@ -1,19 +1,21 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 
-class AddToCartList extends React.Component<{ addToCartList }> {
+class AddToCartList extends React.Component<{ addToCartList; disabled: boolean }> {
   constructor(props) {
     super(props);
     this.state = {};
   }
 
   render() {
-    const { addToCartList } = this.props;
+    const { addToCartList, disabled } = this.props;
     return (
       <>
-        <Button variant="warning" onClick={() => addToCartList()}>
-          Add to Cart
-        </Button>
+        {!disabled && (
+          <Button variant="warning" onClick={() => addToCartList()}>
+            Add Selected to Cart
+          </Button>
+        )}
       </>
     );
   }
