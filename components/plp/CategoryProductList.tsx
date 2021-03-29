@@ -31,18 +31,16 @@ class CategoryProductList extends React.Component<{
                     onChange={() => toggleSelect(item.id)}
                   />
                   <Button
-                    variant="warning"
+                    variant="primary"
                     onClick={() => {
                       Router.push(`/pdp/${item.id}`);
                     }}
-                    style={{ alignItems: "left" }}
                   >
                     View Product
                   </Button>
                   <Button
                     variant="warning"
                     onClick={() => addToCart(item.id)}
-                    style={{ alignItems: "right" }}
                   >
                     Add to Cart
                   </Button>
