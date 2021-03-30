@@ -5,7 +5,7 @@ import CategoryList from "./CategoryList";
 
 class CategorySection extends React.Component<{
   categories: Category[];
-  refreshOnCategoryChange;
+
 }> {
   constructor(props) {
     super(props);

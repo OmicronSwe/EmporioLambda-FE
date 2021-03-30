@@ -16,11 +16,11 @@ class CategoryList extends React.Component<{ categories: Category[] }> {
         <CardColumns>
           {categories ? (
             categories.map((item) => (
-              <Card key={item.name}>
+              <Card>
                 <Card.Body>
-                  <Card.Title>{item.name}</Card.Title>
-                  <Button variant="danger" onClick={() => {
-                      Router.push(`/plp/${item.name}`);
+                  <Card.Title>{item}</Card.Title>
+                  <Button variant="primary" onClick={() => {
+                      Router.push(`/plp/${item}`);
                     }}>
                     View Products
                   </Button>

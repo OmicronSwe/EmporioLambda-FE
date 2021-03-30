@@ -18,11 +18,6 @@ class CategoryListHome extends React.Component<
     this.state = { categories };
   }
 
-  refreshOnCategoryChange = async () => {
-    const categories = await getCategories;
-    this.setState({ categories });
-  };
-
   render() {
     const { categories } = this.state;
     return (
@@ -30,7 +25,6 @@ class CategoryListHome extends React.Component<
         <Layout title="Category List">
           <CategorySection
             categories={categories}
-            refreshOnCategoryChange={this.refreshOnCategoryChange}
           />
         </Layout>
       </>
