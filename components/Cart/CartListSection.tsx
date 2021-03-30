@@ -7,10 +7,11 @@ import {
   removeAllProductsFromCart,
   getProductsInCart,
   insertProductInCart,
+  getProductsFromLocalStorage,
 } from "../../pages/api/Services/cart";
 
 class CartListSection extends React.Component<
-  { products: ProductInCart[]; auth },
+  { products: ProductInCart[]; session },
   { products: ProductInCart[] }
 > {
   tax;
@@ -19,26 +20,22 @@ class CartListSection extends React.Component<
     super(props);
     this.tax = 0.2;
     const { products } = this.props;
-    /*
-    const products = [{"id" : "12345", "name" : "dddddd", "price" : 33, "description" : " ", "imageUrl" : null, "quantity" : 3},{"id" : "123456", "name" : "ccccc", "price" : 33, "description" : " ", "imageUrl" : null, "quantity" : 3}];
-    */
-    this.state = { products };
+    this.state = { products: products };
   }
 
-  componentDidMount() {
-    const { auth } = this.props;
-    if (!auth) {
-      const { products } = this.state;
-      const ids: string = ProductInCart.toStringForLocalStorage(products);
-      localStorage.setItem("cart", ids);
+  componentDidMount = async () => {
+    const { session } = this.props;
+    if (!session) {
+      const products = await getProductsFromLocalStorage(session)
+      this.setState({ products: products });
     }
   }
 
   removeAllProductOnClick = async () => {
-    const { auth } = this.props;
-    if (auth) {
+    const { session } = this.props;
+    if (session) {
       // authenticated -> internal API to call external API to delete the cart
-      const resp = await removeAllProductsFromCart(auth);
+      const resp = await removeAllProductsFromCart(session);
       if (resp) {
         this.setState({ products: [] });
       } else {
@@ -46,19 +43,19 @@ class CartListSection extends React.Component<
       }
     } else if (localStorage) {
       // not authenticated -> empty the localStorage
-      localStorage.setItem("cart", "[]");
+      localStorage.setItem("cart", "{\"items\": []}");
       this.setState({ products: [] });
     }
   };
 
   removeProductOnClick = async (id: string) => {
-    const { auth } = this.props;
+    const { session } = this.props;
     const { products } = this.state;
     if (id) {
-      if (auth) {
-        const resp = await removeProductFromCart({ auth, body: { id } });
+      if (session) {
+        const resp = await removeProductFromCart({ session, body: { id } });
         if (resp) {
-          const respGetCart: any = await getProductsInCart(auth);
+          const respGetCart: any = await getProductsInCart(session);
           if (respGetCart != null) {
             this.setState({ products: respGetCart.products });
           } else {
@@ -68,37 +65,43 @@ class CartListSection extends React.Component<
           // Mostra messaggio di errore
         }
       } else if (localStorage) {
-        let jsonCart: string;
-        jsonCart = localStorage.getItem("cart");
-        const jsonObj: ProductInCart[] = products;
-        const i: number = 0;
-        jsonObj.forEach((element) => {
-          if (element.id === id) {
-            jsonObj.splice(i, 1);
+
+        const _products: ProductInCart[] = products;
+        let index: number = 0
+
+        for (let i = 0; i < _products.length; i++) {
+          const item = _products[i];
+          if(item.id===id){
+            _products.splice(index,1)
+            break
+          }else{
+            index++
           }
-        });
-        jsonCart = ProductInCart.toStringForLocalStorage(jsonObj);
-        localStorage.setItem("cart", jsonCart);
-        this.setState({ products: jsonObj });
+        }
+
+        localStorage.setItem("cart", ProductInCart.toStringForLocalStorage(_products));
+        this.setState({ products: _products });
       }
+
     }
   };
 
   changeProductQuantity = async (id: string, event) => {
     if (event.target.value > 0) {
-      const { auth } = this.props;
+      const { session } = this.props;
       const { products } = this.state;
-      if (auth) {
+      if (session) {
+        //TODO
         products.forEach(async (product) => {
           if (product.id === id) {
             if (product.quantity > event.target.value) {
               const quantityToRemove = product.quantity - event.target.value;
               const response = await removeProductFromCart({
-                auth,
+                session,
                 body: { id, quantity: quantityToRemove },
               });
               if (response) {
-                const productsList: any = await getProductsInCart(auth);
+                const productsList: any = await getProductsInCart(session);
                 if (productsList != null) this.setState({ products: productsList.products });
                 else {
                   // Mostra messaggio di errore
@@ -109,11 +112,11 @@ class CartListSection extends React.Component<
             } else {
               const quantityToAdd = event.target.value - product.quantity;
               const response = await insertProductInCart({
-                auth,
+                session,
                 body: { id, quantity: quantityToAdd },
               });
               if (response) {
-                const productsList: any = await getProductsInCart(auth);
+                const productsList: any = await getProductsInCart(session);
                 if (productsList != null) this.setState({ products: productsList.products });
                 else {
                   // Mostra messaggio di errore
@@ -126,21 +129,19 @@ class CartListSection extends React.Component<
           }
         });
       } else {
-        let jsonCart: string;
-        jsonCart = localStorage.getItem("cart");
         const jsonObj: ProductInCart[] = products;
         jsonObj.forEach((element) => {
           if (element.id === id) {
             element.quantity = event.target.value;
           }
         });
-        jsonCart = ProductInCart.toStringForLocalStorage(jsonObj);
-        localStorage.setItem("cart", jsonCart);
+        localStorage.setItem("cart", ProductInCart.toStringForLocalStorage(jsonObj));
         this.setState({ products: jsonObj });
       }
     }
   };
 
+  //TODO
   getRemoveAllButton = (products: ProductInCart[]) => {
     if (products.length > 0)
       return (
@@ -151,14 +152,15 @@ class CartListSection extends React.Component<
     return null;
   };
 
+  //TODO
   render() {
-    const { auth } = this.props;
+    const { session } = this.props;
     const { products } = this.state;
     return (
       <>
         <h1>Cart Section</h1>
         <CartProductList
-          auth={auth}
+          auth={session}
           products={products}
           removeOnClick={this.removeProductOnClick}
           changeProductQuantity={this.changeProductQuantity}

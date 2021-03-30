@@ -17,7 +17,7 @@ class CartProductList extends React.Component<
     const { products, removeOnClick, changeProductQuantity } = this.props;
     if (products.length > 0)
       return (
-        <Table className="product-list">
+        <Table className="product-list" borderless>
           <caption> Shopping Cart </caption>
           <thead>
             <tr>
@@ -30,28 +30,27 @@ class CartProductList extends React.Component<
           </thead>
           <tbody>
             {products.map((product) => (
-              <tr key={product.id} style={{ border: "1px solid black" }}>
-                <td style={{ border: "1px solid black" }}>
+              <tr key={product.id}>
+                <td>
                   {product.imageUrl ? (
                     <img
                       src={product.imageUrl}
                       alt={product.description}
                       width="100"
-                      height="100"
                     />
                   ) : (
                     ""
                   )}
                 </td>
-                <td style={{ border: "1px solid black" }}>{product.name}</td>
-                <td style={{ border: "1px solid black" }}>{product.description}</td>
-                <td id={`${product.id}price`} style={{ border: "1px solid black" }}>
+                <td>{product.name}</td>
+                <td>{product.description}</td>
+                <td id={`${product.id}price`}>
                   {`€${product.price}`}
                 </td>
-                <td style={{ border: "1px solid black" }}>
+                <td>
                   {!disabled ? (
                     <input
-                      id={`${product.id}+"quantity"`}
+                      id={product.id}
                       type="number"
                       value={product.quantity}
                       min="1"
