@@ -8,7 +8,7 @@ import { getProduct } from "../api/Services/product";
 import CartSection from "../../components/Pdp/CartSection";
 import StoredProduct from "../../src/objects/StoredProduct";
 import { getCategories } from "../api/Services/dashboard";
-import SearchBar from "../../components/SearchBar/SearchBar";
+import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 
 class ProductPage extends React.Component<{
   product: StoredProduct;
@@ -25,7 +25,13 @@ class ProductPage extends React.Component<{
     return (
       <>
         <Layout title="Product page">
-          <SearchBar categories={categories} category={null} />
+          <SearchBarSection
+            categories={categories} 
+            category={product.category} 
+            maxPrice={null}
+            minPrice={null}
+            name={""}
+            />
           <ProductSection product={product} />
           <CartSection session={session} product={product} />
         </Layout>
