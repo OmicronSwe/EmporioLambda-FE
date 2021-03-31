@@ -12,12 +12,12 @@ export const createEmptyCart = async (params): Promise<boolean> => {
   return true;
 };
 
-export const getProductsInCart = async (params): Promise<ProductInCart[]> => {
+export const getProductsInCart = async (session): Promise<ProductInCart[]> => {
   const { response } = (
-    await getlambdaResponse(`cart/${decode(params.accessToken).sub}`, "GET", params.accessToken)
+    await getlambdaResponse(`cart/${decode(session.accessToken).sub}`, "GET", session.accessToken)
   ).props;
   if (response.error === "Cart not found") {
-    if (createEmptyCart(params)) return [];
+    if (createEmptyCart(session)) return [];
     return null;
   }
   if (response.error !== undefined) {
@@ -26,38 +26,62 @@ export const getProductsInCart = async (params): Promise<ProductInCart[]> => {
   return response.result;
 };
 
-export const removeProductFromCart = async (params): Promise<boolean> => {
+export const removeProductFromCart = async (
+  id: string,
+  session,
+  quantity: number = null
+): Promise<boolean> => {
+  let body;
+  if (quantity) {
+    body = {
+      id,
+      quantity,
+    };
+  } else {
+    body = {
+      id,
+    };
+  }
+
   const { response } = (
     await getlambdaResponse(
-      `cart/removeProduct/${decode(params.auth.accessToken).sub}`,
+      `cart/removeProduct/${decode(session.accessToken).sub}`,
       "PUT",
-      params.auth.accessToken,
-      JSON.stringify(params.body)
+      session.accessToken,
+      JSON.stringify(body)
     )
   ).props;
   if (response.error !== undefined) return false;
   return true;
 };
 
-export const removeAllProductsFromCart = async (params): Promise<boolean> => {
+export const removeAllProductsFromCart = async (session): Promise<boolean> => {
   const { response } = (
     await getlambdaResponse(
-      `cart/toEmpty/${decode(params.accessToken).sub}`,
+      `cart/toEmpty/${decode(session.accessToken).sub}`,
       "PUT",
-      params.accessToken
+      session.accessToken
     )
   ).props;
   if (response.error !== undefined) return false;
   return true;
 };
 
-export const insertProductInCart = async (params): Promise<boolean> => {
+export const insertProductInCart = async (
+  id: string,
+  quantity: number,
+  session
+): Promise<boolean> => {
+  const body = {
+    id,
+    quantity,
+  };
   const { response } = (
     await getlambdaResponse(
-      `cart/addProduct/${decode(params.auth.accessToken).sub}`,
+      `cart/addProduct/${decode(session.accessToken).sub}`,
       "PUT",
-      params.auth.accessToken,
-      JSON.stringify(params.body)
+      session,
+      JSON.stringify(body)
     )
   ).props;
   if (response.error !== undefined) return false;
@@ -65,25 +89,36 @@ export const insertProductInCart = async (params): Promise<boolean> => {
 };
 
 export const getProduct = async (id: string, session): Promise<StoredProduct> => {
-  const response = (
-    await getlambdaResponse(`product/${id}`, "GET", session ?  session.accessToken : null)
-  ).props.response;
+  const { response } = (
+    await getlambdaResponse(`product/${id}`, "GET", session ? session.accessToken : null)
+  ).props;
   return response.result;
 };
 
-export const getProductsFromLocalStorage = async (session) => {
-  if(localStorage){
-    let products : ProductInCart[] = []
-    let jsonCart = localStorage.getItem("cart") ? JSON.parse(localStorage.getItem("cart")).items : []
+export const getProductsFromLocalStorage = async (session): Promise<ProductInCart[]> => {
+  if (localStorage) {
+    const products: ProductInCart[] = [];
+    const jsonCart = localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart")).items
+      : [];
 
-    if(jsonCart){
-      for (let i = 0; i < jsonCart.length; i++) {
-        const item = jsonCart[i];
-        const res : StoredProduct = await getProduct(item.id, session)
-        const resTransform = await new ProductInCart(res.id, res.name, res.price, res.description, res.imageUrl, item.quantity)
-        products.push(await resTransform)
-      }
+    if (jsonCart) {
+      await Promise.all(
+        jsonCart.map(async (item) => {
+          const res = await getProduct(item.id, session);
+          const resTransform = new ProductInCart(
+            res.id,
+            res.name,
+            res.price,
+            res.description,
+            res.imageUrl,
+            item.quantity
+          );
+          products.push(resTransform);
+        })
+      );
     }
-    return products
+    return products;
   }
+  return [];
 };

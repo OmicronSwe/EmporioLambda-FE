@@ -26,12 +26,12 @@ class ProductPage extends React.Component<{
       <>
         <Layout title="Product page">
           <SearchBarSection
-            categories={categories} 
-            category={product.category} 
+            categories={categories}
+            category={product.category}
             maxPrice={null}
             minPrice={null}
-            name={""}
-            />
+            name=""
+          />
           <ProductSection product={product} />
           <CartSection session={session} product={product} />
         </Layout>

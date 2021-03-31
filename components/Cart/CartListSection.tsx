@@ -20,16 +20,16 @@ class CartListSection extends React.Component<
     super(props);
     this.tax = 0.2;
     const { products } = this.props;
-    this.state = { products: products };
+    this.state = { products };
   }
 
   componentDidMount = async () => {
     const { session } = this.props;
     if (!session) {
-      const products = await getProductsFromLocalStorage(session)
-      this.setState({ products: products });
+      const products = await getProductsFromLocalStorage(session);
+      this.setState({ products });
     }
-  }
+  };
 
   removeAllProductOnClick = async () => {
     const { session } = this.props;
@@ -43,7 +43,7 @@ class CartListSection extends React.Component<
       }
     } else if (localStorage) {
       // not authenticated -> empty the localStorage
-      localStorage.setItem("cart", "{\"items\": []}");
+      localStorage.setItem("cart", '{"items": []}');
       this.setState({ products: [] });
     }
   };
@@ -53,7 +53,7 @@ class CartListSection extends React.Component<
     const { products } = this.state;
     if (id) {
       if (session) {
-        const resp = await removeProductFromCart({ session, body: { id } });
+        const resp = await removeProductFromCart(id, session);
         if (resp) {
           const respGetCart: any = await getProductsInCart(session);
           if (respGetCart != null) {
@@ -65,24 +65,19 @@ class CartListSection extends React.Component<
           // Mostra messaggio di errore
         }
       } else if (localStorage) {
+        const stateProducts: ProductInCart[] = products;
 
-        const _products: ProductInCart[] = products;
-        let index: number = 0
-
-        for (let i = 0; i < _products.length; i++) {
-          const item = _products[i];
-          if(item.id===id){
-            _products.splice(index,1)
-            break
-          }else{
-            index++
+        for (let i = 0; i < stateProducts.length; i += 1) {
+          const item = stateProducts[i];
+          if (item.id === id) {
+            stateProducts.splice(i, 1);
+            break;
           }
         }
 
-        localStorage.setItem("cart", ProductInCart.toStringForLocalStorage(_products));
-        this.setState({ products: _products });
+        localStorage.setItem("cart", ProductInCart.toStringForLocalStorage(stateProducts));
+        this.setState({ products: stateProducts });
       }
-
     }
   };
 
@@ -91,15 +86,12 @@ class CartListSection extends React.Component<
       const { session } = this.props;
       const { products } = this.state;
       if (session) {
-        //TODO
+        // TODO
         products.forEach(async (product) => {
           if (product.id === id) {
             if (product.quantity > event.target.value) {
               const quantityToRemove = product.quantity - event.target.value;
-              const response = await removeProductFromCart({
-                session,
-                body: { id, quantity: quantityToRemove },
-              });
+              const response = await removeProductFromCart(id, session, quantityToRemove);
               if (response) {
                 const productsList: any = await getProductsInCart(session);
                 if (productsList != null) this.setState({ products: productsList.products });
@@ -111,10 +103,7 @@ class CartListSection extends React.Component<
               }
             } else {
               const quantityToAdd = event.target.value - product.quantity;
-              const response = await insertProductInCart({
-                session,
-                body: { id, quantity: quantityToAdd },
-              });
+              const response = await insertProductInCart(id, quantityToAdd, session);
               if (response) {
                 const productsList: any = await getProductsInCart(session);
                 if (productsList != null) this.setState({ products: productsList.products });
@@ -141,7 +130,7 @@ class CartListSection extends React.Component<
     }
   };
 
-  //TODO
+  // TODO
   getRemoveAllButton = (products: ProductInCart[]) => {
     if (products.length > 0)
       return (
@@ -152,7 +141,7 @@ class CartListSection extends React.Component<
     return null;
   };
 
-  //TODO
+  // TODO
   render() {
     const { session } = this.props;
     const { products } = this.state;

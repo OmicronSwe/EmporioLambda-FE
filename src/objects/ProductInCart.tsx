@@ -35,7 +35,7 @@ export default class ProductInCart implements ProductInCartJSON {
   }
 
   public static toStringForLocalStorage(cartArray: ProductInCart[]): string {
-    let ids: string = "{\"items\":[";
+    let ids: string = '{"items":[';
     let containElements: boolean = false;
     cartArray.forEach((element) => {
       ids = `${ids}{ "id" : "${element.id}", "quantity" : "${element.quantity}" },`;

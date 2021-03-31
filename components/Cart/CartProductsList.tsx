@@ -33,20 +33,14 @@ class CartProductList extends React.Component<
               <tr key={product.id}>
                 <td>
                   {product.imageUrl ? (
-                    <img
-                      src={product.imageUrl}
-                      alt={product.description}
-                      width="100"
-                    />
+                    <img src={product.imageUrl} alt={product.description} width="100" />
                   ) : (
                     ""
                   )}
                 </td>
                 <td>{product.name}</td>
                 <td>{product.description}</td>
-                <td id={`${product.id}price`}>
-                  {`€${product.price}`}
-                </td>
+                <td id={`${product.id}price`}>{`€${product.price}`}</td>
                 <td>
                   {!disabled ? (
                     <input
