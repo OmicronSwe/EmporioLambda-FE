@@ -28,7 +28,7 @@ class ProductList extends React.Component<{ orders: Order[] }> {
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>{item.date}</td>
-                  <td>{item.totalPrice}</td>
+                  <td>{`${item.totalPrice.toFixed(2)}€`}</td>
                   <td>
                     <Button
                       variant="primary"

@@ -34,6 +34,7 @@ class ProductList extends React.Component<{ products: StoredProduct[]; removePro
                       src={item.imageUrl ? item.imageUrl : ""}
                       className="img-thumbnail"
                       alt={item.name}
+                      width={100}
                     />
                   </td>
                   <td>{item.name}</td>

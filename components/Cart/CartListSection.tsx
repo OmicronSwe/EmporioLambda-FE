@@ -163,9 +163,10 @@ class CartListSection extends React.Component<
         {`${(this.tax * 100).toString()}%`}
         <br />
         Total cost:
-        {`€${
-          ProductInCart.getProductsSum(products) + ProductInCart.getProductsSum(products) * this.tax
-        }`}
+        {`€${(
+          ProductInCart.getProductsSum(products) +
+          ProductInCart.getProductsSum(products) * this.tax
+        ).toFixed(2)}`}
       </>
     );
   }

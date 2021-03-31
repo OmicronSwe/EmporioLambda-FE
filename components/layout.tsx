@@ -40,6 +40,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
         <nav>
           <Link href="/">Home</Link>
           <Link href="/Cart">Cart</Link>
+          {session && <Link href="/profile">Profile</Link>}
           {session && session?.adm && <Link href="/dashboard">Merchant Dashboard</Link>}
           {!session && (
             <Button

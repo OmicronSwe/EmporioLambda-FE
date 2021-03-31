@@ -61,6 +61,7 @@ class OrderSection extends React.Component<{ order: Order }> {
                           <td>{item.id}</td>
                           <td>
                             <img
+                              width={100}
                               src={item.imageUrl ? item.imageUrl : ""}
                               className="img-thumbnail"
                               alt={item.name}
@@ -68,7 +69,10 @@ class OrderSection extends React.Component<{ order: Order }> {
                           </td>
                           <td>{item.name}</td>
                           <td>{item.quantity}</td>
-                          <td>{item.price}</td>
+                          <td>
+                            {item.price}
+                            &euro;
+                          </td>
                         </tr>
                       ))
                     ) : (
@@ -82,13 +86,16 @@ class OrderSection extends React.Component<{ order: Order }> {
               <td>
                 <h3>Tax applied</h3>
               </td>
-              <td>{order.taxesApplied}</td>
+              <td>{`${order.taxesApplied}%`}</td>
             </tr>
             <tr>
               <td>
                 <h3>Total cost</h3>
               </td>
-              <td>{order.totalPrice}</td>
+              <td>
+                {order.totalPrice.toFixed(2)}
+                &euro;
+              </td>
             </tr>
           </tbody>
         </Table>

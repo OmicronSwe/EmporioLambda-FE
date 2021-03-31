@@ -12,12 +12,11 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
     const { product } = this.props;
     return (
       <>
-        <h1>Product Section</h1>
-
         <Form>
+          <br />
           <Form.Row>
             <Col>
-              <Image src={product.imageUrl ? product.imageUrl : ""} rounded />
+              <Image width={300} src={product.imageUrl ? product.imageUrl : ""} rounded />
             </Col>
             <Col>
               <Form.Group as={Row} controlId="formPlainTextID">
@@ -66,6 +65,7 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
               </Form.Group>
             </Col>
           </Form.Row>
+          <br />
         </Form>
       </>
     );
