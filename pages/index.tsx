@@ -17,6 +17,7 @@ class CategoryListHome extends React.Component<{ categories: string[] }> {
     return (
       <>
         <Layout title="Homepage">
+          <h1>Home</h1>
           <SearchBarSection
             categories={categories}
             category="All categories"
