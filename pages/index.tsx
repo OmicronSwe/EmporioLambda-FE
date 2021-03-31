@@ -4,7 +4,7 @@ import { getSession } from "next-auth/client";
 import CategoryList from "../components/home/CategoryList";
 import Layout from "../components/layout";
 import { getCategories } from "./api/Services/dashboard";
-import SearchBar from "../components/SearchBar/SearchBar";
+import SearchBarSection from "../components/SearchBar/SearchBarSection";
 
 class CategoryListHome extends React.Component<{ categories: string[] }> {
   constructor(props) {
@@ -17,7 +17,13 @@ class CategoryListHome extends React.Component<{ categories: string[] }> {
     return (
       <>
         <Layout title="Homepage">
-          <SearchBar categories={categories} category="All categories" />
+          <SearchBarSection
+            categories={categories}
+            category="All categories"
+            minPrice={null}
+            maxPrice={null}
+            name=""
+          />
           <CategoryList categories={categories} />
         </Layout>
       </>
