@@ -34,7 +34,7 @@ class CartSection extends React.Component<{ session; product: StoredProduct }> {
             <option value="4">4</option>
           </Form.Control>
           <Button type="submit" className="add">
-            Aggiungi al carrello
+            Add to cart
           </Button>
         </Form>
       </>
