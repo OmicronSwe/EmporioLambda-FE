@@ -11,7 +11,7 @@
     "checkWithLint": "eslint . --ext ts,tsx",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "cross-env JWT_SIGNING_PRIVATE_KEY={\\\"kty\\\":\\\"oct\\\",\\\"kid\\\":\\\"6DZYv-ZotNlxHw8x-AC7GephMr_27-jHx002jIaHmWs\\\",\\\"alg\\\":\\\"HS512\\\",\\\"k\\\":\\\"OeeuJbW_H0fas8xDVhQsdxzE2iuF9ETupYugyJBP09k\\\"} start-server-and-test dev 3000 cypress:run"
+    "test": "node_modules/.bin/json-server --watch test-db.json --routes test-routes.json --middlewares test-middleware.js --port 3001 && node_modules/.bin/env-cmd -f .test-env start-server-and-test dev 3000 cypress:run"
   },
   "repository": {
     "type": "git",
@@ -28,6 +28,8 @@
     "bootstrap": "^4.6.0",
     "cookie-cutter": "^0.2.0",
     "cookies": "^0.8.0",
+    "env-cmd": "^10.1.0",
+    "json-server": "^0.16.3",
     "jsonwebtoken": "^8.5.1",
     "next": "^10.0.0",
     "next-auth": "^3.4.1",

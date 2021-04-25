@@ -1,0 +1,47 @@
+{
+  "category": [
+    "Headphones",
+    "Sound Cards",
+    "Speakers",
+    "Synthesizers",
+    "Amplifiers",
+    "Microphones"
+  ],
+  "product": [
+    {
+      "category": "Synthesizers",
+      "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/9669d5bd-c448-4c03-a47b-bfe43586c904.jpg",
+      "description": "Synthesizer Korg Monologue",
+      "id": "ff60640d-e92e-4f06-a7cd-79a570474dda",
+      "price": 260.5,
+      "name": "Korg Monologue"
+    },
+    {
+      "category": "Synthesizers",
+      "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/5822a808-bf2b-4faf-a189-3acdcfd90ede.jpg",
+      "description": "12-Voice Virtual\nAnalog Synthesizer",
+      "id": "022fd11f-624a-4f87-b4a1-8547d698027b",
+      "price": 229,
+      "name": "M-Audio Venom"
+    },
+    {
+      "category": "Synthesizers",
+      "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/beb57d31-a9e3-4182-8f43-a7a377e2bdd7.jpg",
+      "description": "Synthesizer Korg Minilogue",
+      "id": "1a3f1905-45b7-4a31-9af4-ec5b9862f794",
+      "price": 179.99,
+      "name": "Korg Minilogue"
+    },
+    {
+      "category": "Microphones",
+      "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/db7a8c53-bde9-438c-ab76-6c6c122634c8.jpg",
+      "description": "Plug and play microphone",
+      "id": "80c2be99-3cae-44d7-a37a-5d3a5f5dcca5",
+      "price": 30.99,
+      "name": "Fifine microphone"
+    }
+  ],
+  "profile": {
+    "name": "typicode"
+  }
+}
