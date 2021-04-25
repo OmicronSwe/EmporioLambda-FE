@@ -36,12 +36,12 @@ async function refreshAccessToken(token) {
 const options = {
   site: process.env.NEXT_PUBLIC_SITE || "http://localhost:3000",
   session: { jwt: true },
-  jwt: { 
+  jwt: {
     signingKey: process.env.JWT_SIGNING_PRIVATE_KEY,
     verificationOptions: {
-      algorithms: ["HS256"]
-    }
-   },
+      algorithms: ["HS256"],
+    },
+  },
   callbacks: {
     async jwt(token, user, account) {
       if (account?.accessToken && user) {

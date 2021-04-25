@@ -1,4 +1,3 @@
-JWT_SIGNING_PRIVATE_KEY={"kty":"oct","kid":"6DZYv-ZotNlxHw8x-AC7GephMr_27-jHx002jIaHmWs","alg":"HS512","k":"OeeuJbW_H0fas8xDVhQsdxzE2iuF9ETupYugyJBP09k"}
 VERCEL="1"
 VERCEL_ENV="development"
 VERCEL_URL=""

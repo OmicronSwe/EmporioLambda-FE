@@ -5,7 +5,6 @@ export default class Fetcher {
     this.url = new URL( // creates the URL based on enviroment variables and the function name
       `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${process.env.NEXT_PUBLIC_API_ID}.${process.env.NEXT_PUBLIC_API_SERVICE}.${process.env.NEXT_PUBLIC_REGION_API}.${process.env.NEXT_PUBLIC_API_DOMAIN}/${process.env.NEXT_PUBLIC_STAGE}/${funName}`
     );
-    console.log(this.url);
   }
 
   async getJSONResponse(method: string, params: string, session: string): Promise<any> {
