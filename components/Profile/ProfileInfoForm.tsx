@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Form, Row } from "react-bootstrap";
-import { Profile } from "../../types/Profile";
+import { Profile } from "../../src/types/Profile";
 
 class ProfileForm extends React.Component<{ profile: Profile }> {
   constructor(props) {

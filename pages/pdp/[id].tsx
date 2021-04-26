@@ -4,10 +4,10 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import ProductSection from "../../components/Pdp/ProductSection";
-import { getProduct } from "../api/Services/product";
+import { getProduct } from "../../src/Services/product";
 import CartSection from "../../components/Pdp/CartSection";
-import StoredProduct from "../../types/StoredProduct";
-import { getCategories } from "../api/Services/dashboard";
+import StoredProduct from "../../src/types/StoredProduct";
+import { getCategories } from "../../src/Services/dashboard";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 
 class ProductPage extends React.Component<{

@@ -7,8 +7,8 @@ import {
   getProductsInCart,
   insertProductInCart,
   getProductsFromLocalStorage,
-} from "../../pages/api/Services/cart";
-import Cart from "../../types/Cart";
+} from "../../src/Services/cart";
+import Cart from "../../src/types/Cart";
 
 class CartListSection extends React.Component<
   { cart: Cart; session },

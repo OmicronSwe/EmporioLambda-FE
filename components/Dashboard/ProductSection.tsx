@@ -1,16 +1,16 @@
 import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
-import ProductImage from "../../types/RawImage";
+import ProductImage from "../../src/types/RawImage";
 import {
   fileToBase64,
   insertProduct,
   removeProduct,
   getProducts,
-} from "../../pages/api/Services/dashboard";
+} from "../../src/Services/dashboard";
 
-import StoredProduct from "../../types/StoredProduct";
-import ProductSend from "../../types/ProductSend";
+import StoredProduct from "../../src/types/StoredProduct";
+import ProductSend from "../../src/types/ProductSend";
 
 class ProductSection extends React.Component<
   { products: StoredProduct[]; categories: string[]; session },
@@ -53,7 +53,6 @@ class ProductSection extends React.Component<
 
     if (allInfoInserted) {
       const product: ProductSend = new ProductSend(
-        null,
         name,
         description,
         image,

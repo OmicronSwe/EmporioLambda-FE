@@ -1,7 +1,7 @@
 import Router from "next/router";
 import React from "react";
 import { Button, CardColumns, Card } from "react-bootstrap";
-import StoredProduct from "../../types/StoredProduct";
+import StoredProduct from "../../src/types/StoredProduct";
 
 class CategoryProductList extends React.Component<{
   products: StoredProduct[];

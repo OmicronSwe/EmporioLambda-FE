@@ -1,7 +1,7 @@
 import React from "react";
 import { Button, Form } from "react-bootstrap";
-import { insertCart } from "../../pages/api/Services/product";
-import StoredProduct from "../../types/StoredProduct";
+import { insertCart } from "../../src/Services/product";
+import StoredProduct from "../../src/types/StoredProduct";
 
 class CartSection extends React.Component<{ session; product: StoredProduct }> {
   constructor(props) {

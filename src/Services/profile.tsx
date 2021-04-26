@@ -1,6 +1,6 @@
 import { decode } from "jsonwebtoken";
-import getlambdaResponse from "../lib/lambdas";
-import { Profile } from "../../../types/Profile";
+import getlambdaResponse from "../../pages/api/lib/lambdas";
+import { Profile } from "../types/Profile";
 
 export const getProfile = async (session): Promise<Profile> => {
   const response = (

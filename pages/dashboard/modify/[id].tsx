@@ -9,12 +9,12 @@ import {
   getProduct,
   updateProduct,
   fileToBase64,
-} from "../../api/Services/dashboard";
+} from "../../../src/Services/dashboard";
 import OldProductInformations from "../../../components/Dashboard/OldProductInformations";
 import ModifyingProductForm from "../../../components/Dashboard/ModifyingProductForm";
-import StoredProduct from "../../../types/StoredProduct";
-import ProductSend from "../../../types/ProductSend";
-import RawImage from "../../../types/RawImage";
+import StoredProduct from "../../../src/types/StoredProduct";
+import ProductSend from "../../../src/types/ProductSend";
+import RawImage from "../../../src/types/RawImage";
 
 class ModifyProductPage extends React.Component<
   { product: StoredProduct; categories: string[]; session },
@@ -56,7 +56,6 @@ class ModifyProductPage extends React.Component<
 
     if (atLeastOneInfoInserted) {
       const modifiedProduct: ProductSend = new ProductSend(
-        null,
         name !== "" ? name : product.name,
         description !== "" ? description : product.description,
         image,

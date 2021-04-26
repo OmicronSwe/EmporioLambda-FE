@@ -1,8 +1,8 @@
 import { decode } from "jsonwebtoken";
-import Cart from "../../../types/Cart";
-import ProductInCart from "../../../types/ProductInCart";
-import StoredProduct from "../../../types/StoredProduct";
-import getlambdaResponse from "../lib/lambdas";
+import Cart from "../types/Cart";
+import ProductInCart from "../types/ProductInCart";
+import StoredProduct from "../types/StoredProduct";
+import getlambdaResponse from "../../pages/api/lib/lambdas";
 
 export const createEmptyCart = async (params): Promise<boolean> => {
   const JSONData = { username: decode(params.accessToken).sub, products: [] };

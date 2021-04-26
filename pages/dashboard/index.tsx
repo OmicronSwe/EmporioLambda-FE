@@ -8,10 +8,10 @@ import CategorySection from "../../components/Dashboard/CategorySection";
 import OrderSection from "../../components/Dashboard/OrderSection";
 import DashboardLinks from "../../components/Dashboard/DashboardLinks";
 
-import { getProducts, getCategories } from "../api/Services/dashboard";
-import { getOrders } from "../api/Services/order";
-import { Order } from "../../types/Order";
-import StoredProduct from "../../types/StoredProduct";
+import { getProducts, getCategories } from "../../src/Services/dashboard";
+import { getOrders } from "../../src/Services/order";
+import { Order } from "../../src/types/Order";
+import StoredProduct from "../../src/types/StoredProduct";
 
 class Dashboard extends React.Component<
   { products: StoredProduct[]; categories: string[]; orders: Order[]; session },

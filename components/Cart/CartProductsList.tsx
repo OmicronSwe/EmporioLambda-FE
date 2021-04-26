@@ -1,6 +1,6 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
-import Cart from "../../types/Cart";
+import Cart from "../../src/types/Cart";
 
 class CartProductList extends React.Component<
   { auth; cart: Cart; removeOnClick; changeProductQuantity },

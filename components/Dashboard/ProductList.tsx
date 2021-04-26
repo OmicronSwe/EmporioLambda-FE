@@ -1,7 +1,7 @@
 import Router from "next/router";
 import React from "react";
 import { Table, Button } from "react-bootstrap";
-import StoredProduct from "../../types/StoredProduct";
+import StoredProduct from "../../src/types/StoredProduct";
 
 class ProductList extends React.Component<{ products: StoredProduct[]; removeProduct }> {
   constructor(props) {

@@ -4,9 +4,9 @@ import { getSession } from "next-auth/client";
 import { decode } from "jsonwebtoken";
 import Layout from "../../components/layout";
 import CartListSection from "../../components/Cart/CartListSection";
-import { getProductsInCart } from "../api/Services/cart";
+import { getProductsInCart } from "../../src/Services/cart";
 import PayButton from "../../components/Cart/PayButton";
-import Cart from "../../types/Cart";
+import Cart from "../../src/types/Cart";
 
 
 const CartPage = (props: { response: Cart; session }) => {

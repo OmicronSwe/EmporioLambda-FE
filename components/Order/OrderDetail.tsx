@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { Order } from "../../types/Order";
+import { Order } from "../../src/types/Order";
 
 class OrderSection extends React.Component<{ order: Order }> {
   constructor(props) {
@@ -57,20 +57,20 @@ class OrderSection extends React.Component<{ order: Order }> {
                   <tbody>
                     {order.products ? (
                       order.products.map((item) => (
-                        <tr key={item.id}>
-                          <td>{item.id}</td>
+                        <tr key={item.product.id}>
+                          <td>{item.product.id}</td>
                           <td>
                             <img
                               width={100}
-                              src={item.imageUrl ? item.imageUrl : ""}
+                              src={item.product.imageUrl ? item.product.imageUrl : ""}
                               className="img-thumbnail"
-                              alt={item.name}
+                              alt={item.product.name}
                             />
                           </td>
-                          <td>{item.name}</td>
+                          <td>{item.product.name}</td>
                           <td>{item.quantity}</td>
                           <td>
-                            {item.price}
+                            {item.product.price}
                             &euro;
                           </td>
                         </tr>

@@ -5,8 +5,8 @@ import { getSession } from "next-auth/client";
 import Layout from "../../../components/layout";
 import OrderDetail from "../../../components/Order/OrderDetail";
 
-import { getOrderDetails } from "../../api/Services/order";
-import { Order } from "../../../types/Order";
+import { getOrderDetails } from "../../../src/Services/order";
+import { Order } from "../../../src/types/Order";
 
 class OrderPage extends React.Component<{ order: Order }> {
   constructor(props) {

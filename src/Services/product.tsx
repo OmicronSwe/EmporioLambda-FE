@@ -1,6 +1,6 @@
 import { decode } from "jsonwebtoken";
-import StoredProduct from "../../../types/StoredProduct";
-import getlambdaResponse from "../lib/lambdas";
+import StoredProduct from "../types/StoredProduct";
+import getlambdaResponse from "../../pages/api/lib/lambdas";
 
 export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
   const response = (
