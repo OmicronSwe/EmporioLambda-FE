@@ -1,6 +1,6 @@
 import React from "react";
 import { Table } from "react-bootstrap";
-import { Order } from "../../src/types/Order";
+import Order from "../../src/types/Order";
 
 class OrderSection extends React.Component<{ order: Order }> {
   constructor(props) {

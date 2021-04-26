@@ -1,8 +1,12 @@
-export class Profile {
+export default class Profile {
   username: string;
+
   address: string;
+
   name: string;
+
   family_name: string;
+
   email: string;
 
   constructor(username: string, address: string, name: string, family_name: string, email: string) {

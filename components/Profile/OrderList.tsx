@@ -1,7 +1,7 @@
 import React from "react";
 import Router from "next/router";
 import { Table, Button } from "react-bootstrap";
-import { Order } from "../../src/types/Order";
+import Order from "../../src/types/Order";
 
 class ProductList extends React.Component<{ orders: Order[] }> {
   constructor(props) {

@@ -10,24 +10,21 @@ import {
 } from "../../src/Services/cart";
 import Cart from "../../src/types/Cart";
 
-class CartListSection extends React.Component<
-  { cart: Cart; session },
-  { cart: Cart }
-> {
+class CartListSection extends React.Component<{ cart: Cart; session }, { cart: Cart }> {
   tax;
 
   constructor(props) {
     super(props);
     this.tax = 0.2;
     const { cart } = this.props;
-    this.state = { cart: cart };
+    this.state = { cart };
   }
 
   componentDidMount = async () => {
     const { session } = this.props;
     if (!session) {
       const cart = await getProductsFromLocalStorage(session);
-      this.setState({ cart: cart });
+      this.setState({ cart });
     }
   };
 
@@ -65,7 +62,7 @@ class CartListSection extends React.Component<
           // Mostra messaggio di errore
         }
       } else if (localStorage) {
-        let stateCart: Cart = cart;
+        const stateCart: Cart = cart;
 
         for (let i = 0; i < stateCart.products.length; i += 1) {
           const item = stateCart.products[i];
@@ -118,7 +115,7 @@ class CartListSection extends React.Component<
           }
         });
       } else {
-        let jsonObj: Cart = cart;
+        const jsonObj: Cart = cart;
         jsonObj.products.forEach((element) => {
           if (element.product.id === id) {
             element.quantity = event.target.value;
@@ -145,7 +142,6 @@ class CartListSection extends React.Component<
   render() {
     const { session } = this.props;
     const { cart } = this.state;
-    console.log(cart)
     return (
       <>
         <h1>Cart Section</h1>
@@ -164,10 +160,7 @@ class CartListSection extends React.Component<
         {`${(this.tax * 100).toString()}%`}
         <br />
         Total cost:
-        {`€${(
-          cart.getProductsSum() +
-          cart.getProductsSum() * this.tax
-        ).toFixed(2)}`}
+        {`€${(cart.getProductsSum() + cart.getProductsSum() * this.tax).toFixed(2)}`}
       </>
     );
   }

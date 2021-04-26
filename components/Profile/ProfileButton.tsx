@@ -1,7 +1,7 @@
 import React from "react";
 import { Button } from "react-bootstrap";
 import Router from "next/router";
-import { Profile } from "../../src/types/Profile";
+import Profile from "../../src/types/Profile";
 
 class ProfileButton extends React.Component<{ profile: Profile; removeProfile }> {
   constructor(props) {

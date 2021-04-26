@@ -5,7 +5,7 @@ import Router from "next/router";
 import { getSession, Session } from "next-auth/client";
 import Layout from "../../../components/layout";
 import { getProfile, updateProfile } from "../../../src/Services/profile";
-import { Profile } from "../../../src/types/Profile";
+import Profile from "../../../src/types/Profile";
 import ProfileInfoForm from "../../../components/Profile/ProfileInfoForm";
 import ModifyingProfileForm from "../../../components/Profile/ModifyingProfileForm";
 

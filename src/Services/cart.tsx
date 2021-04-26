@@ -25,10 +25,17 @@ export const getProductsInCart = async (session): Promise<Cart> => {
     return null;
   }
 
-  let productArray : ProductInCart[] = []
-  response.result.products.forEach(product=> {
-    let stored = new StoredProduct(product.id, product.name, product.description, product.imageUrl, product.price, product.category)
-    productArray.push(new ProductInCart(stored, product.quantity))
+  const productArray: ProductInCart[] = [];
+  response.result.products.forEach((product) => {
+    const stored = new StoredProduct(
+      product.id,
+      product.name,
+      product.description,
+      product.imageUrl,
+      product.price,
+      product.category
+    );
+    productArray.push(new ProductInCart(stored, product.quantity));
   });
 
   return new Cart(productArray);
@@ -115,7 +122,14 @@ export const getProductsFromLocalStorage = async (session): Promise<Cart> => {
         jsonCart.map(async (item) => {
           const res = await getProduct(item.id, session);
           const resTransform = new ProductInCart(
-            new StoredProduct(res.id,res.name,res.description,res.imageUrl,res.price, res.category),
+            new StoredProduct(
+              res.id,
+              res.name,
+              res.description,
+              res.imageUrl,
+              res.price,
+              res.category
+            ),
             item.quantity
           );
           products.push(resTransform);

@@ -33,7 +33,11 @@ class CartProductList extends React.Component<
               <tr key={cartProduct.product.id}>
                 <td>
                   {cartProduct.product.imageUrl ? (
-                    <img src={cartProduct.product.imageUrl} alt={cartProduct.product.description} width="100" />
+                    <img
+                      src={cartProduct.product.imageUrl}
+                      alt={cartProduct.product.description}
+                      width="100"
+                    />
                   ) : (
                     ""
                   )}

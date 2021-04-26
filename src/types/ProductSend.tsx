@@ -11,7 +11,7 @@ export default class ProductSend extends Product {
     price: number,
     category: string
   ) {
-    super(name,description,price,category)
+    super(name, description, price, category);
     this.imageFile = imageFile;
   }
 }

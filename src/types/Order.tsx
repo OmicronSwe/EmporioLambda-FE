@@ -1,12 +1,18 @@
 import ProductInCart from "./ProductInCart";
 
-export class Order{
+export default class Order {
   id: string;
+
   username: string;
+
   products: ProductInCart[];
+
   totalPrice: number;
+
   taxesApplied: number;
+
   date: Date;
+
   email: string;
 
   constructor(

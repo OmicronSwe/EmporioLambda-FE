@@ -2,6 +2,7 @@ import Product from "./Product";
 
 export default class StoredProduct extends Product {
   imageUrl: string;
+
   id: string;
 
   constructor(
@@ -12,7 +13,7 @@ export default class StoredProduct extends Product {
     price: number,
     category: string
   ) {
-    super(name,description,price,category)
+    super(name, description, price, category);
     this.id = id;
     this.imageUrl = imageUrl;
   }

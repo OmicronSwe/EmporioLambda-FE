@@ -5,11 +5,11 @@ import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import ProfileInfoForm from "../../components/Profile/ProfileInfoForm";
 import { getProfile, removeProfile } from "../../src/Services/profile";
-import { Profile } from "../../src/types/Profile";
+import Profile from "../../src/types/Profile";
 import ProfileButton from "../../components/Profile/ProfileButton";
 import OrderList from "../../components/Profile/OrderList";
 import { getOrdersProfile } from "../../src/Services/order";
-import { Order } from "../../src/types/Order";
+import Order from "../../src/types/Order";
 
 class ProfilePage extends React.Component<{ profile: Profile; orders: Order[]; session }> {
   constructor(props) {

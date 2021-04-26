@@ -8,7 +8,6 @@ import { getProductsInCart } from "../../src/Services/cart";
 import PayButton from "../../components/Cart/PayButton";
 import Cart from "../../src/types/Cart";
 
-
 const CartPage = (props: { response: Cart; session }) => {
   const { response, session } = props;
   const username = session ? decode(session.accessToken).sub : null;

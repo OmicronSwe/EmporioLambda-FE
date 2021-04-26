@@ -10,7 +10,7 @@ import DashboardLinks from "../../components/Dashboard/DashboardLinks";
 
 import { getProducts, getCategories } from "../../src/Services/dashboard";
 import { getOrders } from "../../src/Services/order";
-import { Order } from "../../src/types/Order";
+import Order from "../../src/types/Order";
 import StoredProduct from "../../src/types/StoredProduct";
 
 class Dashboard extends React.Component<
@@ -33,7 +33,6 @@ class Dashboard extends React.Component<
   render() {
     const { products, orders, session } = this.props;
     const { categories } = this.state;
-    console.log(products)
     return (
       <>
         <Layout title="Dashboard page">
