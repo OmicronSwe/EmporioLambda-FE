@@ -6,15 +6,17 @@ import Layout from "../../components/layout";
 import CartListSection from "../../components/Cart/CartListSection";
 import { getProductsInCart } from "../api/Services/cart";
 import PayButton from "../../components/Cart/PayButton";
+import Cart from "../../types/Cart";
 
-const Cart = (props: { response; session }) => {
+
+const CartPage = (props: { response: Cart; session }) => {
   const { response, session } = props;
   const username = session ? decode(session.accessToken).sub : null;
   // <CheckoutSection/>
   return (
     <>
       <Layout title="Cart page">
-        <CartListSection session={session} products={response} />
+        <CartListSection session={session} cart={new Cart(response.products)} />
         <PayButton username={username} />
       </Layout>
     </>
@@ -25,9 +27,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req }); // get session data
   if (session) {
     const resp: any = await getProductsInCart(session); // external API call to get cart's product ids
-    return { props: { response: resp.products, session } };
+    return { props: { response: JSON.parse(JSON.stringify(resp)), session } };
   }
-  return { props: { response: [], session: null } }; // if not authenticated, return empty response and null session
+  return { props: { response: null, session: null } }; // if not authenticated, return empty response and null session
 };
 
-export default Cart;
+export default CartPage;

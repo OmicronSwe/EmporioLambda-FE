@@ -2,7 +2,7 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
-import StoredProduct from "../../src/objects/StoredProduct";
+import StoredProduct from "../../types/StoredProduct";
 import { getProductsByCategory } from "../api/Services/plp";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 import { getCategories } from "../api/Services/dashboard";

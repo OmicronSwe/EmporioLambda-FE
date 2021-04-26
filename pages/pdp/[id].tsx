@@ -6,7 +6,7 @@ import Layout from "../../components/layout";
 import ProductSection from "../../components/Pdp/ProductSection";
 import { getProduct } from "../api/Services/product";
 import CartSection from "../../components/Pdp/CartSection";
-import StoredProduct from "../../src/objects/StoredProduct";
+import StoredProduct from "../../types/StoredProduct";
 import { getCategories } from "../api/Services/dashboard";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 

@@ -1,5 +1,5 @@
 import { decode } from "jsonwebtoken";
-import StoredProduct from "../../../src/objects/StoredProduct";
+import StoredProduct from "../../../types/StoredProduct";
 import getlambdaResponse from "../lib/lambdas";
 
 export const getProductsByCategory = async (

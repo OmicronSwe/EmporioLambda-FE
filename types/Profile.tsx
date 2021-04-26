@@ -1,20 +1,8 @@
-export interface ProfileJSON {
+export class Profile {
   username: string;
   address: string;
   name: string;
   family_name: string;
-  email: string;
-}
-
-export class Profile implements ProfileJSON {
-  username: string;
-
-  address: string;
-
-  name: string;
-
-  family_name: string;
-
   email: string;
 
   constructor(username: string, address: string, name: string, family_name: string, email: string) {

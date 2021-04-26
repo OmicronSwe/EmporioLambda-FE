@@ -1,5 +1,5 @@
-import JustCreatedProduct from "../../../src/objects/JustCreatedProduct";
-import StoredProduct from "../../../src/objects/StoredProduct";
+import JustCreatedProduct from "../../../types/ProductSend";
+import StoredProduct from "../../../types/StoredProduct";
 import getlambdaResponse from "../lib/lambdas";
 
 export const insertProduct = async (product: JustCreatedProduct, ses): Promise<boolean> => {

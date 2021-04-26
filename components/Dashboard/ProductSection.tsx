@@ -1,7 +1,7 @@
 import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
-import ProductImage from "../../src/objects/ProductImage";
+import ProductImage from "../../types/RawImage";
 import {
   fileToBase64,
   insertProduct,
@@ -9,8 +9,8 @@ import {
   getProducts,
 } from "../../pages/api/Services/dashboard";
 
-import StoredProduct from "../../src/objects/StoredProduct";
-import JustCreatedProduct from "../../src/objects/JustCreatedProduct";
+import StoredProduct from "../../types/StoredProduct";
+import ProductSend from "../../types/ProductSend";
 
 class ProductSection extends React.Component<
   { products: StoredProduct[]; categories: string[]; session },
@@ -52,7 +52,8 @@ class ProductSection extends React.Component<
       name !== "" && description !== "" && price !== "" && image !== undefined && category !== "";
 
     if (allInfoInserted) {
-      const product: JustCreatedProduct = new JustCreatedProduct(
+      const product: ProductSend = new ProductSend(
+        null,
         name,
         description,
         image,

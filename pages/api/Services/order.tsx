@@ -1,5 +1,5 @@
-import { Order } from "../../../src/objects/Order";
-import { Profile } from "../../../src/objects/Profile";
+import { Order } from "../../../types/Order";
+import { Profile } from "../../../types/Profile";
 import getlambdaResponse from "../lib/lambdas";
 
 export const getOrderDetails = async (id: string, ses): Promise<Order> => {

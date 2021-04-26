@@ -1,6 +1,6 @@
 import React from "react";
 import { Table, Button } from "react-bootstrap";
-import { Order } from "../../src/objects/Order";
+import { Order } from "../../types/Order";
 
 class ProductList extends React.Component<{ orders: Order[] }> {
   constructor(props) {

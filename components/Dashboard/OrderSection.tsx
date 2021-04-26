@@ -1,5 +1,5 @@
 import React from "react";
-import { Order } from "../../src/objects/Order";
+import { Order } from "../../types/Order";
 import OrderList from "./OrderList";
 
 class OrderSection extends React.Component<{ orders: Order[] }> {
