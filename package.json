@@ -66,6 +66,7 @@
   "nyc": {
     "exclude": [
       "pages/api/_coverage_.ts"
-    ]
+    ],
+    "reporter": ["html"]
   }
 }
