@@ -1,3 +1,4 @@
+
 html,
 body {
   padding: 0;
@@ -53,11 +54,12 @@ header nav {
   margin: auto;
   padding: 2em;
   word-wrap: break-word;
+  width: 70%;
 }
 
 #footer {
   border-top: 1px solid #ccc;
-  position: absolute;
+  position: relative;
   bottom: 0;
   width: 100%;
   height: 3em;
@@ -72,4 +74,8 @@ header nav {
   justify-content: space-evenly;
   max-width: 30em;
   margin: 0 auto;
+}
+
+.searchProductName{
+  width: 40% !important;
 }

@@ -4,5 +4,6 @@
         "codeCoverage": {
           "url": "/api/_coverage_"
         }
-    }
+    },
+    "chromeWebSecurity": false
 }
