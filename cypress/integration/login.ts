@@ -22,12 +22,12 @@ describe("Test login", () => {
     cy.get("a").contains("Merchant Dashboard");
   });
   it("Test signin button", () => {
-    cy.intercept("/api/auth/signin/cognito", []).as('getSignin');
+    cy.intercept("/api/auth/signin/cognito", []).as("getSignin");
     cy.visit("/");
     cy.wait(1000);
     cy.get("button").contains("Sign in").click();
 
-    cy.wait('@getSignin').then((interception) => {
+    cy.wait("@getSignin").then((interception) => {
       expect(interception.request.body).to.include("callbackUrl=");
     });
   });
@@ -40,7 +40,7 @@ describe("Test login", () => {
     cy.wait(1000);
     cy.intercept("/api/auth/logout", (req) => {
       expect(req.body).to.equal("");
-      req.redirect('/');
+      req.redirect("/");
     });
     cy.get("button").contains("Sign out").click();
   });
