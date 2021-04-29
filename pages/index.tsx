@@ -3,7 +3,7 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import CategoryList from "../components/home/CategoryList";
 import Layout from "../components/layout";
-// import { getCategories } from "../src/Services/dashboard";
+import { getCategories } from "../src/Services/dashboard";
 import SearchBarSection from "../components/SearchBar/SearchBarSection";
 
 class CategoryListHome extends React.Component<{ categories: string[] }> {
@@ -36,8 +36,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req });
   return {
     props: {
-      categories: ["test"],
-      session,
+      categories: await getCategories(session),
     },
   };
 };
