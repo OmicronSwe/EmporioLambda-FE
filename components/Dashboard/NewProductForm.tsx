@@ -1,4 +1,4 @@
-import React,{FC} from "react";
+import React, { FC } from "react";
 import {
   Button,
   Accordion,
@@ -14,12 +14,16 @@ import {
 } from "react-bootstrap";
 
 type NewProductFormProps = {
-  insertProduct,
-  categories: string[],
-  productInsertedAlert: boolean
-}
+  insertProduct;
+  categories: string[];
+  productInsertedAlert: boolean;
+};
 
-const NewProductForm: FC<NewProductFormProps> = ({ insertProduct, categories, productInsertedAlert }) => {
+const NewProductForm: FC<NewProductFormProps> = ({
+  insertProduct,
+  categories,
+  productInsertedAlert,
+}) => {
   return (
     <>
       <Accordion>
@@ -141,6 +145,6 @@ const NewProductForm: FC<NewProductFormProps> = ({ insertProduct, categories, pr
       </Accordion>
     </>
   );
-}
+};
 
 export default NewProductForm;
