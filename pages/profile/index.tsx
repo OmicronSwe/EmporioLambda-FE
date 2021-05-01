@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
       profile,
-      orders: await getOrdersProfile(session.accessToken, profile),
+      orders: await getOrdersProfile(session, profile),
     },
   };
 };
