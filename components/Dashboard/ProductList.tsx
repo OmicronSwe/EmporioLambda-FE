@@ -3,14 +3,12 @@ import React from "react";
 import { Table, Button } from "react-bootstrap";
 import StoredProduct from "../../src/types/StoredProduct";
 
-class ProductList extends React.Component<{ products: StoredProduct[]; removeProduct }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+interface ProductListProps {
+  products: StoredProduct[];
+  removeProduct;
+}
 
-  render() {
-    const { products, removeProduct } = this.props;
+const ProductList = ({ products, removeProduct }: ProductListProps) => {
     return (
       <>
         <Table>
@@ -69,6 +67,5 @@ class ProductList extends React.Component<{ products: StoredProduct[]; removePro
       </>
     );
   }
-}
 
 export default ProductList;
