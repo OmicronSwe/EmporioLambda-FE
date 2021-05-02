@@ -12,7 +12,7 @@ import SummaryInfo from "./SummaryInfo";
 import RemoveAllButton from "./RemoveAllButton";
 
 class CartListSection extends React.Component<{ cart: Cart; session }, { cart: Cart }> {
-  tax : number;
+  tax: number;
 
   constructor(props) {
     super(props);
@@ -129,7 +129,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
   };
 
   // TODO
-  /*getRemoveAllButton = (cart: Cart) => {
+  /* getRemoveAllButton = (cart: Cart) => {
     if (cart.products.length > 0)
       return (
         <Button variant="primary" onClick={() => this.removeAllProductOnClick()}>
@@ -137,7 +137,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
         </Button>
       );
     return null;
-  };*/
+  }; */
 
   // TODO
   render() {
@@ -152,14 +152,8 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
           removeOnClick={this.removeProduct}
           changeProductQuantity={this.changeProductQuantity}
         />
-        <RemoveAllButton 
-          cart={cart}
-          removeAllProduct={this.removeAllProduct}
-        />
-        <SummaryInfo 
-          tax={this.tax}
-          cart={cart}
-        />
+        <RemoveAllButton cart={cart} removeAllProduct={this.removeAllProduct} />
+        <SummaryInfo tax={this.tax} cart={cart} />
       </>
     );
   }
