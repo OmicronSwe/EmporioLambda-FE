@@ -28,7 +28,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
     const resp: any = await getProductsInCart(session); // external API call to get cart's product ids
     return { props: { response: JSON.parse(JSON.stringify(resp)), session } };
   }
-  return { props: { response: null, session: null } }; // if not authenticated, return empty response and null session
+  return { props: { response: {products : []}, session: null } }; // if not authenticated, return empty response and null session
 };
 
 export default CartPage;

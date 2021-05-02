@@ -1,5 +1,4 @@
 import React from "react";
-import { Button } from "react-bootstrap";
 import CartProductList from "./CartProductsList";
 import {
   removeProductFromCart,
@@ -9,9 +8,11 @@ import {
   getProductsFromLocalStorage,
 } from "../../src/Services/cart";
 import Cart from "../../src/types/Cart";
+import SummaryInfo from "./SummaryInfo";
+import RemoveAllButton from "./RemoveAllButton";
 
 class CartListSection extends React.Component<{ cart: Cart; session }, { cart: Cart }> {
-  tax;
+  tax : number;
 
   constructor(props) {
     super(props);
@@ -28,7 +29,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
     }
   };
 
-  removeAllProductOnClick = async () => {
+  removeAllProduct = async () => {
     const { session } = this.props;
     if (session) {
       // authenticated -> internal API to call external API to delete the cart
@@ -45,7 +46,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
     }
   };
 
-  removeProductOnClick = async (id: string) => {
+  removeProduct = async (id: string) => {
     const { session } = this.props;
     const { cart } = this.state;
     if (id) {
@@ -128,7 +129,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
   };
 
   // TODO
-  getRemoveAllButton = (cart: Cart) => {
+  /*getRemoveAllButton = (cart: Cart) => {
     if (cart.products.length > 0)
       return (
         <Button variant="primary" onClick={() => this.removeAllProductOnClick()}>
@@ -136,7 +137,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
         </Button>
       );
     return null;
-  };
+  };*/
 
   // TODO
   render() {
@@ -148,19 +149,17 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
         <CartProductList
           auth={session}
           cart={cart}
-          removeOnClick={this.removeProductOnClick}
+          removeOnClick={this.removeProduct}
           changeProductQuantity={this.changeProductQuantity}
         />
-        {this.getRemoveAllButton(cart)}
-        <br />
-        Products cost:
-        {`€${cart.getProductsSum().toString()}`}
-        <br />
-        Tax cost:
-        {`${(this.tax * 100).toString()}%`}
-        <br />
-        Total cost:
-        {`€${(cart.getProductsSum() + cart.getProductsSum() * this.tax).toFixed(2)}`}
+        <RemoveAllButton 
+          cart={cart}
+          removeAllProduct={this.removeAllProduct}
+        />
+        <SummaryInfo 
+          tax={this.tax}
+          cart={cart}
+        />
       </>
     );
   }
