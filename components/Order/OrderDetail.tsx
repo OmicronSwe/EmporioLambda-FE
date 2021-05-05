@@ -23,9 +23,15 @@ class OrderSection extends React.Component<{ order: Order }> {
             </tr>
             <tr>
               <td>
-                <h3>Client&apos;s email</h3>
+                <h3>Email used</h3>
               </td>
               <td>{order.email}</td>
+            </tr>
+            <tr>
+              <td>
+                <h3>Client&apos;s username</h3>
+              </td>
+              <td>{order.username}</td>
             </tr>
             <tr>
               <td>
@@ -55,14 +61,18 @@ class OrderSection extends React.Component<{ order: Order }> {
                           <td>{item.id}</td>
                           <td>
                             <img
-                              src={item.image ? item.image : ""}
+                              width={100}
+                              src={item.imageUrl ? item.imageUrl : ""}
                               className="img-thumbnail"
                               alt={item.name}
                             />
                           </td>
                           <td>{item.name}</td>
                           <td>{item.quantity}</td>
-                          <td>{item.price}</td>
+                          <td>
+                            {item.price}
+                            &euro;
+                          </td>
                         </tr>
                       ))
                     ) : (
@@ -76,13 +86,16 @@ class OrderSection extends React.Component<{ order: Order }> {
               <td>
                 <h3>Tax applied</h3>
               </td>
-              <td>{order.totalTax}</td>
+              <td>{`${order.taxesApplied}%`}</td>
             </tr>
             <tr>
               <td>
                 <h3>Total cost</h3>
               </td>
-              <td>{order.totalCost}</td>
+              <td>
+                {order.totalPrice.toFixed(2)}
+                &euro;
+              </td>
             </tr>
           </tbody>
         </Table>

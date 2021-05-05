@@ -3,7 +3,7 @@ export default class Fetcher {
 
   constructor(funName: string) {
     this.url = new URL( // creates the URL based on enviroment variables and the function name
-      `https://${process.env.NEXT_PUBLIC_API_ID}.execute-api.${process.env.NEXT_PUBLIC_REGION_API}.amazonaws.com/${process.env.NEXT_PUBLIC_STAGE}/${funName}`
+      `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${process.env.NEXT_PUBLIC_API_ID}.${process.env.NEXT_PUBLIC_API_SERVICE}.${process.env.NEXT_PUBLIC_REGION_API}.${process.env.NEXT_PUBLIC_API_DOMAIN}/${process.env.NEXT_PUBLIC_STAGE}/${funName}`
     );
   }
 

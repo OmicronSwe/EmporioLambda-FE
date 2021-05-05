@@ -67,8 +67,8 @@ export const removeCategory = async (name: string, ses): Promise<boolean> => {
 };
 
 export const getCategories = async (ses): Promise<string[]> => {
-  const response = (await getlambdaResponse("category", "GET", ses.accessToken)).props.response
-    .result.items;
+  const response = (await getlambdaResponse("category", "GET", ses ? ses.accessToken : null)).props
+    .response.result.items;
   return response;
 };
 

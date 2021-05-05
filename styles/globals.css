@@ -75,3 +75,7 @@ header nav {
   max-width: 30em;
   margin: 0 auto;
 }
+
+.searchProductName{
+  width: 40% !important;
+}

@@ -1,11 +1,11 @@
-import { ProductInCart } from "./ProductInCart";
+import ProductInCart from "./ProductInCart";
 
 export interface OrderJSON {
   id: string;
   username: string;
   products: ProductInCart[];
-  totalCost: number;
-  totalTax: number;
+  totalPrice: number;
+  taxesApplied: number;
   date: Date;
   email: string;
 }
@@ -17,9 +17,9 @@ export class Order implements OrderJSON {
 
   products: ProductInCart[];
 
-  totalCost: number;
+  totalPrice: number;
 
-  totalTax: number;
+  taxesApplied: number;
 
   date: Date;
 
@@ -29,16 +29,16 @@ export class Order implements OrderJSON {
     id: string,
     username: string,
     products: ProductInCart[],
-    totalCost: number,
-    totalTax: number,
+    totalPrice: number,
+    taxesApplied: number,
     date: Date,
     email: string
   ) {
     this.id = id;
     this.username = username;
     this.products = products;
-    this.totalCost = totalCost;
-    this.totalTax = totalTax;
+    this.totalPrice = totalPrice;
+    this.taxesApplied = taxesApplied;
     this.date = date;
     this.email = email;
   }

@@ -1,4 +1,5 @@
 import React from "react";
+import Router from "next/router";
 import { Table, Button } from "react-bootstrap";
 import { Order } from "../../src/objects/Order";
 
@@ -10,6 +11,7 @@ class ProductList extends React.Component<{ orders: Order[] }> {
 
   render() {
     const { orders } = this.props;
+
     return (
       <>
         {orders ? (
@@ -17,20 +19,23 @@ class ProductList extends React.Component<{ orders: Order[] }> {
             <thead className="thead-light">
               <tr>
                 <th>ID ordine</th>
-                <th>Client</th>
-                <th>Total cost</th>
                 <th>Date</th>
+                <th>Total cost</th>
               </tr>
             </thead>
             <tbody>
               {orders.map((item) => (
                 <tr key={item.id}>
                   <td>{item.id}</td>
-                  <td>{item.email}</td>
-                  <td>{`${item.totalPrice.toFixed(2)}€`}</td>
                   <td>{item.date}</td>
+                  <td>{`${item.totalPrice.toFixed(2)}€`}</td>
                   <td>
-                    <Button variant="primary">Details</Button>
+                    <Button
+                      variant="primary"
+                      onClick={() => Router.push(`/profile/order/${item.id}`)}
+                    >
+                      Details
+                    </Button>
                   </td>
                 </tr>
               ))}
