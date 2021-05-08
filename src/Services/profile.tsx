@@ -4,7 +4,7 @@ import Profile from "../types/Profile";
 
 export const getProfile = async (session): Promise<Profile> => {
   const response = (
-    await getlambdaResponse(`user/${decode(session.accessToken).sub}`, "GET", session.accessToken)
+    await getlambdaResponse(`user/${decode(session.accessToken).sub}/`, "GET", session.accessToken)
   ).props.response.result;
   return response;
 };

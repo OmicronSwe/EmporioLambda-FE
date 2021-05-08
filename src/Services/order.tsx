@@ -1,3 +1,4 @@
+import { decode } from "jsonwebtoken";
 import Order from "../types/Order";
 import Profile from "../types/Profile";
 import getlambdaResponse from "../../pages/api/lib/lambdas";
@@ -5,9 +6,13 @@ import ProductInCart from "../types/ProductInCart";
 import StoredProduct from "../types/StoredProduct";
 
 export const getOrderDetails = async (id: string, ses): Promise<Order> => {
-  const response = await (await getlambdaResponse(`order/${id}`, "GET", ses.accessToken)).props
-    .response.result;
-
+  const response = await (
+    await getlambdaResponse(
+      `order/getByUsername/${decode(ses.accessToken).sub}/${id}`,
+      "GET",
+      ses.accessToken
+    )
+  ).props.response.result.items[0];
   const productArray: ProductInCart[] = [];
   response.products.forEach((product) => {
     const stored = new StoredProduct(
