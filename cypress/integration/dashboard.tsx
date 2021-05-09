@@ -25,7 +25,7 @@ describe("Test dashboard", () => {
     cy.get("button").contains("Add new product").click();
     cy.get("#productName");
     cy.get("#productDescription");
-    cy.get("#productPrice")
+    cy.get("#productPrice");
     cy.get("#productImage");
     cy.get("#productCategorySelection");
     cy.get("button").contains("Submit");
@@ -37,7 +37,7 @@ describe("Test dashboard", () => {
     );
     cy.visit("/dashboard");
     cy.wait(1000);
-    cy.get("#productList").find('tr').its('length').should('be.gte', 1);
+    cy.get("#productList").find("tr").its("length").should("be.gte", 1);
   });
 });
 
