@@ -13,7 +13,7 @@ class ProductList extends React.Component<{ products: StoredProduct[]; removePro
     const { products, removeProduct } = this.props;
     return (
       <>
-        <Table>
+        <Table id="productList">
           <thead className="thead-light">
             <tr>
               <th>ID</th>
