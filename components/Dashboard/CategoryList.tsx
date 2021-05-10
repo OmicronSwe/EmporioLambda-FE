@@ -27,6 +27,6 @@ const CategoryList = ({ categories, removeCategory }: CategoryListProps) => {
       </CardColumns>
     </>
   );
-}
+};
 
 export default CategoryList;

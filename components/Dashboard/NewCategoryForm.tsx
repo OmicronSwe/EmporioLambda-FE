@@ -37,6 +37,6 @@ const NewCategoryForm = ({ insertCategory }: NewCategoryFormProps) => {
       </Accordion>
     </>
   );
-}
+};
 
 export default NewCategoryForm;

@@ -38,6 +38,6 @@ const OrderList = ({ orders }: OrderListProps) => {
       )}
     </>
   );
-}
+};
 
 export default OrderList;

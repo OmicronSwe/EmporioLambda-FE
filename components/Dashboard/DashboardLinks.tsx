@@ -22,6 +22,6 @@ const DashboardLinks = () => {
       </ul>
     </div>
   );
-}
+};
 
 export default DashboardLinks;

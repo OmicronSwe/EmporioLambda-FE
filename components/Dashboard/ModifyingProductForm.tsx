@@ -18,7 +18,11 @@ interface ModifyingProductFormProps {
   productModifiedAlert: boolean;
 }
 
-const ModifyingProductForm = ({ updateProduct, categories, productModifiedAlert }: ModifyingProductFormProps) => {
+const ModifyingProductForm = ({
+  updateProduct,
+  categories,
+  productModifiedAlert,
+}: ModifyingProductFormProps) => {
   return (
     <>
       <Form onSubmit={updateProduct} className="border border-dark p-3">
@@ -120,15 +124,13 @@ const ModifyingProductForm = ({ updateProduct, categories, productModifiedAlert 
       </Form>
       {productModifiedAlert !== null && productModifiedAlert === false ? (
         <Alert variant="danger">
-          <Alert.Heading>
-            At least one field must be filled in to modify the product
-          </Alert.Heading>
+          <Alert.Heading>At least one field must be filled in to modify the product</Alert.Heading>
         </Alert>
       ) : (
         <p />
       )}
     </>
   );
-}
+};
 
 export default ModifyingProductForm;

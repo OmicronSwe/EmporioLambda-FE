@@ -61,6 +61,6 @@ const OldProductInformations = ({ product }: OldProductInformationsProps) => {
       </Form>
     </>
   );
-}
+};
 
 export default OldProductInformations;
