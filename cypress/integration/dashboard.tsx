@@ -50,7 +50,7 @@ describe("Test dashboard", () => {
     cy.get("#productName").type("CypressTest");
     cy.get("#productDescription").type("CypressTest");
     cy.get("#productPrice").type("100");
-    const filepath = 'images/aws_black.png';
+    const filepath = "images/aws_black.png";
     cy.get('input[type="file"]').attachFile(filepath);
     cy.get("#productCategorySelection").type("Headphones");
     cy.get("button").contains("Submit").click();
