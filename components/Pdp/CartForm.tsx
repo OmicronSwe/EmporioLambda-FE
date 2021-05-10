@@ -1,11 +1,12 @@
 import React from "react";
-import { Button, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 
 interface AddCartProps {
   addCart;
+  addedCartAlert: boolean;
 }
 
-const CartForm = ({ addCart }: AddCartProps) => {
+const CartForm = ({ addCart, addedCartAlert }: AddCartProps) => {
   return (
     <>
       <Form inline onSubmit={addCart}>
@@ -25,6 +26,20 @@ const CartForm = ({ addCart }: AddCartProps) => {
           Add to cart
         </Button>
       </Form>
+      {addedCartAlert !== null && addedCartAlert === true ? (
+        <Alert variant="success">
+          <Alert.Heading>Product added to cart successfully!</Alert.Heading>
+        </Alert>
+      ) : (
+        <p />
+      )}
+      {addedCartAlert !== null && addedCartAlert === false ? (
+        <Alert variant="danger">
+          <Alert.Heading>ERROR! Product was not correctly added to the cart!</Alert.Heading>
+        </Alert>
+      ) : (
+        <p />
+      )}
     </>
   );
 };

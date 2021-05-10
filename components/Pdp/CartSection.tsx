@@ -3,10 +3,13 @@ import { insertCart } from "../../src/Services/product";
 import StoredProduct from "../../src/types/StoredProduct";
 import CartForm from "./CartForm";
 
-class CartSection extends React.Component<{ session; product: StoredProduct }> {
+class CartSection extends React.Component<
+  { session; product: StoredProduct },
+  { addedCartAlert: boolean | null }
+> {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { addedCartAlert: null };
   }
 
   addCart = async (event) => {
@@ -14,13 +17,21 @@ class CartSection extends React.Component<{ session; product: StoredProduct }> {
     event.preventDefault();
 
     const { session, product } = this.props;
-    await insertCart(session, product, Number(event.target.quantity.value));
+
+    const resp = await insertCart(session, product, Number(event.target.quantity.value));
+
+    if (resp) {
+      this.setState({ addedCartAlert: true });
+    } else {
+      this.setState({ addedCartAlert: false });
+    }
   };
 
   render() {
+    const { addedCartAlert } = this.state;
     return (
       <>
-        <CartForm addCart={this.addCart} />
+        <CartForm addCart={this.addCart} addedCartAlert={addedCartAlert} />
       </>
     );
   }
