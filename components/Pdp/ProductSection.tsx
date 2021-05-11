@@ -16,7 +16,12 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
           <br />
           <Form.Row>
             <Col>
-              <Image width={300} src={product.imageUrl ? product.imageUrl : ""} rounded />
+              <Image
+                id="imgProduct"
+                width={300}
+                src={product.imageUrl ? product.imageUrl : ""}
+                rounded
+              />
             </Col>
             <Col>
               <Form.Group as={Row} controlId="formPlainTextID">

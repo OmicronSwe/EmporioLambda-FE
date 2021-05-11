@@ -28,7 +28,7 @@ const CartForm = ({ addCart, addedCartAlert }: AddCartProps) => {
       </Form>
       {addedCartAlert !== null && addedCartAlert === true ? (
         <Alert variant="success">
-          <Alert.Heading>Product added to cart successfully!</Alert.Heading>
+          <Alert.Heading id="AlertSuccess">Product added to cart successfully!</Alert.Heading>
         </Alert>
       ) : (
         <p />
