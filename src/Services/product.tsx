@@ -47,7 +47,7 @@ export const insertCart = async (
         jsonCart = {
           items: [],
         };
-      }     
+      }
     } else {
       jsonCart = {
         items: [],
