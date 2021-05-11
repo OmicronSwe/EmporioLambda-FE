@@ -16,7 +16,6 @@ export const insertCart = async (
 ): Promise<boolean> => {
   if (session) {
     // authenticated
-
     const stringJSON = JSON.stringify({
       id: product.id,
       quantity,
@@ -42,7 +41,13 @@ export const insertCart = async (
     let jsonCart;
 
     if (cart != null) {
-      jsonCart = JSON.parse(cart);
+      try {
+        jsonCart = JSON.parse(cart);
+      } catch (error) {
+        jsonCart = {
+          items: [],
+        };
+      }     
     } else {
       jsonCart = {
         items: [],
@@ -60,8 +65,12 @@ export const insertCart = async (
     if (!change) {
       jsonCart.items.push({ id: product.id, quantity }); // push new id to the cart
     }
-    localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
-    return true;
+    try {
+      localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 };
 
