@@ -1,5 +1,7 @@
 {
     "/local/*": "/$1",
     "/product/search/category=:category": "/product?category=:category",
-    "/product/:id": "/product?id=:id"
+    "/product/:id": "/product?id=:id",
+    "/user/*": "/user",
+    "/order/getByUsername/*": "/order"
 }
