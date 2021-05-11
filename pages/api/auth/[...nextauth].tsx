@@ -4,7 +4,9 @@ import jwt from "jsonwebtoken";
 
 async function refreshAccessToken(token) {
   try {
-    const url = `https://${process.env.COGNITO_DOMAIN}/oauth2/token?${new URLSearchParams({
+    const url = `${process.env.NEXT_PUBLIC_API_PROTOCOL}://${
+      process.env.COGNITO_DOMAIN
+    }/oauth2/token?${new URLSearchParams({
       client_id: process.env.COGNITO_CLIENT_ID,
       grant_type: "refresh_token",
       refresh_token: token.refreshToken,
@@ -21,14 +23,13 @@ async function refreshAccessToken(token) {
     }
     return {
       ...token,
-      accessToken: refreshedTokens.access_token,
+      accessToken: refreshedTokens.access_token ?? token.accessToken,
       e: Date.now() + refreshedTokens.expires_in * 1000,
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
     return {
       ...token,
-      error: "RefreshAccessTokenError",
     };
   }
 }
