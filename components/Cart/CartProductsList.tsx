@@ -1,9 +1,9 @@
 import React from "react";
-import { Button, Table } from "react-bootstrap";
+import { Button, Table, Alert } from "react-bootstrap";
 import Cart from "../../src/types/Cart";
 
 class CartProductList extends React.Component<
-  { auth; cart: Cart; removeOnClick; changeProductQuantity },
+  { auth; cart: Cart; removeOnClick; changeProductQuantity; insertAlert: boolean; removeAlert: boolean; fetchAlert: boolean; },
   { disabled: boolean }
 > {
   constructor(props) {
@@ -14,9 +14,10 @@ class CartProductList extends React.Component<
 
   render() {
     const { disabled } = this.state;
-    const { cart, removeOnClick, changeProductQuantity } = this.props;
+    const { cart, removeOnClick, changeProductQuantity, insertAlert, removeAlert, fetchAlert } = this.props;
     if (cart.products.length > 0)
       return (
+      <>
         <Table className="product-list" borderless>
           <caption> Shopping Cart </caption>
           <thead>
@@ -70,7 +71,7 @@ class CartProductList extends React.Component<
                   )}
                 </td>
                 <td>
-                  <Button variant="primary" onClick={() => removeOnClick(cartProduct.product.id)}>
+                  <Button id={cartProduct.product.id} variant="primary" onClick={() => removeOnClick(cartProduct.product.id)}>
                     Remove
                   </Button>
                 </td>
@@ -78,7 +79,45 @@ class CartProductList extends React.Component<
             ))}
           </tbody>
         </Table>
-      );
+        {insertAlert === true ? (
+        <Alert variant="danger">
+          <Alert.Heading>
+            A problem occurred while inserting the item from the cart
+          </Alert.Heading>  
+        </Alert> )
+        : 
+        insertAlert === false ? (
+        <Alert variant="success">
+          <Alert.Heading>
+            Item correctly inserted to the cart
+          </Alert.Heading>  
+        </Alert>
+        ) : null}
+        {removeAlert === true ? (
+        <Alert variant="danger">
+          <Alert.Heading>
+            A problem occurred while removing the item from the cart
+          </Alert.Heading>
+        </Alert>
+        ) 
+        :
+        removeAlert === false ? 
+        <Alert variant="success">
+          <Alert.Heading>
+            Item correctly removed from the cart
+          </Alert.Heading>  
+        </Alert>
+        : null}
+        {fetchAlert === true ? (
+        <Alert variant="danger">
+          <Alert.Heading>
+            A problem occured while getting the necessary data
+          </Alert.Heading>
+        </Alert>
+        ) : null}
+    </>
+    );
+    
     return <h2>Your cart is empty</h2>;
   }
 }

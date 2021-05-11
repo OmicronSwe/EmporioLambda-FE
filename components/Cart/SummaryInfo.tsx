@@ -11,6 +11,7 @@ class SummaryInfo extends React.Component<{ tax: number; cart: Cart }> {
     const { tax, cart } = this.props;
     return (
       <>
+      <div id="summaryInfo">
         <br />
         Products cost:
         {`€${cart.getProductsSum().toString()}`}
@@ -20,6 +21,7 @@ class SummaryInfo extends React.Component<{ tax: number; cart: Cart }> {
         <br />
         Total cost:
         {`€${(cart.getProductsSum() + cart.getProductsSum() * tax).toFixed(2)}`}
+      </div>
       </>
     );
   }

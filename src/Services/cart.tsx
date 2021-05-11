@@ -14,7 +14,7 @@ export const createEmptyCart = async (params): Promise<boolean> => {
 };
 
 export const getProductsInCart = async (session): Promise<Cart> => {
-  const { response } = (
+  const {response} = (
     await getlambdaResponse(`cart/${decode(session.accessToken).sub}`, "GET", session.accessToken)
   ).props;
   if (response.error === "Cart not found") {
@@ -57,7 +57,7 @@ export const removeProductFromCart = async (
       id,
     };
   }
-
+  try{
   const { response } = (
     await getlambdaResponse(
       `cart/removeProduct/${decode(session.accessToken).sub}`,
@@ -67,7 +67,11 @@ export const removeProductFromCart = async (
     )
   ).props;
   if (response.error !== undefined) return false;
-  return true;
+  return true;}
+  catch(e){
+    console.log(e);
+    return null;
+  }
 };
 
 export const removeAllProductsFromCart = async (session): Promise<boolean> => {
@@ -104,10 +108,14 @@ export const insertProductInCart = async (
 };
 
 export const getProduct = async (id: string, session): Promise<StoredProduct> => {
+  try{
   const { response } = (
     await getlambdaResponse(`product/${id}`, "GET", session ? session.accessToken : null)
   ).props;
   return response.result;
+  }catch(e){
+    return null;
+  }
 };
 
 export const getProductsFromLocalStorage = async (session): Promise<Cart> => {

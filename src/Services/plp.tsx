@@ -35,9 +35,14 @@ export const insertCart = async (id: string, session) => {
     // not authenticated -> add product to localstorage
     const cart = localStorage.getItem("cart"); // retrieve cart
     let jsonCart;
-
+    
     if (cart != null) {
+      try{
       jsonCart = JSON.parse(cart);
+      }catch(e){
+        console.log(e);
+        jsonCart = {items: []};
+      }
     } else {
       jsonCart = {
         items: [],

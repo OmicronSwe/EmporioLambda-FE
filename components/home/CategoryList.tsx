@@ -19,6 +19,7 @@ class CategoryList extends React.Component<{ categories: string[] }> {
                 <Card.Body>
                   <Card.Title>{item}</Card.Title>
                   <Button
+                    title={item}
                     variant="danger"
                     onClick={() => {
                       Router.push(`/plp/${item}`);
