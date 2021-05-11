@@ -1,6 +1,6 @@
 import React from "react";
 import NewCategoryForm from "./NewCategoryForm";
-import { insertCategory, removeCategory } from "../../pages/api/Services/dashboard";
+import { insertCategory, removeCategory } from "../../src/Services/dashboard";
 import CategoryList from "./CategoryList";
 
 class CategorySection extends React.Component<{

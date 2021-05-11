@@ -1,12 +1,4 @@
-export interface ProfileJSON {
-  username: string;
-  address: string;
-  name: string;
-  family_name: string;
-  email: string;
-}
-
-export class Profile implements ProfileJSON {
+export default class Profile {
   username: string;
 
   address: string;

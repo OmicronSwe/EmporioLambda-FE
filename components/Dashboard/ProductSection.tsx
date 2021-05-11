@@ -1,16 +1,16 @@
 import React from "react";
 import NewProductForm from "./NewProductForm";
 import ProductList from "./ProductList";
-import ProductImage from "../../src/objects/ProductImage";
+import ProductImage from "../../src/types/RawImage";
 import {
   fileToBase64,
   insertProduct,
   removeProduct,
   getProducts,
-} from "../../pages/api/Services/dashboard";
+} from "../../src/Services/dashboard";
 
-import StoredProduct from "../../src/objects/StoredProduct";
-import JustCreatedProduct from "../../src/objects/JustCreatedProduct";
+import StoredProduct from "../../src/types/StoredProduct";
+import ProductSend from "../../src/types/ProductSend";
 
 class ProductSection extends React.Component<
   { products: StoredProduct[]; categories: string[]; session },
@@ -52,7 +52,7 @@ class ProductSection extends React.Component<
       name !== "" && description !== "" && price !== "" && image !== undefined && category !== "";
 
     if (allInfoInserted) {
-      const product: JustCreatedProduct = new JustCreatedProduct(
+      const product: ProductSend = new ProductSend(
         name,
         description,
         image,
@@ -68,6 +68,7 @@ class ProductSection extends React.Component<
   };
 
   removeProduct = async (id: string) => {
+    // TODO: aggiunta alert di avvenuta cancellazione
     const { session } = this.props;
     await removeProduct(id, session);
     const prod = await getProducts(session);

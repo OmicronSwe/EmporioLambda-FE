@@ -2,11 +2,11 @@ import React from "react";
 import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
-import StoredProduct from "../../src/objects/StoredProduct";
+import StoredProduct from "../../src/types/StoredProduct";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
-import { getCategories } from "../api/Services/dashboard";
+import { getCategories } from "../../src/Services/dashboard";
 import ListingSection from "../../components/plp/ListingSection";
-import { getProductsFiltered } from "../api/Services/product";
+import { getProductsFiltered } from "../../src/Services/product";
 
 class SearchPage extends React.Component<{
   products: StoredProduct[];

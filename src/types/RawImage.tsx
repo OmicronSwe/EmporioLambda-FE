@@ -1,9 +1,4 @@
-export interface ProductImageJSON {
-  mime: string;
-  imageCode: string;
-}
-
-export default class ProductImage implements ProductImageJSON {
+export default class RawImage {
   mime: string;
 
   imageCode: string;

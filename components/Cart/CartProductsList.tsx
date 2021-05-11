@@ -1,9 +1,9 @@
 import React from "react";
 import { Button, Table } from "react-bootstrap";
-import ProductInCart from "../../src/objects/ProductInCart";
+import Cart from "../../src/types/Cart";
 
 class CartProductList extends React.Component<
-  { auth; products: ProductInCart[]; removeOnClick; changeProductQuantity },
+  { auth; cart: Cart; removeOnClick; changeProductQuantity },
   { disabled: boolean }
 > {
   constructor(props) {
@@ -14,8 +14,8 @@ class CartProductList extends React.Component<
 
   render() {
     const { disabled } = this.state;
-    const { products, removeOnClick, changeProductQuantity } = this.props;
-    if (products.length > 0)
+    const { cart, removeOnClick, changeProductQuantity } = this.props;
+    if (cart.products.length > 0)
       return (
         <Table className="product-list" borderless>
           <caption> Shopping Cart </caption>
@@ -29,44 +29,48 @@ class CartProductList extends React.Component<
             </tr>
           </thead>
           <tbody>
-            {products.map((product) => (
-              <tr key={product.id}>
+            {cart.products.map((cartProduct) => (
+              <tr key={cartProduct.product.id}>
                 <td>
-                  {product.imageUrl ? (
-                    <img src={product.imageUrl} alt={product.description} width="100" />
+                  {cartProduct.product.imageUrl ? (
+                    <img
+                      src={cartProduct.product.imageUrl}
+                      alt={cartProduct.product.description}
+                      width="100"
+                    />
                   ) : (
                     ""
                   )}
                 </td>
-                <td>{product.name}</td>
-                <td>{product.description}</td>
-                <td id={`${product.id}price`}>{`€${product.price}`}</td>
+                <td>{cartProduct.product.name}</td>
+                <td>{cartProduct.product.description}</td>
+                <td id={`${cartProduct.product.id}price`}>{`€${cartProduct.product.price}`}</td>
                 <td>
                   {!disabled ? (
                     <input
-                      id={product.id}
+                      id={cartProduct.product.id}
                       type="number"
-                      value={product.quantity}
+                      value={cartProduct.quantity}
                       min="1"
                       onChange={(event) => {
                         this.setState({ disabled: true });
-                        changeProductQuantity(product.id, event);
+                        changeProductQuantity(cartProduct.product.id, event);
                         this.setState({ disabled: false });
                       }}
                     />
                   ) : (
                     <input
-                      id={`${product.id}"quantity"`}
+                      id={`${cartProduct.product.id}"quantity"`}
                       type="number"
-                      value={product.quantity}
+                      value={cartProduct.quantity}
                       min="1"
-                      onChange={(event) => changeProductQuantity(product.id, event)}
+                      onChange={(event) => changeProductQuantity(cartProduct.product.id, event)}
                       disabled
                     />
                   )}
                 </td>
                 <td>
-                  <Button variant="primary" onClick={() => removeOnClick(product.id)}>
+                  <Button variant="primary" onClick={() => removeOnClick(cartProduct.product.id)}>
                     Remove
                   </Button>
                 </td>

@@ -4,12 +4,12 @@ import { GetServerSideProps } from "next";
 import { getSession } from "next-auth/client";
 import Layout from "../../components/layout";
 import ProfileInfoForm from "../../components/Profile/ProfileInfoForm";
-import { getProfile, removeProfile } from "../api/Services/profile";
-import { Profile } from "../../src/objects/Profile";
+import { getProfile, removeProfile } from "../../src/Services/profile";
+import Profile from "../../src/types/Profile";
 import ProfileButton from "../../components/Profile/ProfileButton";
 import OrderList from "../../components/Profile/OrderList";
-import { getOrdersProfile } from "../api/Services/order";
-import { Order } from "../../src/objects/Order";
+import { getOrdersProfile } from "../../src/Services/order";
+import Order from "../../src/types/Order";
 
 class ProfilePage extends React.Component<{ profile: Profile; orders: Order[]; session }> {
   constructor(props) {
@@ -52,7 +52,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
       profile,
-      orders: await getOrdersProfile(session.accessToken, profile),
+      orders: await getOrdersProfile(session, profile),
     },
   };
 };

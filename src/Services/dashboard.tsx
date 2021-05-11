@@ -1,8 +1,8 @@
-import JustCreatedProduct from "../../../src/objects/JustCreatedProduct";
-import StoredProduct from "../../../src/objects/StoredProduct";
-import getlambdaResponse from "../lib/lambdas";
+import ProductSend from "../types/ProductSend";
+import StoredProduct from "../types/StoredProduct";
+import getlambdaResponse from "../../pages/api/lib/lambdas";
 
-export const insertProduct = async (product: JustCreatedProduct, ses): Promise<boolean> => {
+export const insertProduct = async (product: ProductSend, ses): Promise<boolean> => {
   const { response } = (
     await getlambdaResponse("product", "POST", ses.accessToken, JSON.stringify(product))
   ).props;
@@ -27,7 +27,7 @@ export const getProducts = async (ses): Promise<StoredProduct[]> => {
 export const updateProduct = async (
   id: string,
   session,
-  modifiedProduct: JustCreatedProduct
+  modifiedProduct: ProductSend
 ): Promise<boolean> => {
   const { response } = (
     await getlambdaResponse(

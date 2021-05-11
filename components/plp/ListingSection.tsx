@@ -1,6 +1,6 @@
 import React from "react";
-import StoredProduct from "../../src/objects/StoredProduct";
-import { insertCart, insertCartList } from "../../pages/api/Services/plp";
+import StoredProduct from "../../src/types/StoredProduct";
+import { insertCart, insertCartList } from "../../src/Services/plp";
 import CategoryProductList from "./CategoryProductList";
 import AddToCartList from "./AddToCartList";
 

@@ -8,10 +8,10 @@ import CategorySection from "../../components/Dashboard/CategorySection";
 import OrderSection from "../../components/Dashboard/OrderSection";
 import DashboardLinks from "../../components/Dashboard/DashboardLinks";
 
-import { getProducts, getCategories } from "../api/Services/dashboard";
-import { getOrders } from "../api/Services/order";
-import { Order } from "../../src/objects/Order";
-import StoredProduct from "../../src/objects/StoredProduct";
+import { getProducts, getCategories } from "../../src/Services/dashboard";
+import { getOrders } from "../../src/Services/order";
+import Order from "../../src/types/Order";
+import StoredProduct from "../../src/types/StoredProduct";
 
 class Dashboard extends React.Component<
   { products: StoredProduct[]; categories: string[]; orders: Order[]; session },
@@ -63,9 +63,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
   return {
     props: {
-      products: await getProducts(session.accessToken),
-      categories: await getCategories(session.accessToken),
-      orders: await getOrders(session.accessToken),
+      products: await getProducts(session),
+      categories: await getCategories(session),
+      orders: await getOrders(session),
       session,
     },
   };

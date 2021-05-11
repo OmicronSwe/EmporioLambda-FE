@@ -1,16 +1,6 @@
 import ProductInCart from "./ProductInCart";
 
-export interface OrderJSON {
-  id: string;
-  username: string;
-  products: ProductInCart[];
-  totalPrice: number;
-  taxesApplied: number;
-  date: Date;
-  email: string;
-}
-
-export class Order implements OrderJSON {
+export default class Order {
   id: string;
 
   username: string;

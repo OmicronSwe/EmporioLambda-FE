@@ -9,12 +9,12 @@ import {
   getProduct,
   updateProduct,
   fileToBase64,
-} from "../../api/Services/dashboard";
+} from "../../../src/Services/dashboard";
 import OldProductInformations from "../../../components/Dashboard/OldProductInformations";
 import ModifyingProductForm from "../../../components/Dashboard/ModifyingProductForm";
-import StoredProduct from "../../../src/objects/StoredProduct";
-import JustCreatedProduct from "../../../src/objects/JustCreatedProduct";
-import ProductImage from "../../../src/objects/ProductImage";
+import StoredProduct from "../../../src/types/StoredProduct";
+import ProductSend from "../../../src/types/ProductSend";
+import RawImage from "../../../src/types/RawImage";
 
 class ModifyProductPage extends React.Component<
   { product: StoredProduct; categories: string[]; session },
@@ -42,9 +42,9 @@ class ModifyProductPage extends React.Component<
       ? event.target.productDescription.value
       : "";
     const price = event.target.productPrice.value ? event.target.productPrice.value : "";
-    const image: ProductImage =
+    const image: RawImage =
       base64StringImage !== ""
-        ? new ProductImage(fileObject.type, `base64,${base64StringImage}`)
+        ? new RawImage(fileObject.type, `base64,${base64StringImage}`)
         : undefined;
     const category =
       event.target.productCategorySelection.value !== "Choose..."
@@ -55,7 +55,7 @@ class ModifyProductPage extends React.Component<
       name !== "" || description !== "" || price !== "" || image !== undefined || category !== "";
 
     if (atLeastOneInfoInserted) {
-      const modifiedProduct: JustCreatedProduct = new JustCreatedProduct(
+      const modifiedProduct: ProductSend = new ProductSend(
         name !== "" ? name : product.name,
         description !== "" ? description : product.description,
         image,

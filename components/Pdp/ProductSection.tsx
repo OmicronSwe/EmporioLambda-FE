@@ -1,6 +1,6 @@
 import React from "react";
 import { Col, Form, Image, Row } from "react-bootstrap";
-import StoredProduct from "../../src/objects/StoredProduct";
+import StoredProduct from "../../src/types/StoredProduct";
 
 class ProductSection extends React.Component<{ product: StoredProduct }> {
   constructor(props) {
