@@ -11,7 +11,16 @@ import Cart from "../../src/types/Cart";
 import SummaryInfo from "./SummaryInfo";
 import RemoveAllButton from "./RemoveAllButton";
 
-class CartListSection extends React.Component<{ cart: Cart; session }, { cart: Cart; insertAlert: boolean | null; removeAlert: boolean | null; fetchAlert: boolean | null; disabled: boolean}> {
+class CartListSection extends React.Component<
+  { cart: Cart; session },
+  {
+    cart: Cart;
+    insertAlert: boolean | null;
+    removeAlert: boolean | null;
+    fetchAlert: boolean | null;
+    disabled: boolean;
+  }
+> {
   tax: number;
 
   constructor(props) {
@@ -24,32 +33,31 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
   componentDidMount = async () => {
     const { session } = this.props;
     if (!session) {
-      try{
-      const cart = await getProductsFromLocalStorage(session);
-      this.setState({ cart });
-      }
-      catch(e){
-      localStorage.setItem("cart", "{items: []}");
-      const cart = new Cart([]);
-      this.setState({ cart });
+      try {
+        const cart = await getProductsFromLocalStorage(session);
+        this.setState({ cart });
+      } catch (e) {
+        localStorage.setItem("cart", "{items: []}");
+        const cart = new Cart([]);
+        this.setState({ cart });
       }
     }
   };
 
   setDisabledState = (val: boolean) => {
-    this.setState({disabled: val});
-  }
+    this.setState({ disabled: val });
+  };
 
   removeAllProduct = async () => {
-    this.setState({removeAlert: null});
+    this.setState({ removeAlert: null });
     const { session } = this.props;
     if (session) {
       // authenticated -> internal API to call external API to delete the cart
       const resp = await removeAllProductsFromCart(session);
       if (resp) {
-        this.setState({ cart: new Cart([]), removeAlert:false });
+        this.setState({ cart: new Cart([]), removeAlert: false });
       } else {
-        this.setState({removeAlert: true});
+        this.setState({ removeAlert: true });
       }
     } else if (localStorage) {
       // not authenticated -> empty the localStorage
@@ -59,7 +67,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
   };
 
   removeProduct = async (id: string) => {
-    this.setState({removeAlert: null, fetchAlert: null});
+    this.setState({ removeAlert: null, fetchAlert: null });
     const { session } = this.props;
     const { cart } = this.state;
     if (id) {
@@ -68,30 +76,29 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
         if (resp) {
           const respGetCart: any = await getProductsInCart(session);
           if (respGetCart != null) {
-            this.setState({ cart: respGetCart, removeAlert:false });
+            this.setState({ cart: respGetCart, removeAlert: false });
           } else {
             // Mostra messaggio di errore
-            this.setState({fetchAlert: true});
+            this.setState({ fetchAlert: true });
           }
         } else {
           // Mostra messaggio di errore
-          this.setState({removeAlert: true});
+          this.setState({ removeAlert: true });
         }
       } else if (localStorage) {
         const stateCart: Cart = cart;
-        try{
+        try {
           for (let i = 0; i < stateCart.products.length; i += 1) {
-          const item = stateCart.products[i];
-          if (item.product.id === id) {
-            stateCart.products.splice(i, 1);
-            break;
+            const item = stateCart.products[i];
+            if (item.product.id === id) {
+              stateCart.products.splice(i, 1);
+              break;
+            }
           }
+        } catch (e) {
+          localStorage.setItem("cart", '{"items": []}');
+          this.setState({ removeAlert: true });
         }
-      }catch(e)
-      {
-        localStorage.setItem("cart", '{"items": []}');
-        this.setState({removeAlert: true});
-      }
         localStorage.setItem("cart", cart.toStringForLocalStorage());
         this.setState({ cart: stateCart, removeAlert: false });
       }
@@ -99,7 +106,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
   };
 
   changeProductQuantity = async (id: string, event) => {
-    this.setState({removeAlert: null, fetchAlert: null, insertAlert: null});
+    this.setState({ removeAlert: null, fetchAlert: null, insertAlert: null });
     if (event.target.value > 0) {
       const { session } = this.props;
       const { cart } = this.state;
@@ -115,28 +122,26 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
                 if (newCart != null) this.setState({ cart: newCart });
                 else {
                   // Mostra messaggio di errore
-                  this.setState({fetchAlert:true});
+                  this.setState({ fetchAlert: true });
                 }
               } else {
                 // Mostra messaggio di errore
-                this.setState({removeAlert: true});
+                this.setState({ removeAlert: true });
               }
             } else {
               const quantityToAdd = event.target.value - cartProduct.quantity;
               const response = await insertProductInCart(id, quantityToAdd, session);
               if (response) {
                 const newCart: any = await getProductsInCart(session);
-                if (newCart != null)
-                {
+                if (newCart != null) {
                   this.setState({ cart: newCart });
-                }
-                else {
+                } else {
                   // Mostra messaggio di errore
-                  this.setState({fetchAlert:true});
+                  this.setState({ fetchAlert: true });
                 }
               } else {
                 // Mostra messaggio di errore
-                this.setState({insertAlert:true});
+                this.setState({ insertAlert: true });
               }
             }
             cartProduct.quantity = event.target.value;
@@ -144,26 +149,22 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
         });
       } else {
         const jsonObj: Cart = cart;
-        let check : boolean = false;
-        let increment : boolean = false;
+        let check: boolean = false;
+        let increment: boolean = false;
         jsonObj.products.forEach((element) => {
           if (element.product.id === id) {
-            if(element.quantity < event.target.value) increment=true;
+            if (element.quantity < event.target.value) increment = true;
             element.quantity = event.target.value;
             check = true;
           }
         });
-        if(check)
-        {
+        if (check) {
           localStorage.setItem("cart", jsonObj.toStringForLocalStorage());
           this.setState({ cart: jsonObj });
-        }
-        else {
+        } else {
           localStorage.setItem("cart", jsonObj.toStringForLocalStorage());
-          if(increment)
-          this.setState({insertAlert : true});
-          else 
-          this.setState({removeAlert : true});
+          if (increment) this.setState({ insertAlert: true });
+          else this.setState({ removeAlert: true });
         }
       }
     }
@@ -171,13 +172,11 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
 
   // TODO
   render() {
-    const { session } = this.props;
     const { cart, insertAlert, removeAlert, fetchAlert, disabled } = this.state;
     return (
       <>
         <h1>Cart Section</h1>
         <CartProductList
-          auth={session}
           cart={cart}
           removeOnClick={this.removeProduct}
           changeProductQuantity={this.changeProductQuantity}

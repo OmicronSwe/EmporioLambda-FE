@@ -2,12 +2,12 @@ import React from "react";
 import { Button } from "react-bootstrap";
 import Cart from "../../src/types/Cart";
 
-interface ProductListProps{
+interface ProductListProps {
   cart: Cart;
   removeAllProduct;
 }
 
-const RemoveAllButton = ({cart, removeAllProduct}: ProductListProps) => {
+const RemoveAllButton = ({ cart, removeAllProduct }: ProductListProps) => {
   if (cart.products.length > 0)
     return (
       <>
@@ -17,9 +17,9 @@ const RemoveAllButton = ({cart, removeAllProduct}: ProductListProps) => {
       </>
     );
   return null;
-}
+};
 
-/*class RemoveAllButton extends React.Component<{ cart: Cart; removeAllProduct }> {
+/* class RemoveAllButton extends React.Component<{ cart: Cart; removeAllProduct }> {
   constructor(props) {
     super(props);
     this.state = {};
@@ -37,6 +37,6 @@ const RemoveAllButton = ({cart, removeAllProduct}: ProductListProps) => {
       );
     return null;
   }
-}*/
+} */
 
 export default RemoveAllButton;
