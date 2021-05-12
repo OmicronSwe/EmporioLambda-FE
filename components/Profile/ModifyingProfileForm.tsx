@@ -1,12 +1,16 @@
 import React from "react";
 import Router from "next/router";
-import { Button, Form, Row, Col, FormControl, FormGroup, FormLabel } from "react-bootstrap";
+import { Button, Form, Row, Col, FormControl, FormGroup, FormLabel, Alert } from "react-bootstrap";
 
 interface ModifyingProfileFormProps {
   updateProfile;
+  updatedProfileAlert: boolean;
 }
 
-const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
+const ModifyingProfileForm = ({
+  updateProfile,
+  updatedProfileAlert,
+}: ModifyingProfileFormProps) => {
   return (
     <>
       <Form onSubmit={updateProfile}>
@@ -64,6 +68,22 @@ const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
         <Button variant="danger" onClick={() => Router.push("/profile")}>
           Cancel
         </Button>
+        {updatedProfileAlert !== null && updatedProfileAlert === true ? (
+          <Alert variant="success">
+            <Alert.Heading> Profile edited Successfully! </Alert.Heading>
+          </Alert>
+        ) : (
+          <p />
+        )}
+        {updatedProfileAlert !== null && updatedProfileAlert === false ? (
+          <Alert variant="danger">
+            <Alert.Heading>
+              At least one field must be filled in to modify the profile
+            </Alert.Heading>
+          </Alert>
+        ) : (
+          <p />
+        )}
       </Form>
     </>
   );

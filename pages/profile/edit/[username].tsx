@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Button } from "react-bootstrap";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
 import { getSession, Session } from "next-auth/client";
@@ -9,37 +9,56 @@ import Profile from "../../../src/types/Profile";
 import ProfileInfoForm from "../../../components/Profile/ProfileInfoForm";
 import ModifyingProfileForm from "../../../components/Profile/ModifyingProfileForm";
 
-class EditProfile extends React.Component<{ profile: Profile; session }> {
+class EditProfile extends React.Component<
+  { profile: Profile; session },
+  { updatedProfileAlert: boolean | null }
+> {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { updatedProfileAlert: null };
   }
 
   updateProfile = async (event) => {
     event.preventDefault();
     const { profile, session } = this.props;
+    let empty: boolean = true;
 
     // TODO: validation
 
     const name = event.target.profileName.value ? event.target.profileName.value : profile.name;
+    if (name !== profile.name) {
+      empty = false;
+    }
     const familyName = event.target.profileFamilyName.value
       ? event.target.profileFamilyName.value
       : profile.family_name;
+    if (familyName !== profile.family_name) {
+      empty = false;
+    }
     const email = event.target.profileEmail.value ? event.target.profileEmail.value : profile.email;
+    if (email !== profile.email) {
+      empty = false;
+    }
     const address = event.target.profileAddress.value
       ? event.target.profileAddress.value
       : profile.address;
+    if (address !== profile.address) {
+      empty = false;
+    }
     const modifyedProfile = new Profile(profile.username, address, name, familyName, email);
 
-    await updateProfile(modifyedProfile, session);
+    const resp = await updateProfile(modifyedProfile, session);
 
-    // redirect to profile
-    Router.push("/profile");
-    // TODO: success/error alert
+    if (!resp || empty) {
+      this.setState({ updatedProfileAlert: false });
+    } else {
+      this.setState({ updatedProfileAlert: true });
+    }
   };
 
   render() {
     const { profile } = this.props;
+    const { updatedProfileAlert } = this.state;
     return (
       <>
         <Layout title="Profile edit page">
@@ -52,9 +71,21 @@ class EditProfile extends React.Component<{ profile: Profile; session }> {
                 <ProfileInfoForm profile={profile} />
               </Col>
               <Col>
-                <ModifyingProfileForm updateProfile={this.updateProfile} />
+                <ModifyingProfileForm
+                  updateProfile={this.updateProfile}
+                  updatedProfileAlert={updatedProfileAlert}
+                />
               </Col>
             </Row>
+            {updatedProfileAlert !== null && updatedProfileAlert === true ? (
+              <Row>
+                <Button variant="success" onClick={() => Router.push("/profile")}>
+                  Redirect to Profile page
+                </Button>
+              </Row>
+            ) : (
+              <p />
+            )}
           </Container>
         </Layout>
       </>

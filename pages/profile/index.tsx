@@ -1,7 +1,8 @@
 import React from "react";
-import Router from "next/router";
 import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+import { getSession, signOut } from "next-auth/client";
+import { Alert, Button, Container } from "react-bootstrap";
+import Router from "next/router";
 import Layout from "../../components/layout";
 import ProfileInfoForm from "../../components/Profile/ProfileInfoForm";
 import { getProfile, removeProfile } from "../../src/Services/profile";
@@ -11,10 +12,13 @@ import OrderList from "../../components/Profile/OrderList";
 import { getOrdersProfile } from "../../src/Services/order";
 import Order from "../../src/types/Order";
 
-class ProfilePage extends React.Component<{ profile: Profile; orders: Order[]; session }> {
+class ProfilePage extends React.Component<
+  { profile: Profile; orders: Order[]; session },
+  { removedProfileAlert: boolean | null }
+> {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { removedProfileAlert: null };
   }
 
   removeProfile = async () => {
@@ -22,25 +26,58 @@ class ProfilePage extends React.Component<{ profile: Profile; orders: Order[]; s
 
     // TODO: validation
 
-    await removeProfile(profile, session);
+    const resp = await removeProfile(profile, session);
 
-    // redirect to profile
-    Router.push("/");
-    // TODO: success/error alert
+    if (resp) {
+      this.setState({ removedProfileAlert: true });
+    } else {
+      this.setState({ removedProfileAlert: false });
+    }
+    signOut({ redirect: false });
   };
 
   render() {
     const { profile, orders } = this.props;
+    const { removedProfileAlert } = this.state;
     return (
       <>
-        <Layout title="Profile page">
-          <h1>Profile Section</h1>
-          <ProfileInfoForm profile={profile} />
-          <ProfileButton profile={profile} removeProfile={this.removeProfile} />
+        {removedProfileAlert === null ? (
+          <Layout title="Profile page">
+            <h1>Profile Section</h1>
+            <ProfileInfoForm profile={profile} />
 
-          <h1>Order Section</h1>
-          <OrderList orders={orders} />
-        </Layout>
+            <ProfileButton profile={profile} removeProfile={this.removeProfile} />
+
+            <h1>Order Section</h1>
+            <OrderList orders={orders} />
+          </Layout>
+        ) : (
+          <p />
+        )}
+        {removedProfileAlert === true ? (
+          <Container>
+            <Alert variant="success">
+              <Alert.Heading>Profile removed Successfully!</Alert.Heading>
+            </Alert>
+            <Button variant="success" onClick={() => Router.push("/")}>
+              Redirect to Home page
+            </Button>
+          </Container>
+        ) : (
+          <p />
+        )}
+        {removedProfileAlert === false ? (
+          <Container>
+            <Alert variant="danger">
+              <Alert.Heading>Error in profile removal!</Alert.Heading>
+            </Alert>
+            <Button variant="primary" onClick={() => Router.push("/profile")}>
+              Redirect to Profile page
+            </Button>
+          </Container>
+        ) : (
+          <p />
+        )}
       </>
     );
   }
@@ -52,6 +89,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   return {
     props: {
       profile,
+      session,
       orders: await getOrdersProfile(session, profile),
     },
   };
