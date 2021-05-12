@@ -11,14 +11,14 @@ import Cart from "../../src/types/Cart";
 import SummaryInfo from "./SummaryInfo";
 import RemoveAllButton from "./RemoveAllButton";
 
-class CartListSection extends React.Component<{ cart: Cart; session }, { cart: Cart; insertAlert: boolean | null; removeAlert: boolean | null; fetchAlert: boolean | null}> {
+class CartListSection extends React.Component<{ cart: Cart; session }, { cart: Cart; insertAlert: boolean | null; removeAlert: boolean | null; fetchAlert: boolean | null; disabled: boolean}> {
   tax: number;
 
   constructor(props) {
     super(props);
     this.tax = 0.2;
     const { cart } = this.props;
-    this.state = { cart, insertAlert: null, removeAlert: null, fetchAlert: null };
+    this.state = { cart, insertAlert: null, removeAlert: null, fetchAlert: null, disabled: false };
   }
 
   componentDidMount = async () => {
@@ -36,6 +36,10 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
     }
   };
 
+  setDisabledState = (val: boolean) => {
+    this.setState({disabled: val});
+  }
+
   removeAllProduct = async () => {
     this.setState({removeAlert: null});
     const { session } = this.props;
@@ -50,7 +54,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
     } else if (localStorage) {
       // not authenticated -> empty the localStorage
       localStorage.setItem("cart", '{"items": []}');
-      this.setState({ cart: new Cart([]) });
+      this.setState({ cart: new Cart([]), removeAlert: false });
     }
   };
 
@@ -168,7 +172,7 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
   // TODO
   render() {
     const { session } = this.props;
-    const { cart, insertAlert, removeAlert, fetchAlert } = this.state;
+    const { cart, insertAlert, removeAlert, fetchAlert, disabled } = this.state;
     return (
       <>
         <h1>Cart Section</h1>
@@ -180,6 +184,8 @@ class CartListSection extends React.Component<{ cart: Cart; session }, { cart: C
           insertAlert={insertAlert}
           removeAlert={removeAlert}
           fetchAlert={fetchAlert}
+          disabled={disabled}
+          setDisabledState={this.setDisabledState}
         />
         <RemoveAllButton cart={cart} removeAllProduct={this.removeAllProduct} />
         <SummaryInfo tax={this.tax} cart={cart} />
