@@ -18,11 +18,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
         <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        {title === "Cart page" ? (
-          <script id="stripe-js" src="https://js.stripe.com/v3/" async />
-        ) : (
-          ""
-        )}
+        
       </Head>
       <header>
         <div className="logo">
