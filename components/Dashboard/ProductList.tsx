@@ -11,7 +11,7 @@ interface ProductListProps {
 const ProductList = ({ products, removeProduct }: ProductListProps) => {
   return (
     <>
-      <Table>
+      <Table id="productList">
         <thead className="thead-light">
           <tr>
             <th>ID</th>

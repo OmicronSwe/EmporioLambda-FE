@@ -108,9 +108,9 @@ const NewProductForm = ({
                       name="productCategorySelection"
                     >
                       {categories ? (
-                        categories.map((item) => <option>{item}</option>)
+                        categories.map((item) => <option key={item}>{item}</option>)
                       ) : (
-                        <option>no category found</option>
+                        <option key="noCategory">no category found</option>
                       )}
                     </FormControl>
                   </Col>

@@ -11,7 +11,9 @@
     "checkWithLint": "eslint . --ext ts,tsx",
     "cypress:open": "cypress open",
     "cypress:run": "cypress run",
-    "test": "node_modules/.bin/json-server --watch test-db.json --routes test-routes.json --middlewares test-middleware.js -q --port 3001 & node_modules/.bin/env-cmd -f .test-env start-server-and-test dev 3000 cypress:run"
+    "test": "node_modules/.bin/json-server --watch test-db.json --routes test-routes.json --middlewares test-middleware.js -q --port 3001 & node_modules/.bin/env-cmd -f .test-env start-server-and-test dev 3000 cypress:run",
+    "testServer": "node_modules/.bin/json-server --watch test-db.json --routes test-routes.json --middlewares test-middleware.js -q --port 3001",
+    "testClient": "node_modules/.bin/env-cmd -f .test-env start-server-and-test dev 3000 cypress:run"
   },
   "repository": {
     "type": "git",
@@ -68,6 +70,8 @@
     "exclude": [
       "pages/api/_coverage_.ts"
     ],
-    "reporter": ["clover"]
+    "reporter": [
+      "clover"
+    ]
   }
 }

@@ -54,7 +54,7 @@ export const insertCategory = async (category: string, ses): Promise<boolean> =>
   const { response } = (
     await getlambdaResponse("category", "POST", ses.accessToken, JSON.stringify(body))
   ).props;
-  if (response.err) return false;
+  if (response.error) return false;
   return true;
 };
 
@@ -62,7 +62,7 @@ export const removeCategory = async (name: string, ses): Promise<boolean> => {
   const { response } = (
     await getlambdaResponse(`category/${name}`, "DELETE", ses.accessToken)
   ).props;
-  if (response.err) return false;
+  if (response.error) return false;
   return true;
 };
 
