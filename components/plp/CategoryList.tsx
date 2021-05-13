@@ -1,6 +1,6 @@
 import Router from "next/router";
 import React from "react";
-import { Button, CardColumns, Card } from "react-bootstrap";
+import { Alert, Button, CardColumns, Card } from "react-bootstrap";
 import { Category } from "../../src/objects/Category";
 
 class CategoryList extends React.Component<{ categories: Category[] }> {
