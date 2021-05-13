@@ -163,3 +163,23 @@ export const getProductsFromLocalStorage = async (session): Promise<Cart> => {
   }
   return new Cart([]);
 };
+
+// This is needed, as there was a weird interation happening when the insertion of a product was being called in a parallel loop.
+// The lambda function in the backend would fire correctly, but random products in the list weren't being added to dynamoDB
+
+/* eslint-disable */
+
+export const addProductsFromLocalStorage = async (session): Promise<void> => {
+  if (localStorage) {
+    const jsonCart = localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart")).items
+      : [];
+
+    if (jsonCart) {
+      for (const item of jsonCart) {
+        await insertProductInCart(item.id, item.quantity, session);
+      }
+    }
+  }
+};
+/* eslint-enable */

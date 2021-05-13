@@ -6,6 +6,7 @@ import {
   getProductsInCart,
   insertProductInCart,
   getProductsFromLocalStorage,
+  addProductsFromLocalStorage,
 } from "../../src/Services/cart";
 import Cart from "../../src/types/Cart";
 import SummaryInfo from "./SummaryInfo";
@@ -32,6 +33,7 @@ class CartListSection extends React.Component<
 
   componentDidMount = async () => {
     const { session } = this.props;
+
     if (!session) {
       try {
         const cart = await getProductsFromLocalStorage(session);
@@ -40,6 +42,20 @@ class CartListSection extends React.Component<
         localStorage.setItem("cart", "{items: []}");
         const cart = new Cart([]);
         this.setState({ cart });
+      }
+    } else {
+      try {
+        if (
+          localStorage.getItem("cart") != null &&
+          JSON.parse(localStorage.getItem("cart")).items.length !== 0
+        ) {
+          await addProductsFromLocalStorage(session);
+          const respCart = await getProductsInCart(session);
+          this.setState({ cart: respCart });
+          localStorage.removeItem("cart");
+        }
+      } catch (error) {
+        localStorage.removeItem("cart");
       }
     }
   };
