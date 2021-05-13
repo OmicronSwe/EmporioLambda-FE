@@ -16,13 +16,15 @@ import {
 interface NewProductFormProps {
   insertProduct;
   categories: string[];
-  productInsertedAlert: boolean;
+  productInserted: boolean;
+  errors;
 }
 
 const NewProductForm = ({
   insertProduct,
   categories,
-  productInsertedAlert,
+  productInserted,
+  errors,
 }: NewProductFormProps) => {
   return (
     <>
@@ -48,6 +50,13 @@ const NewProductForm = ({
                       name="productName"
                       placeholder="Name"
                     />
+                    {errors.productNameError !== undefined ? (
+                      <small id="productNameErrors" className="text-danger">
+                        {errors.productNameError}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <FormGroup as={Row}>
@@ -63,6 +72,13 @@ const NewProductForm = ({
                       placeholder="Description"
                       rows={3}
                     />
+                    {errors.productDescriptionError !== undefined ? (
+                      <small id="productDescriptionErrors" className="text-danger">
+                        {errors.productDescriptionError}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <FormGroup as={Row}>
@@ -81,6 +97,13 @@ const NewProductForm = ({
                         <InputGroup.Text>€</InputGroup.Text>
                       </InputGroup.Append>
                     </InputGroup>
+                    {errors.productPriceError !== undefined ? (
+                      <small id="productPriceErrors" className="text-danger">
+                        {errors.productPriceError}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <FormGroup as={Row}>
@@ -94,6 +117,13 @@ const NewProductForm = ({
                       id="productImage"
                       name="productImage"
                     />
+                    {errors.productImageError !== undefined ? (
+                      <small id="productImageErrors" className="text-danger">
+                        {errors.productImageError}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <FormGroup as={Row}>
@@ -123,18 +153,9 @@ const NewProductForm = ({
                   </Col>
                 </Form.Row>
               </Form>
-              {productInsertedAlert !== null && productInsertedAlert === true ? (
+              {productInserted === true ? (
                 <Alert variant="success">
                   <Alert.Heading>Product created successfully!</Alert.Heading>
-                </Alert>
-              ) : (
-                <p />
-              )}
-              {productInsertedAlert !== null && productInsertedAlert === false ? (
-                <Alert variant="danger">
-                  <Alert.Heading>
-                    All fields must be filled in to create a new product
-                  </Alert.Heading>
                 </Alert>
               ) : (
                 <p />
