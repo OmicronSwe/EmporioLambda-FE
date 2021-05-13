@@ -1,3 +1,4 @@
+import { useRouter } from "next/router";
 import React from "react";
 import { Button, Table, Alert } from "react-bootstrap";
 import Cart from "../../src/types/Cart";
@@ -23,9 +24,20 @@ const CartProductList = ({
   disabled,
   setDisabledState,
 }: CartProductListProps) => {
+  const router = useRouter();
+  const { error } = router.query;
+
   if (cart.products.length > 0)
     return (
       <>
+        {error ? (
+          <Alert variant="warning">
+            <Alert.Heading>{error}</Alert.Heading>
+          </Alert>
+        ) : (
+          ""
+        )}
+
         <Table className="product-list" borderless>
           <caption> Shopping Cart </caption>
           <thead>
