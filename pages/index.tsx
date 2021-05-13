@@ -21,8 +21,8 @@ class CategoryListHome extends React.Component<{ categories: string[] }> {
           <SearchBarSection
             categories={categories}
             category="All categories"
-            minPrice={null}
-            maxPrice={null}
+            minPrice={undefined}
+            maxPrice={undefined}
             name=""
           />
           <CategoryList categories={categories} />
