@@ -15,14 +15,15 @@ export default class PayButton extends React.Component<{ username: string }, { s
   }
 
   componentDidMount() {
-    const stripeJs = document.createElement('script');
-    stripeJs.src = 'https://js.stripe.com/v3/';
+    const stripeJs = document.createElement("script");
+    stripeJs.src = "https://js.stripe.com/v3/";
     stripeJs.async = true;
     stripeJs.onload = () => {
-        this.setState({
-          stripe: window.Stripe(process.env.NEXT_PUBLIC_STRIPE)
-        })};
-    document.body && document.body.appendChild(stripeJs);
+      this.setState({
+        stripe: window.Stripe(process.env.NEXT_PUBLIC_STRIPE),
+      });
+    };
+    document.body.appendChild(stripeJs);
   }
 
   render() {
