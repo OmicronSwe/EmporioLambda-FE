@@ -7,7 +7,10 @@ interface ModifyingProfileFormProps {
   updatedProfileAlert: boolean;
 }
 
-const ModifyingProfileForm = ({ updateProfile, updatedProfileAlert }: ModifyingProfileFormProps) => {
+const ModifyingProfileForm = ({
+  updateProfile,
+  updatedProfileAlert,
+}: ModifyingProfileFormProps) => {
   let setShow: boolean = true;
   return (
     <>
@@ -67,7 +70,7 @@ const ModifyingProfileForm = ({ updateProfile, updatedProfileAlert }: ModifyingP
           Cancel
         </Button>
         {updatedProfileAlert !== null && updatedProfileAlert === true ? (
-          <Alert variant="success" onClose={() => setShow=false} dismissible>
+          <Alert variant="success" onClose={() => (setShow = false)} dismissible>
             <Alert.Heading> Profile edited Successfully! </Alert.Heading>
           </Alert>
         ) : (

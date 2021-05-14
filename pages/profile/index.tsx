@@ -52,7 +52,6 @@ class ProfilePage extends React.Component<
     }
   };
 
-
   render() {
     const { profile, orders } = this.props;
     const { removedProfileAlert, updatedPasswordAlert } = this.state;
@@ -69,7 +68,12 @@ class ProfilePage extends React.Component<
                   <ProfileInfoForm profile={profile} />
                 </Col>
                 <Col>
-                  <ProfileButton profile={profile} removeProfile={this.removeProfile} updatePassword={this.updatePassword} updatedPasswordAlert={updatedPasswordAlert}/>
+                  <ProfileButton
+                    profile={profile}
+                    removeProfile={this.removeProfile}
+                    updatePassword={this.updatePassword}
+                    updatedPasswordAlert={updatedPasswordAlert}
+                  />
                 </Col>
               </Row>
 

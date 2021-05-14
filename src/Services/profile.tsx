@@ -24,8 +24,8 @@ export const updateProfile = async (profile: Profile, session): Promise<boolean>
 
 export const updatePassword = async (profile: Profile, session, pass: string): Promise<boolean> => {
   const password = {
-    password: pass
-  }
+    password: pass,
+  };
   const { response } = (
     await getlambdaResponse(
       `user/${profile.username}/updatePassword`,

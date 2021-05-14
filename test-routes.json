@@ -2,6 +2,9 @@
     "/local/*": "/$1",
     "/product/search/category=:category": "/product?category=:category",
     "/product/:id": "/product?id=:id",
-    "/user/*": "/user",
+    "/user/:id": "/user?username=:id",
+    "/user/3184a143-558f-4461-9b91-d0047037a53b/updatePassword": "/updatePasswordSuccess",
+    "/user/93edaf82-37fe-420d-af28-44d3693c8bdf/updatePassword": "/updatePasswordFail",
+    "/user/:id/update": "/updateProfileSuccess",
     "/order/getByUsername/*": "/order"
 }
