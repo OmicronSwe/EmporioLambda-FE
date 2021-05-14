@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container } from "react-bootstrap";
+import { Row, Col, Container, Alert, Button } from "react-bootstrap";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
 import { getSession, Session } from "next-auth/client";
@@ -18,25 +18,68 @@ import RawImage from "../../../src/types/RawImage";
 
 class ModifyProductPage extends React.Component<
   { product: StoredProduct; categories: string[]; session },
-  { productModifiedAlert: boolean | null }
+  { productModified: boolean | null; errors: Map<string, string> }
 > {
   constructor(props) {
     super(props);
-    this.state = { productModifiedAlert: null };
+    this.state = { productModified: null, errors: new Map<string, string>() };
   }
+
+  formValidation = (
+    name: string,
+    description: string,
+    price: string,
+    image: RawImage,
+    category: string,
+    product: StoredProduct
+  ) => {
+
+    let isValid: boolean = true;
+    // Refresh of the form errors and alerts
+    const updatedErrors: Map<string, string> = new Map<string, string>();
+    this.setState({ errors: updatedErrors, productModified: null });
+
+    if (name === "" && description === "" && price === "" && image === undefined && category === ""){
+      this.setState({ productModified: false });
+      return false;
+    }
+
+    if (name === product.name) {
+      updatedErrors.set("productNameError", "The new product name cannot be the same as the old one");
+      isValid = false;
+    }
+    if (description === product.description) {
+      updatedErrors.set("productDescriptionError", "The new product description cannot be the same as the old one");
+      isValid = false;
+    }
+    if (Number.isNaN(Number(price)) || Number(price) < 0) {
+      updatedErrors.set("productPriceError", "The price must be a positive number");
+      isValid = false;
+    }
+    if (Number(price) === product.price) {
+      updatedErrors.set("productPriceError", "The new product price cannot be the same as the old one");
+      isValid = false;
+    }
+    if (category === product.category) {
+      updatedErrors.set("productCategoryError", "The new product category cannot be the same as the old one");
+      isValid = false;
+    }
+
+    this.setState({ errors: updatedErrors });
+    return isValid;
+  };
 
   updateProduct = async (event) => {
     event.preventDefault();
     const { product, session } = this.props;
 
-    // TODO: validation
+    // Form parameters extraction
 
     const fileObject = event.target.productImage.files[0];
     let base64StringImage: string = "";
     if (fileObject) {
       base64StringImage = await fileToBase64(fileObject);
     }
-
     const name = event.target.productName.value ? event.target.productName.value : "";
     const description = event.target.productDescription.value
       ? event.target.productDescription.value
@@ -51,10 +94,12 @@ class ModifyProductPage extends React.Component<
         ? event.target.productCategorySelection.value
         : "";
 
-    const atLeastOneInfoInserted: boolean =
-      name !== "" || description !== "" || price !== "" || image !== undefined || category !== "";
+    // Validation
 
-    if (atLeastOneInfoInserted) {
+    const isValid: boolean = this.formValidation(name, description, price, image, category, product);
+
+    if (isValid) {
+      // Sending a new product with modified infos
       const modifiedProduct: ProductSend = new ProductSend(
         name !== "" ? name : product.name,
         description !== "" ? description : product.description,
@@ -63,16 +108,13 @@ class ModifyProductPage extends React.Component<
         category !== "" ? category : product.category
       );
       await updateProduct(product.id, session, modifiedProduct);
-      // redirect to dashboard
-      Router.push("/dashboard");
-    } else {
-      this.setState({ productModifiedAlert: atLeastOneInfoInserted });
+      this.setState({ productModified: true });
     }
   };
 
   render() {
     const { product, categories } = this.props;
-    const { productModifiedAlert } = this.state;
+    const { productModified, errors } = this.state;
     return (
       <>
         <Layout title="Product modifying page">
@@ -88,10 +130,35 @@ class ModifyProductPage extends React.Component<
                 <ModifyingProductForm
                   updateProduct={this.updateProduct}
                   categories={categories}
-                  productModifiedAlert={productModifiedAlert}
+                  errors={errors}
                 />
               </Col>
             </Row>
+            {productModified !== null && productModified === true ? (
+              <Container>
+                <Row className="justify-content-md-center mt-3">
+                  <Alert variant="success">
+                    <Alert.Heading> Product edited Successfully! </Alert.Heading>
+                  </Alert>
+                </Row>
+                <Row className="justify-content-md-center">
+                  <Button variant="success" onClick={() => Router.push("/dashboard")}>
+                    Redirect to Dashboard
+                  </Button>
+                </Row>
+              </Container>
+            ) : (
+              <p />
+            )}
+            {productModified !== null && productModified === false ? (
+              <Alert variant="danger">
+                <Alert.Heading>
+                  At least one field must be filled in to modify the product
+                </Alert.Heading>
+              </Alert>
+            ) : (
+              <p />
+            )}
           </Container>
         </Layout>
       </>
