@@ -38,7 +38,7 @@ describe("Test dashboard", () => {
     cy.get("#productPrice").type("1");
     const filepath = "images/aws_black.png";
     cy.get('input[type="file"]').attachFile(filepath);
-    cy.get("#productCategorySelection").type("Headphones");
+    cy.get("select").select("Headphones");
     cy.get("button").contains("Submit").click();
   });
   it("Check if the created product is present in the product list", () => {
@@ -67,7 +67,7 @@ describe("Test dashboard", () => {
       });
     cy.wait(2000);
     cy.get("button").contains("Cancel").click();
-    cy.url().should("eq", "/dashboard");
+    cy.url().should("eq", "http://localhost:3000/dashboard");
   });
 
   it("Check if 'the add new category' button is present", () => {

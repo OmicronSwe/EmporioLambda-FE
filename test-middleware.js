@@ -1,7 +1,14 @@
 module.exports = (req, res, next) => {
-    if (req.method === 'POST') {
-        req.method = 'GET';
-        req.query = req.body;
+    // if (req.method === 'POST') {
+    //     req.method = 'GET';
+    //     req.query = req.body;
+    // }
+    allowedPOSTMethods = ["product"];
+    if (!allowedPOSTMethods.some((el) => req.url.includes(el))) {
+        if (req.method === "POST") {
+            req.method = "GET";
+            req.query = req.body;
+        }
     }
     var send = res.send
     res.send = function (string) {
