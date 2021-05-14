@@ -1,5 +1,5 @@
 import React from "react";
-import { Row, Col, Container, Button } from "react-bootstrap";
+import { Row, Col, Container, Button, Alert } from "react-bootstrap";
 import { GetServerSideProps } from "next";
 import Router from "next/router";
 import { getSession, Session } from "next-auth/client";
@@ -73,16 +73,29 @@ class EditProfile extends React.Component<
               <Col>
                 <ModifyingProfileForm
                   updateProfile={this.updateProfile}
-                  updatedProfileAlert={updatedProfileAlert}
                 />
               </Col>
             </Row>
             {updatedProfileAlert !== null && updatedProfileAlert === true ? (
-              <Row>
-                <Button variant="success" onClick={() => Router.push("/profile")}>
-                  Redirect to Profile page
-                </Button>
-              </Row>
+              <Container>
+                <Row className="justify-content-md-center mt-3" >
+                  <Alert variant="success">
+                    <Alert.Heading> Profile edited Successfully! </Alert.Heading>
+                  </Alert>
+                </Row>
+                <Row className="justify-content-md-center">
+                  <Button variant="success" onClick={() => Router.push("/profile")}>
+                    Redirect to Profile page
+                  </Button>
+                </Row>
+              </Container>
+            ) : (
+              <p />
+            )}
+            {updatedProfileAlert !== null && updatedProfileAlert === false ? (
+              <Alert variant="danger">
+                <Alert.Heading> <p className="text-center"> At least one field must be filled in to modify the profile </p></Alert.Heading>
+              </Alert>
             ) : (
               <p />
             )}

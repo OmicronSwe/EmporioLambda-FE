@@ -1,17 +1,14 @@
 import React from "react";
 import Router from "next/router";
-import { Button, Form, Row, Col, FormControl, FormGroup, FormLabel, Alert } from "react-bootstrap";
+import { Button, Form, Row, Col, FormControl, FormGroup, FormLabel } from "react-bootstrap";
 
 interface ModifyingProfileFormProps {
   updateProfile;
-  updatedProfileAlert: boolean;
 }
 
 const ModifyingProfileForm = ({
   updateProfile,
-  updatedProfileAlert,
 }: ModifyingProfileFormProps) => {
-  let setShow: boolean = true;
   return (
     <>
       <Form onSubmit={updateProfile}>
@@ -69,13 +66,6 @@ const ModifyingProfileForm = ({
         <Button variant="danger" onClick={() => Router.push("/profile")}>
           Cancel
         </Button>
-        {updatedProfileAlert !== null && updatedProfileAlert === true ? (
-          <Alert variant="success" onClose={() => (setShow = false)} dismissible>
-            <Alert.Heading> Profile edited Successfully! </Alert.Heading>
-          </Alert>
-        ) : (
-          <p />
-        )}
       </Form>
     </>
   );

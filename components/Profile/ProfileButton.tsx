@@ -3,19 +3,16 @@ import {
   Accordion,
   Button,
   Card,
-  Container,
   Row,
   Form,
   FormGroup,
   FormLabel,
   Col,
   FormControl,
-  InputGroup,
   Alert,
 } from "react-bootstrap";
 import Router from "next/router";
 import Profile from "../../src/types/Profile";
-import { updatePassword, updateProfile } from "../../src/Services/profile";
 
 interface ProfileButtonProps {
   profile: Profile;

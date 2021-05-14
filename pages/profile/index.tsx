@@ -50,6 +50,7 @@ class ProfilePage extends React.Component<
     } else {
       this.setState({ updatedPasswordAlert: false });
     }
+    console.log(resp);
   };
 
   render() {
