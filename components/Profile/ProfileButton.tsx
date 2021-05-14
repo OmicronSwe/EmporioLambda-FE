@@ -40,47 +40,46 @@ const ProfileButton = ({
             </Accordion.Toggle>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
-            <Card.Body>
-              <Form onSubmit={updatePassword}>
-                <FormGroup as={Row}>
-                  <FormLabel column sm="5" htmlFor="newPassword">
-                    New Password
-                  </FormLabel>
-                  <Col sm="5">
-                    <FormControl
-                      type="text"
-                      className="sm"
-                      id="newPassword"
-                      name="newPassword"
-                      placeholder="New Password"
-                    />
-                  </Col>
-                </FormGroup>
-                <Form.Row className="text-center">
-                  <Col sm="12">
-                    <Button type="submit" variant="primary">
-                      Submit
-                    </Button>
-                    {updatedPasswordAlert !== null && updatedPasswordAlert === true ? (
-                      <Alert variant="success">
-                        <Alert.Heading> Password edited Successfully! </Alert.Heading>
-                      </Alert>
-                    ) : (
-                      <p />
-                    )}
-                    {updatedPasswordAlert !== null && updatedPasswordAlert === false ? (
-                      console.log(updatedPasswordAlert)
-                    ) : (
-                      /* <Alert variant="danger">
+              <Card.Body>
+                <Form onSubmit={updatePassword}>
+                  <FormGroup as={Row}>
+                    <FormLabel column sm="5" htmlFor="newPassword">
+                      New Password
+                    </FormLabel>
+                    <Col sm="5">
+                      <FormControl
+                        type="text"
+                        className="sm"
+                        id="newPassword"
+                        name="newPassword"
+                        placeholder="New Password"
+                      />
+                    </Col>
+                  </FormGroup>
+                  <Form.Row className="text-center">
+                    <Col sm="12">
+                      <Button type="submit" variant="primary">
+                        Submit
+                      </Button>
+                        {updatedPasswordAlert !== null && updatedPasswordAlert === true ? (
+                          <Alert variant="success">
+                            <Alert.Heading> Password edited Successfully! </Alert.Heading>
+                          </Alert>
+                          ) : (
+                            <p />
+                        )}
+                        {updatedPasswordAlert !== null && updatedPasswordAlert === false ? (
+                          <Alert variant="danger">
                             <Alert.Heading> Error! Failed edit password! </Alert.Heading>
-                          </Alert> */
-                      <p />
-                    )}
-                  </Col>
-                </Form.Row>
-              </Form>
-            </Card.Body>
-          </Accordion.Collapse>
+                          </Alert>
+                          ) : (
+                            <p />
+                        )}
+                    </Col>
+                  </Form.Row>
+                </Form>
+              </Card.Body>
+            </Accordion.Collapse>
         </Card>
         <Card>
           <Card.Header>
