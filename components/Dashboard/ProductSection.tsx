@@ -8,46 +8,55 @@ import {
   removeProduct,
   getProducts,
 } from "../../src/Services/dashboard";
-
 import StoredProduct from "../../src/types/StoredProduct";
 import ProductSend from "../../src/types/ProductSend";
 
 class ProductSection extends React.Component<
   { products: StoredProduct[]; categories: string[]; session },
-  { products: StoredProduct[]; productInserted: boolean; errors }
+  { products: StoredProduct[]; productInserted: boolean; errors: Map<string, string> }
 > {
   constructor(props) {
     super(props);
 
     const { products } = this.props;
-    this.state = { products, productInserted: false, errors: {} };
+    this.state = { products, productInserted: false, errors: new Map<string, string>() };
   }
 
-  formValidation = (name: string, description: string, price: string, image: ProductImage) => {
+  formValidation = (
+    name: string,
+    description: string,
+    price: string,
+    image: ProductImage,
+    category: string
+  ) => {
     let isValid: boolean = true;
-    const errors = {};
+    const updatedErrors: Map<string, string> = new Map<string, string>();
     if (name === "") {
-      errors["productNameError"] = "The name can't be empty";
+      updatedErrors.set("productNameError", "The name can't be empty");
       isValid = false;
     }
     if (description === "") {
-      errors["productDescriptionError"] = "The description can't be empty";
+      updatedErrors.set("productDescriptionError", "The description can't be empty");
       isValid = false;
     }
     if (price === "") {
-      errors["productPriceError"] = "The price can't be empty";
+      updatedErrors.set("productPriceError", "The price can't be empty");
       isValid = false;
     }
     if (Number.isNaN(Number(price)) || Number(price) < 0) {
-      errors["productPriceError"] = "The price must be a positive number";
+      updatedErrors.set("productPriceError", "The price must be a positive number");
       isValid = false;
     }
     if (image === undefined) {
-      errors["productImageError"] = "An image must be uploaded";
+      updatedErrors.set("productImageError", "An image must be uploaded");
+      isValid = false;
+    }
+    if (category === "") {
+      updatedErrors.set("productCategoryError", "A valid category must be selected");
       isValid = false;
     }
 
-    this.setState({ errors });
+    this.setState({ errors: updatedErrors });
 
     return isValid;
   };
@@ -71,12 +80,13 @@ class ProductSection extends React.Component<
       base64StringImage !== ""
         ? new ProductImage(fileObject.type, `base64,${base64StringImage}`)
         : undefined;
-    const category: string = event.target.productCategorySelection.value
-      ? event.target.productCategorySelection.value
-      : "";
+    const category: string =
+      event.target.productCategorySelection.value !== "Choose..."
+        ? event.target.productCategorySelection.value
+        : "";
 
-    // VALIDATION
-    const isValid: boolean = this.formValidation(name, description, price, image);
+    // Validation
+    const isValid: boolean = this.formValidation(name, description, price, image, category);
 
     if (isValid) {
       const product: ProductSend = new ProductSend(

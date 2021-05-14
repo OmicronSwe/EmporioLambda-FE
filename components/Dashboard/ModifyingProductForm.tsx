@@ -54,9 +54,6 @@ const ModifyingProductForm = ({
               rows={3}
               aria-describedby="productDescriptionHelpBlock"
             />
-            <small id="productDescriptionHelpBlock" className="form-text text-muted">
-              Maximum x characters.
-            </small>
           </Col>
         </FormGroup>
         <FormGroup as={Row}>

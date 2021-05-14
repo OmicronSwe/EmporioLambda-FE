@@ -17,7 +17,7 @@ interface NewProductFormProps {
   insertProduct;
   categories: string[];
   productInserted: boolean;
-  errors;
+  errors: Map<string, string>;
 }
 
 const NewProductForm = ({
@@ -50,9 +50,9 @@ const NewProductForm = ({
                       name="productName"
                       placeholder="Name"
                     />
-                    {errors.productNameError !== undefined ? (
+                    {errors.has("productNameError") ? (
                       <small id="productNameErrors" className="text-danger">
-                        {errors.productNameError}
+                        {errors.get("productNameError")}
                       </small>
                     ) : (
                       <p />
@@ -72,9 +72,9 @@ const NewProductForm = ({
                       placeholder="Description"
                       rows={3}
                     />
-                    {errors.productDescriptionError !== undefined ? (
+                    {errors.has("productDescriptionError") ? (
                       <small id="productDescriptionErrors" className="text-danger">
-                        {errors.productDescriptionError}
+                        {errors.get("productDescriptionError")}
                       </small>
                     ) : (
                       <p />
@@ -97,9 +97,9 @@ const NewProductForm = ({
                         <InputGroup.Text>€</InputGroup.Text>
                       </InputGroup.Append>
                     </InputGroup>
-                    {errors.productPriceError !== undefined ? (
+                    {errors.has("productPriceError") ? (
                       <small id="productPriceErrors" className="text-danger">
-                        {errors.productPriceError}
+                        {errors.get("productPriceError")}
                       </small>
                     ) : (
                       <p />
@@ -117,9 +117,9 @@ const NewProductForm = ({
                       id="productImage"
                       name="productImage"
                     />
-                    {errors.productImageError !== undefined ? (
+                    {errors.has("productImageError") ? (
                       <small id="productImageErrors" className="text-danger">
-                        {errors.productImageError}
+                        {errors.get("productImageError")}
                       </small>
                     ) : (
                       <p />
@@ -134,15 +134,24 @@ const NewProductForm = ({
                     <FormControl
                       as="select"
                       className="form-control-sm"
+                      defaultValue="Choose..."
                       id="productCategorySelection"
                       name="productCategorySelection"
                     >
+                      <option>Choose...</option>
                       {categories ? (
                         categories.map((item) => <option key={item}>{item}</option>)
                       ) : (
                         <option key="noCategory">no category found</option>
                       )}
                     </FormControl>
+                    {errors.has("productCategoryError") ? (
+                      <small id="productCategoryErrors" className="text-danger">
+                        {errors.get("productCategoryError")}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <Form.Row className="text-center">
