@@ -6,9 +6,7 @@ interface ModifyingProfileFormProps {
   updateProfile;
 }
 
-const ModifyingProfileForm = ({
-  updateProfile,
-}: ModifyingProfileFormProps) => {
+const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
   return (
     <>
       <Form onSubmit={updateProfile}>

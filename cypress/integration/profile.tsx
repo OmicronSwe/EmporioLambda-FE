@@ -106,7 +106,7 @@ describe("Test profile", () => {
 
     cy.get("button").contains("Submit").click();
     cy.wait(1000);
-    cy.contains('Error! Failed edit password!');
+    cy.contains("Error! Failed edit password!");
   });
   it("Successfully update password", () => {
     cy.setCookie(
@@ -120,7 +120,7 @@ describe("Test profile", () => {
 
     cy.get("button").contains("Submit").click();
     cy.wait(1000);
-    cy.get('div').contains('Password edited Successfully!').should("have.class","alert-heading");
+    cy.get("div").contains("Password edited Successfully!").should("have.class", "alert-heading");
   });
 });
 

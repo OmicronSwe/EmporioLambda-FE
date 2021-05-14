@@ -71,14 +71,12 @@ class EditProfile extends React.Component<
                 <ProfileInfoForm profile={profile} />
               </Col>
               <Col>
-                <ModifyingProfileForm
-                  updateProfile={this.updateProfile}
-                />
+                <ModifyingProfileForm updateProfile={this.updateProfile} />
               </Col>
             </Row>
             {updatedProfileAlert !== null && updatedProfileAlert === true ? (
               <Container>
-                <Row className="justify-content-md-center mt-3" >
+                <Row className="justify-content-md-center mt-3">
                   <Alert variant="success">
                     <Alert.Heading> Profile edited Successfully! </Alert.Heading>
                   </Alert>
@@ -94,7 +92,9 @@ class EditProfile extends React.Component<
             )}
             {updatedProfileAlert !== null && updatedProfileAlert === false ? (
               <Alert variant="danger">
-                <Alert.Heading> <p className="text-center"> At least one field must be filled in to modify the profile </p></Alert.Heading>
+                <Alert.Heading>
+                  At least one field must be filled in to modify the profile
+                </Alert.Heading>
               </Alert>
             ) : (
               <p />
