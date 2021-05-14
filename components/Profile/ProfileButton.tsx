@@ -51,10 +51,9 @@ const ProfileButton = ({ profile, removeProfile, updatePassword, updatedPassword
                             <p />
                         )}
                         {updatedPasswordAlert !== null && updatedPasswordAlert === false ? (
-                          console.log(updatedPasswordAlert)
-                          /*<Alert variant="danger">
+                          <Alert variant="danger">
                             <Alert.Heading> Error! Failed edit password! </Alert.Heading>
-                          </Alert>*/
+                          </Alert>
                           ) : (
                             <p />
                         )}
