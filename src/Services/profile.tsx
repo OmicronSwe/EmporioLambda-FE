@@ -18,7 +18,23 @@ export const updateProfile = async (profile: Profile, session): Promise<boolean>
       JSON.stringify(profile)
     )
   ).props;
-  if (response.err !== undefined) return false;
+  if (response.error !== undefined) return false;
+  return true;
+};
+
+export const updatePassword = async (profile: Profile, session, pass: string): Promise<boolean> => {
+  const password = {
+    password: pass
+  }
+  const { response } = (
+    await getlambdaResponse(
+      `user/${profile.username}/updatePassword`,
+      "POST",
+      session.accessToken,
+      JSON.stringify(password)
+    )
+  ).props;
+  if (response.error !== undefined) return false;
   return true;
 };
 

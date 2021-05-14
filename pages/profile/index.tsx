@@ -1,11 +1,11 @@
 import React from "react";
 import { GetServerSideProps } from "next";
 import { getSession, signOut } from "next-auth/client";
-import { Alert, Button, Container } from "react-bootstrap";
+import { Alert, Button, Col, Container, Row } from "react-bootstrap";
 import Router from "next/router";
 import Layout from "../../components/layout";
 import ProfileInfoForm from "../../components/Profile/ProfileInfoForm";
-import { getProfile, removeProfile } from "../../src/Services/profile";
+import { getProfile, removeProfile, updatePassword } from "../../src/Services/profile";
 import Profile from "../../src/types/Profile";
 import ProfileButton from "../../components/Profile/ProfileButton";
 import OrderList from "../../components/Profile/OrderList";
@@ -14,11 +14,11 @@ import Order from "../../src/types/Order";
 
 class ProfilePage extends React.Component<
   { profile: Profile; orders: Order[]; session },
-  { removedProfileAlert: boolean | null }
+  { removedProfileAlert: boolean | null; updatedPasswordAlert: boolean | null }
 > {
   constructor(props) {
     super(props);
-    this.state = { removedProfileAlert: null };
+    this.state = { removedProfileAlert: null, updatedPasswordAlert: null };
   }
 
   removeProfile = async () => {
@@ -36,20 +36,48 @@ class ProfilePage extends React.Component<
     signOut({ redirect: false });
   };
 
+  updatePassword = async (event) => {
+    event.preventDefault();
+    const { profile, session } = this.props;
+
+    // TODO: validation
+    const password = event.target.newPassword.value;
+
+    const resp = await updatePassword(profile, session, password);
+
+    if (resp) {
+      this.setState({ updatedPasswordAlert: true });
+    } else {
+      this.setState({ updatedPasswordAlert: false });
+    }
+  };
+
+
   render() {
     const { profile, orders } = this.props;
-    const { removedProfileAlert } = this.state;
+    const { removedProfileAlert, updatedPasswordAlert } = this.state;
     return (
       <>
         {removedProfileAlert === null ? (
           <Layout title="Profile page">
-            <h1>Profile Section</h1>
-            <ProfileInfoForm profile={profile} />
+            <Container>
+              <Row className="justify-content-md-center">
+                <h1>Profile section</h1>
+              </Row>
+              <Row>
+                <Col>
+                  <ProfileInfoForm profile={profile} />
+                </Col>
+                <Col>
+                  <ProfileButton profile={profile} removeProfile={this.removeProfile} updatePassword={this.updatePassword} updatedPasswordAlert={updatedPasswordAlert}/>
+                </Col>
+              </Row>
 
-            <ProfileButton profile={profile} removeProfile={this.removeProfile} />
-
-            <h1>Order Section</h1>
-            <OrderList orders={orders} />
+              <Row className="justify-content-md-center">
+                <h1>Order section</h1>
+              </Row>
+              <OrderList orders={orders} />
+            </Container>
           </Layout>
         ) : (
           <p />
