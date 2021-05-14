@@ -33,23 +33,34 @@ class ModifyProductPage extends React.Component<
     category: string,
     product: StoredProduct
   ) => {
-
     let isValid: boolean = true;
     // Refresh of the form errors and alerts
     const updatedErrors: Map<string, string> = new Map<string, string>();
     this.setState({ errors: updatedErrors, productModified: null });
 
-    if (name === "" && description === "" && price === "" && image === undefined && category === ""){
+    if (
+      name === "" &&
+      description === "" &&
+      price === "" &&
+      image === undefined &&
+      category === ""
+    ) {
       this.setState({ productModified: false });
       return false;
     }
 
     if (name === product.name) {
-      updatedErrors.set("productNameError", "The new product name cannot be the same as the old one");
+      updatedErrors.set(
+        "productNameError",
+        "The new product name cannot be the same as the old one"
+      );
       isValid = false;
     }
     if (description === product.description) {
-      updatedErrors.set("productDescriptionError", "The new product description cannot be the same as the old one");
+      updatedErrors.set(
+        "productDescriptionError",
+        "The new product description cannot be the same as the old one"
+      );
       isValid = false;
     }
     if (Number.isNaN(Number(price)) || Number(price) < 0) {
@@ -57,11 +68,17 @@ class ModifyProductPage extends React.Component<
       isValid = false;
     }
     if (Number(price) === product.price) {
-      updatedErrors.set("productPriceError", "The new product price cannot be the same as the old one");
+      updatedErrors.set(
+        "productPriceError",
+        "The new product price cannot be the same as the old one"
+      );
       isValid = false;
     }
     if (category === product.category) {
-      updatedErrors.set("productCategoryError", "The new product category cannot be the same as the old one");
+      updatedErrors.set(
+        "productCategoryError",
+        "The new product category cannot be the same as the old one"
+      );
       isValid = false;
     }
 
@@ -96,7 +113,14 @@ class ModifyProductPage extends React.Component<
 
     // Validation
 
-    const isValid: boolean = this.formValidation(name, description, price, image, category, product);
+    const isValid: boolean = this.formValidation(
+      name,
+      description,
+      price,
+      image,
+      category,
+      product
+    );
 
     if (isValid) {
       // Sending a new product with modified infos

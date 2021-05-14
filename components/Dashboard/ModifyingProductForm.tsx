@@ -8,7 +8,7 @@ import {
   InputGroup,
   FormControl,
   FormGroup,
-  FormLabel
+  FormLabel,
 } from "react-bootstrap";
 
 interface ModifyingProductFormProps {
@@ -17,11 +17,7 @@ interface ModifyingProductFormProps {
   errors: Map<string, string>;
 }
 
-const ModifyingProductForm = ({
-  updateProduct,
-  categories,
-  errors
-}: ModifyingProductFormProps) => {
+const ModifyingProductForm = ({ updateProduct, categories, errors }: ModifyingProductFormProps) => {
   return (
     <>
       <Form onSubmit={updateProduct} className="border border-dark p-3">
