@@ -1,4 +1,8 @@
 module.exports = (req, res, next) => {
+	if(req.method === "PUT"){
+		req.method = "DELETE";
+		req.query = req.body;
+	}
     var send = res.send
     res.send = function (string) {
         var body = string instanceof Buffer ? string.toString() : string

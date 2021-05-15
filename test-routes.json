@@ -2,5 +2,6 @@
     "/local/*": "/$1",
     "/product/search/category=:category": "/product?category=:category",
     "/product/:id": "/product?id=:id",
-	"/cart/:username": "/cart?username=:username"
+	"/cart/toEmpty/:id": "/cart/1",
+	"/cart/:id": "/cart?username=:id&_limit=1"
 }

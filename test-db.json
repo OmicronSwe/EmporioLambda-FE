@@ -46,6 +46,7 @@
    },
    "cart":[
       {
+		 "id":1,
          "username":"93edaf82-37fe-420d-af28-44d3693c8bdf",
          "products":[
             {
@@ -78,6 +79,12 @@
          ],
          "totalPrice":803.39,
          "taxesApplied":20
+      },
+	  {
+        "username":"93edaf82-37fe-420d-af28-44d3693c8bdf",
+        "products":[],
+        "totalPrice":0.0,
+        "taxesApplied":20
       }
    ],
    "order":[
