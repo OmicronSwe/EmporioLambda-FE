@@ -13,7 +13,7 @@ class OrderSection extends React.Component<{ order: Order }> {
     return (
       <>
         {order ? (
-          <Table borderless>
+          <Table>
             <tbody>
               <tr>
                 <td>
@@ -37,7 +37,7 @@ class OrderSection extends React.Component<{ order: Order }> {
                 <td>
                   <h3>Date</h3>
                 </td>
-                <td>{order.date}</td>
+                <td>{`${new Date(order.date).toLocaleDateString()}`}</td>
               </tr>
               <tr>
                 <td>
