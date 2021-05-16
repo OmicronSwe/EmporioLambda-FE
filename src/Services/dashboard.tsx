@@ -12,7 +12,7 @@ export const insertProduct = async (product: ProductSend, ses): Promise<boolean>
   return true;
 };
 
-export const removeProduct = async (id: string, ses) => {
+export const removeProduct = async (id: string, ses): Promise<boolean> => {
   const { response } = (await getlambdaResponse(`product/${id}`, "DELETE", ses.accessToken)).props;
   if (response.err !== undefined) return false;
   return true;

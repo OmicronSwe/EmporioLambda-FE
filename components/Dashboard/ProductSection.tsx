@@ -13,13 +13,13 @@ import ProductSend from "../../src/types/ProductSend";
 
 class ProductSection extends React.Component<
   { products: StoredProduct[]; categories: string[]; session },
-  { products: StoredProduct[]; productInserted: boolean; errors: Map<string, string> }
+  { products: StoredProduct[]; isProductInserted: boolean | null; isProductDeleted: boolean | null; productDeletedId: string; errors: Map<string, string> }
 > {
   constructor(props) {
     super(props);
 
     const { products } = this.props;
-    this.state = { products, productInserted: false, errors: new Map<string, string>() };
+    this.state = { products, isProductInserted: null, isProductDeleted: null, productDeletedId: "", errors: new Map<string, string>() };
   }
 
   formValidation = (
@@ -96,22 +96,20 @@ class ProductSection extends React.Component<
         Number(price),
         category
       );
-      await insertProduct(product, session);
+      const inserted: boolean = await insertProduct(product, session);
       const updatedProducts = await getProducts(session);
-      this.setState({ products: updatedProducts, productInserted: true });
+      this.setState({ products: updatedProducts, isProductInserted: inserted });
     }
   };
 
   removeProduct = async (id: string) => {
-    // TODO: aggiunta alert di avvenuta cancellazione
     const { session } = this.props;
-    await removeProduct(id, session);
-    const prod = await getProducts(session);
-    this.setState({ products: prod });
+    const removed: boolean = await removeProduct(id, session);
+    this.setState({ isProductDeleted: removed, productDeletedId: id });
   };
 
   render() {
-    const { products, productInserted, errors } = this.state;
+    const { products, isProductInserted, isProductDeleted, productDeletedId, errors } = this.state;
     const { categories } = this.props;
     return (
       <>
@@ -119,10 +117,14 @@ class ProductSection extends React.Component<
         <NewProductForm
           insertProduct={this.insertProduct}
           categories={categories}
-          productInserted={productInserted}
+          isProductInserted={isProductInserted}
           errors={errors}
         />
-        <ProductList products={products} removeProduct={this.removeProduct} />
+        <ProductList products={products} 
+          removeProduct={this.removeProduct}
+          isProductDeleted={isProductDeleted}
+          productDeletedId={productDeletedId} 
+        />
       </>
     );
   }

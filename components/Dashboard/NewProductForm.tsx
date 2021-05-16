@@ -1,4 +1,5 @@
 import React from "react";
+import { useState } from "react";
 import {
   Button,
   Accordion,
@@ -16,16 +17,17 @@ import {
 interface NewProductFormProps {
   insertProduct;
   categories: string[];
-  productInserted: boolean;
+  isProductInserted: boolean | null;
   errors: Map<string, string>;
 }
 
 const NewProductForm = ({
   insertProduct,
   categories,
-  productInserted,
+  isProductInserted,
   errors,
 }: NewProductFormProps) => {
+  const [show, setShow] = useState(true);
   return (
     <>
       <Accordion>
@@ -156,15 +158,22 @@ const NewProductForm = ({
                 </FormGroup>
                 <Form.Row className="text-center">
                   <Col sm="12">
-                    <Button type="submit" variant="primary">
+                    <Button type="submit" variant="primary" onClick={() => setShow(true)}>
                       Submit
                     </Button>
                   </Col>
                 </Form.Row>
               </Form>
-              {productInserted === true ? (
-                <Alert variant="success">
-                  <Alert.Heading>Product created successfully!</Alert.Heading>
+              {isProductInserted !== null && isProductInserted === true ? (
+                <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
+                  <Alert.Heading className="text-center">Product created successfully!</Alert.Heading>
+                </Alert>
+              ) : (
+                <p />
+              )}
+              {isProductInserted !== null && isProductInserted === false ? (
+                <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
+                  <Alert.Heading className="text-center">A Server Error occured creating the product, please retry</Alert.Heading>
                 </Alert>
               ) : (
                 <p />
