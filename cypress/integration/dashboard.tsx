@@ -37,6 +37,7 @@ describe("Test dashboard", () => {
     cy.get("#productPrice").type("a");
     cy.get("select").select("Choose...");
     cy.get("button").contains("Submit").click();
+
     cy.get("small").contains("The description can't be empty");
     cy.get("small").contains("The price must be a positive number");
     cy.get("small").contains("An image must be uploaded");
@@ -142,7 +143,7 @@ describe("Test dashboard", () => {
     cy.wait(1000);
 
     cy.get("small").should("contain", "The new product name cannot be the same as the old one");
-    cy.get("small").should("contains", "The price must be a positive number");
+    cy.get("small").should("contain", "The price must be a positive number");
     cy.get("small").should("contain", "The new product category cannot be the same as the old one");
   });
 
