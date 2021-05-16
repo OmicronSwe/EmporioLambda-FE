@@ -162,7 +162,9 @@ class ModifyProductPage extends React.Component<
               <Container>
                 <Row className="justify-content-md-center mt-3">
                   <Alert variant="success">
-                    <Alert.Heading className="text-center"> Product edited Successfully! </Alert.Heading>
+                    <Alert.Heading className="text-center">
+                      Product edited Successfully!
+                    </Alert.Heading>
                   </Alert>
                 </Row>
                 <Row className="justify-content-md-center">

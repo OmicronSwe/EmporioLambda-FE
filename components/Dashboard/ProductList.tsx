@@ -1,8 +1,8 @@
 import Router from "next/router";
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+
 import { Table, Button } from "react-bootstrap";
-import Alert from 'react-bootstrap/Alert'
+import Alert from "react-bootstrap/Alert";
 import StoredProduct from "../../src/types/StoredProduct";
 
 interface ProductListProps {
@@ -12,7 +12,12 @@ interface ProductListProps {
   productDeletedId: string;
 }
 
-const ProductList = ({ products, removeProduct, isProductDeleted, productDeletedId }: ProductListProps) => {
+const ProductList = ({
+  products,
+  removeProduct,
+  isProductDeleted,
+  productDeletedId,
+}: ProductListProps) => {
   const [show, setShow] = useState(true);
 
   return (
@@ -31,32 +36,46 @@ const ProductList = ({ products, removeProduct, isProductDeleted, productDeleted
         <tbody>
           {products ? (
             products.map((item) => {
-              if(item.id === productDeletedId){
-                  if(isProductDeleted !== null && isProductDeleted === true){
-                    return(
-                    <tr>
-                      <td colSpan={8} >
-                        <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
-                          <Alert.Heading className="text-center">Product deleted successfully!</Alert.Heading>
-                        </Alert>
-                      </td>
-                    </tr>
-                    );
-                  }
-                  else if(isProductDeleted !== null && isProductDeleted === false){
-                    return (
+              if (item.id === productDeletedId) {
+                return (
+                  <>
+                    {isProductDeleted !== null && isProductDeleted === true && (
                       <tr>
-                        <td colSpan={8} >
-                          <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
-                            <Alert.Heading className="text-center">A Server Error occured deleting the product, please refresh the page and retry</Alert.Heading>
+                        <td colSpan={8}>
+                          <Alert
+                            variant="success"
+                            show={show}
+                            onClose={() => setShow(false)}
+                            dismissible
+                          >
+                            <Alert.Heading className="text-center">
+                              Product deleted successfully!
+                            </Alert.Heading>
                           </Alert>
                         </td>
                       </tr>
-                    );
-                  }
+                    )}
+                    {isProductDeleted !== null && isProductDeleted === false && (
+                      <tr>
+                        <td colSpan={8}>
+                          <Alert
+                            variant="danger"
+                            show={show}
+                            onClose={() => setShow(false)}
+                            dismissible
+                          >
+                            <Alert.Heading className="text-center">
+                              A Server Error occured deleting the product, please refresh the page
+                              and retry
+                            </Alert.Heading>
+                          </Alert>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                );
               }
-              else{
-                return (
+              return (
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>
@@ -91,13 +110,11 @@ const ProductList = ({ products, removeProduct, isProductDeleted, productDeleted
                     </Button>
                   </td>
                 </tr>
-                );
-              }
-            }
-            )) : (
-              <p>No product found</p>
-              )
-          }
+              );
+            })
+          ) : (
+            <p>No product found</p>
+          )}
         </tbody>
       </Table>
     </>

@@ -13,13 +13,25 @@ import ProductSend from "../../src/types/ProductSend";
 
 class ProductSection extends React.Component<
   { products: StoredProduct[]; categories: string[]; session },
-  { products: StoredProduct[]; isProductInserted: boolean | null; isProductDeleted: boolean | null; productDeletedId: string; errors: Map<string, string> }
+  {
+    products: StoredProduct[];
+    isProductInserted: boolean | null;
+    isProductDeleted: boolean | null;
+    productDeletedId: string;
+    errors: Map<string, string>;
+  }
 > {
   constructor(props) {
     super(props);
 
     const { products } = this.props;
-    this.state = { products, isProductInserted: null, isProductDeleted: null, productDeletedId: "", errors: new Map<string, string>() };
+    this.state = {
+      products,
+      isProductInserted: null,
+      isProductDeleted: null,
+      productDeletedId: "",
+      errors: new Map<string, string>(),
+    };
   }
 
   formValidation = (
@@ -120,10 +132,11 @@ class ProductSection extends React.Component<
           isProductInserted={isProductInserted}
           errors={errors}
         />
-        <ProductList products={products} 
+        <ProductList
+          products={products}
           removeProduct={this.removeProduct}
           isProductDeleted={isProductDeleted}
-          productDeletedId={productDeletedId} 
+          productDeletedId={productDeletedId}
         />
       </>
     );

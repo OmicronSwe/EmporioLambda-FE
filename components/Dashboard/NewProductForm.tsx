@@ -1,5 +1,5 @@
-import React from "react";
-import { useState } from "react";
+import React, { useState } from "react";
+
 import {
   Button,
   Accordion,
@@ -166,14 +166,18 @@ const NewProductForm = ({
               </Form>
               {isProductInserted !== null && isProductInserted === true ? (
                 <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
-                  <Alert.Heading className="text-center">Product created successfully!</Alert.Heading>
+                  <Alert.Heading className="text-center">
+                    Product created successfully!
+                  </Alert.Heading>
                 </Alert>
               ) : (
                 <p />
               )}
               {isProductInserted !== null && isProductInserted === false ? (
                 <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
-                  <Alert.Heading className="text-center">A Server Error occured creating the product, please retry</Alert.Heading>
+                  <Alert.Heading className="text-center">
+                    A Server Error occured creating the product, please retry
+                  </Alert.Heading>
                 </Alert>
               ) : (
                 <p />
