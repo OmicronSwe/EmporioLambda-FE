@@ -19,6 +19,7 @@ interface ProfileButtonProps {
   removeProfile;
   updatePassword;
   updatedPasswordAlert: boolean;
+  errors: Map<string, string>;
 }
 
 const ProfileButton = ({
@@ -26,6 +27,7 @@ const ProfileButton = ({
   removeProfile,
   updatePassword,
   updatedPasswordAlert,
+  errors
 }: ProfileButtonProps) => {
   return (
     <>
@@ -51,6 +53,13 @@ const ProfileButton = ({
                       name="newPassword"
                       placeholder="New Password"
                     />
+                    {errors.has("profilePasswordError") ? (
+                      <small id="profilePasswordErrors" className="text-danger">
+                        {errors.get("profilePasswordError")}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <Form.Row className="text-center">

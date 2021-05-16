@@ -11,54 +11,145 @@ import ModifyingProfileForm from "../../../components/Profile/ModifyingProfileFo
 
 class EditProfile extends React.Component<
   { profile: Profile; session },
-  { updatedProfileAlert: boolean | null }
+  { updatedProfileAlert: boolean | null; errors: Map<string, string> }
 > {
   constructor(props) {
     super(props);
-    this.state = { updatedProfileAlert: null };
+    this.state = { updatedProfileAlert: null, errors: new Map<string, string>() };
   }
+
+  formValidation = (
+    name: string,
+    familyName: string,
+    email: string,
+    address: string
+  ) => {
+    const hasNumber = /\d/;
+    const validateEmail = /\S+@\S+\.\S+/;
+    let isValid: boolean = true;
+    const updatedErrors: Map<string, string> = new Map<string, string>();
+    this.setState({ errors: updatedErrors, updatedProfileAlert: null });
+
+    if ( 
+      name === "" &&
+      familyName === "" &&
+      email === "" &&
+      address === ""
+    ) {
+      this.setState({ updatedProfileAlert: false });
+      return false;
+    }
+
+    if (
+      name !== "" &&
+      hasNumber.test(name)
+    ) {
+      updatedErrors.set(
+        "profileNameError",
+        "The new name cannot contains numbers"
+      );
+      isValid = false;
+    }
+    if (
+      name !== "" &&
+      name.length < 2
+    ) {
+      updatedErrors.set(
+        "profileNameError",
+        "The new name must contains at least 2 characters"
+      );
+      isValid = false;
+    }
+    if (
+      familyName !== "" &&
+      hasNumber.test(familyName)
+    ) {
+      updatedErrors.set(
+        "profileFamilyNameError",
+        "The new family name cannot contains numbers"
+      );
+      isValid = false;
+    }
+    if (
+      familyName !== "" &&
+      familyName.length < 2
+    ) {
+      updatedErrors.set(
+        "profileFamilyNameError",
+        "The new family name must contains at least 2 characters"
+      );
+      isValid = false;
+    }
+    if (
+      address !== "" &&
+      address.length < 4
+    ) {
+      updatedErrors.set(
+        "profileAddressError",
+        "The new address must contains at least 4 characters"
+      );
+      isValid = false;
+    }
+    if (
+      email !== "" &&
+      !validateEmail.test(email)
+    ) {
+      updatedErrors.set(
+        "profileEmailError",
+        "The new email isn't in the right form (something@something.something)"
+      );
+      isValid = false;
+    }
+
+    this.setState({ errors: updatedErrors });
+    return isValid;
+  };
 
   updateProfile = async (event) => {
     event.preventDefault();
     const { profile, session } = this.props;
-    let empty: boolean = true;
 
-    // TODO: validation
-
-    const name = event.target.profileName.value ? event.target.profileName.value : profile.name;
-    if (name !== profile.name) {
-      empty = false;
-    }
-    const familyName = event.target.profileFamilyName.value
+    let name = event.target.profileName.value 
+      ? event.target.profileName.value 
+      : "";
+    let familyName = event.target.profileFamilyName.value
       ? event.target.profileFamilyName.value
-      : profile.family_name;
-    if (familyName !== profile.family_name) {
-      empty = false;
-    }
-    const email = event.target.profileEmail.value ? event.target.profileEmail.value : profile.email;
-    if (email !== profile.email) {
-      empty = false;
-    }
-    const address = event.target.profileAddress.value
+      : "";
+    let email = event.target.profileEmail.value 
+      ? event.target.profileEmail.value 
+      : "";
+    let address = event.target.profileAddress.value
       ? event.target.profileAddress.value
-      : profile.address;
-    if (address !== profile.address) {
-      empty = false;
-    }
-    const modifyedProfile = new Profile(profile.username, address, name, familyName, email);
+      : "";
 
-    const resp = await updateProfile(modifyedProfile, session);
+    // Validation
 
-    if (!resp || empty) {
-      this.setState({ updatedProfileAlert: false });
-    } else {
-      this.setState({ updatedProfileAlert: true });
-    }
+    const isValid: boolean = this.formValidation(
+      name,
+      familyName,
+      email, 
+      address
+    );
+
+    if(isValid) {
+      const modifyedProfile = new Profile(
+        profile.username, 
+        address !== "" ? address : profile.address, 
+        name !== "" ? name : profile.name, 
+        familyName !== "" ? familyName : profile.family_name, 
+        email !== "" ? email : profile.email);
+
+        const resp = await updateProfile(modifyedProfile, session);
+
+        if ( resp ) {
+          this.setState({ updatedProfileAlert: true });
+        }
+    }    
   };
 
   render() {
     const { profile } = this.props;
-    const { updatedProfileAlert } = this.state;
+    const { updatedProfileAlert, errors } = this.state;
     return (
       <>
         <Layout title="Profile edit page">
@@ -71,7 +162,7 @@ class EditProfile extends React.Component<
                 <ProfileInfoForm profile={profile} />
               </Col>
               <Col>
-                <ModifyingProfileForm updateProfile={this.updateProfile} />
+                <ModifyingProfileForm updateProfile={this.updateProfile} errors={errors} />
               </Col>
             </Row>
             {updatedProfileAlert !== null && updatedProfileAlert === true ? (

@@ -4,9 +4,10 @@ import { Button, Form, Row, Col, FormControl, FormGroup, FormLabel } from "react
 
 interface ModifyingProfileFormProps {
   updateProfile;
+  errors: Map<string, string>;
 }
 
-const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
+const ModifyingProfileForm = ({ updateProfile, errors }: ModifyingProfileFormProps) => {
   return (
     <>
       <Form onSubmit={updateProfile}>
@@ -22,6 +23,13 @@ const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
               name="profileName"
               placeholder="Name"
             />
+            {errors.has("profileNameError") ? (
+              <small id="profileNameErrors" className="text-danger">
+                {errors.get("profileNameError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
@@ -35,6 +43,13 @@ const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
               name="profileFamilyName"
               placeholder="FamilyName"
             />
+            {errors.has("profileFamilyNameError") ? (
+              <small id="profileFamilyNameErrors" className="text-danger">
+                {errors.get("profileFamilyNameError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
@@ -43,6 +58,13 @@ const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
           </FormLabel>
           <Col sm="6">
             <FormControl className="sm" id="profileEmail" name="profileEmail" placeholder="Email" />
+            {errors.has("profileEmailError") ? (
+              <small id="profileEmailErrors" className="text-danger">
+                {errors.get("profileEmailError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
@@ -56,6 +78,13 @@ const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
               name="profileAddress"
               placeholder="Address"
             />
+            {errors.has("profileAddressError") ? (
+              <small id="profileAddressErrors" className="text-danger">
+                {errors.get("profileAddressError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <Button type="submit" variant="primary">

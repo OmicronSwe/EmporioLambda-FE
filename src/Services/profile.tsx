@@ -42,6 +42,6 @@ export const removeProfile = async (profile: Profile, session): Promise<boolean>
   const { response } = (
     await getlambdaResponse(`user/${profile.username}/delete`, "DELETE", session.accessToken)
   ).props;
-  if (response.err !== undefined) return false;
+  if (response.error !== undefined) return false;
   return true;
 };
