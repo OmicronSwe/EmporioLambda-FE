@@ -14,17 +14,66 @@ import Order from "../../src/types/Order";
 
 class ProfilePage extends React.Component<
   { profile: Profile; orders: Order[]; session },
-  { removedProfileAlert: boolean | null; updatedPasswordAlert: boolean | null }
+  { removedProfileAlert: boolean | null; updatedPasswordAlert: boolean | null; errors: Map<string, string> }
 > {
   constructor(props) {
     super(props);
-    this.state = { removedProfileAlert: null, updatedPasswordAlert: null };
+    this.state = { removedProfileAlert: null, updatedPasswordAlert: null, errors: new Map<string, string>() };
+  }
+
+  formValidation = (
+    password: string
+  ) => {
+    const hasNumber = /\d/;
+    const hasLowerCase = /[a-z]/;
+    const hasUpperCase = /[A-Z]/;
+    const isNumber = /^\d+$/;
+    let isValid: boolean = true;
+    const updatedErrors: Map<string, string> = new Map<string, string>();
+    this.setState({ errors: updatedErrors, updatedPasswordAlert: null });
+
+    if (!hasNumber.test(password)) {
+      updatedErrors.set(
+        "profilePasswordError",
+        "The new password must contains numbers"
+      );
+      isValid = false;
+    }
+    if (hasLowerCase.test(password)) {
+      updatedErrors.set(
+        "profilePasswordError",
+        "The new password must contains at least 1 uppercase letters"
+      );
+      isValid = false;
+    }
+    if (hasUpperCase.test(password)) {
+      updatedErrors.set(
+        "profilePasswordError",
+        "The new password must contains at least 1 lowercase letters"
+      );
+      isValid = false;
+    }
+    if (isNumber.test(password)) {
+      updatedErrors.set(
+        "profilePasswordError",
+        "The new password must contains at least 1 uppercase letters and 1 lowercase letters"
+      );
+      isValid = false;
+    }
+    if (password.length < 8) {
+      updatedErrors.set(
+        "profilePasswordError",
+        "The new password must contains at least 8 characters"
+      );
+      isValid = false;
+    }
+
+    this.setState({ errors: updatedErrors });
+    return isValid;
   }
 
   removeProfile = async () => {
     const { profile, session } = this.props;
-
-    // TODO: validation
 
     const resp = await removeProfile(profile, session);
 
@@ -40,21 +89,26 @@ class ProfilePage extends React.Component<
     event.preventDefault();
     const { profile, session } = this.props;
 
-    // TODO: validation
     const password = event.target.newPassword.value;
 
-    const resp = await updatePassword(profile, session, password);
+    // Validation
 
-    if (resp) {
-      this.setState({ updatedPasswordAlert: true });
-    } else {
-      this.setState({ updatedPasswordAlert: false });
+    const isValid: boolean = this.formValidation(
+      password
+    );
+    
+    if(isValid) {
+      const resp = await updatePassword(profile, session, password);
+
+      if (resp) {
+        this.setState({ updatedPasswordAlert: true });
+      }
     }
   };
 
   render() {
     const { profile, orders } = this.props;
-    const { removedProfileAlert, updatedPasswordAlert } = this.state;
+    const { removedProfileAlert, updatedPasswordAlert, errors } = this.state;
     return (
       <>
         {removedProfileAlert === null ? (
@@ -73,6 +127,7 @@ class ProfilePage extends React.Component<
                     removeProfile={this.removeProfile}
                     updatePassword={this.updatePassword}
                     updatedPasswordAlert={updatedPasswordAlert}
+                    errors={errors}
                   />
                 </Col>
               </Row>

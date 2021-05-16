@@ -1,5 +1,5 @@
 module.exports = (req, res, next) => {
-    pureResponseMethods = ["updateProfileSuccess", "updatePasswordSuccess", "updatePasswordFail"];
+    pureResponseMethods = ["updateProfileSuccess", "updatePasswordSuccess", "updatePasswordFail", "noOrdersFound", "deleteProfileSuccess"];
 
     if (req.method === "POST") {
         req.method = "GET";

@@ -6,5 +6,7 @@
     "/user/3184a143-558f-4461-9b91-d0047037a53b/updatePassword": "/updatePasswordSuccess",
     "/user/93edaf82-37fe-420d-af28-44d3693c8bdf/updatePassword": "/updatePasswordFail",
     "/user/:id/update": "/updateProfileSuccess",
-    "/order/getByUsername/*": "/order"
+    "/order/getByUsername/93edaf82-37fe-420d-af28-44d3693c8bdf": "/noOrdersFound",
+    "/order/getByUsername/:id": "/order?username=:id",
+    "/user/:id/delete": "/deleteProfileSuccess"
 }
