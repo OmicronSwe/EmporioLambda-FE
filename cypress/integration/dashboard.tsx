@@ -53,11 +53,14 @@ describe("Test dashboard", () => {
     cy.get('input[type="file"]').attachFile(filepath);
     cy.get("select").select("Headphones");
     cy.get("button").contains("Submit").click();
+
+    cy.get("div").should("contain","Product created successfully!");
   });
   it("Check if the created product is present in the product list", () => {
     cy.wait(4000);
     cy.visit("/dashboard");
-    cy.get("#productList").find("td").contains("CypressTest");
+
+    cy.get("#productList").find("td").should("contain","CypressTest");
   });
   it("Successfully loads Modifying Product Page", () => {
     cy.visit("/dashboard");
@@ -68,6 +71,7 @@ describe("Test dashboard", () => {
       .within(() => {
         cy.get("td").contains("button", "Modify").click();
       });
+
     cy.url().should("include", "/dashboard/modify/");
   });
   it("Check if the Cancel button redirect to the dashboard", () => {
@@ -81,6 +85,7 @@ describe("Test dashboard", () => {
       });
     cy.wait(2000);
     cy.get("button").contains("Cancel").click();
+
     cy.url().should("eq", "http://localhost:3000/dashboard");
   });
   it("Successful product modification", () => {
@@ -102,7 +107,7 @@ describe("Test dashboard", () => {
     cy.get("button").contains("Submit").click();
     cy.wait(1000);
 
-    cy.contains("Product edited Successfully!");
+    cy.get("div").should("contain","Product edited Successfully!");
     cy.get("button").contains("Redirect to Dashboard");
   });
   it("Failing product modification because of no user input", () => {
@@ -117,9 +122,10 @@ describe("Test dashboard", () => {
     cy.wait(1000);
     cy.get("button").contains("Submit").click();
     cy.wait(1000);
-    cy.contains("At least one field must be filled in to modify the product");
+
+    cy.get("div").should("contain","At least one field must be filled in to modify the product");
   });
-  it("Failing product modification because of input error", () => {
+  it("Failing product modification because of input errors", () => {
     cy.visit("/dashboard");
     cy.get("#productList")
       .find("td")
@@ -134,33 +140,26 @@ describe("Test dashboard", () => {
     cy.get("select").select("Headphones");
     cy.get("button").contains("Submit").click();
     cy.wait(1000);
-    cy.get("small").contains("The new product name cannot be the same as the old one");
-    cy.get("small").contains("The price must be a positive number");
-    cy.get("small").contains("The new product category cannot be the same as the old one");
+
+    cy.get("small").should("contain","The new product name cannot be the same as the old one");
+    cy.get("small").should("contains","The price must be a positive number");
+    cy.get("small").should("contain","The new product category cannot be the same as the old one");
   });
 
-  // it("Successful product elimination", () => {
-  //   cy.visit("/dashboard");
-  //   cy.get("#productList")
-  //     .find("td")
-  //     .contains("t8QXCHw")
-  //     .parent("tr")
-  //     .within(() => {
-  //       cy.get("td").contains("button", "Modify").click();
-  //     });
-  //   cy.wait(1000);
-  //   cy.get("#productName").type("CypressTestModified");
-  //   cy.get("#productDescription").type("CypressTestModified");
-  //   cy.get("#productPrice").type("2");
-  //   const filepath = "images/f.jpg";
-  //   cy.get('input[type="file"]').attachFile(filepath);
-  //   cy.get("select").select("Sound Cards");
-  //   cy.get("button").contains("Submit").click();
-  //   cy.wait(1000);
+  it("Successful product elimination", () => {
+    cy.visit("/dashboard");
+    cy.get("#productList")
+      .find("td")
+      .contains("t8QXCHw")
+      .parent("tr")
+      .within(() => {
+        cy.get("td").contains("button", "Remove").click();
+      });
+    cy.wait(2000);
 
-  //   cy.contains("Product edited Successfully!");
-  //   cy.get("button").contains("Redirect to Dashboard");
-  // });
+    cy.get("#productList").find("td").should("not.contain","t8QXCHw");
+    cy.get("div").should("contain","Product deleted successfully!");
+  });
 
   it("Check if 'the add new category' button is present", () => {
     cy.visit("/dashboard");
