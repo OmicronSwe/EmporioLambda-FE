@@ -1,6 +1,6 @@
 import Router from "next/router";
 import React from "react";
-import { Alert, Button, CardColumns, Card } from "react-bootstrap";
+import { Button, CardColumns, Card } from "react-bootstrap";
 import { Category } from "../../src/objects/Category";
 
 class CategoryList extends React.Component<{ categories: Category[] }> {
@@ -27,9 +27,9 @@ class CategoryList extends React.Component<{ categories: Category[] }> {
                 </Card.Body>
               </Card>
             ))
-          ) : (
-            <p>No category found</p>
-          )}
+            ): (
+              <p>No category found</p>
+            )}
         </CardColumns>
       </>
     );

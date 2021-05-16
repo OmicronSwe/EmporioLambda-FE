@@ -12,7 +12,7 @@ class AddToCartList extends React.Component<{ addToCartList }> {
     return (
       <>
         <Button variant="warning" onClick={() => addToCartList()}>
-          Add to Cart
+          Add selected products to Cart
         </Button>
       </>
     );
