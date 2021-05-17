@@ -82,7 +82,8 @@ export const filterByPrice = async (category: string, session, min: number, max:
       )
     ).props.response.result.items;
   }
-
+  if(response== null)
+    return (<p>no product found</p>);
   return response;
 };
 

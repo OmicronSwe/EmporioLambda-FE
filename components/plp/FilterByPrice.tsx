@@ -13,7 +13,7 @@ class FilterByPrice extends React.Component<{
     const { filterByPrice } = this.props;
     return (
       <>
-        <Accordion style={{ width: "50%" }}>
+        <Accordion style={{ width: "40%" }}>
           <Card>
             <Card.Body>
               <Form onSubmit={filterByPrice}>
@@ -23,7 +23,10 @@ class FilterByPrice extends React.Component<{
                   </Form.Label>
                   <Col sm="8">
                     {" "}
-                    <Form.Control placeholder="Price Min" name="PriceMin" />
+                    <Form.Control 
+                      placeholder="Price Min"
+                      name="PriceMin"
+                      id="PriceMin" />
                   </Col>
                 </Form.Group>
                 <Form.Group as={Row}>
@@ -32,7 +35,10 @@ class FilterByPrice extends React.Component<{
                   </Form.Label>
                   <Col sm="8">
                     {" "}
-                    <Form.Control placeholder="Price Max" name="PriceMax" />
+                    <Form.Control 
+                      placeholder="Price Max"
+                      name="PriceMax"
+                      id="PriceMax" />
                   </Col>
                 </Form.Group>
                 <Button variant="primary" type="submit">
@@ -43,6 +49,7 @@ class FilterByPrice extends React.Component<{
           </Card>
         </Accordion>
       </>
+
     );
   }
 }
