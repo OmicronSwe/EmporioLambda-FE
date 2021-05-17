@@ -26,7 +26,7 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
             <Col>
               <Form.Group as={Row} controlId="formPlainTextID">
                 <Form.Label column lg="3">
-                  ID
+                  <strong> ID </strong>
                 </Form.Label>
                 <Col sm="9">
                   <Form.Control plaintext readOnly defaultValue={product.id} />
@@ -34,7 +34,7 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
               </Form.Group>
               <Form.Group as={Row} controlId="formPlainTextName">
                 <Form.Label column lg="3">
-                  Name
+                  <strong> Name </strong>
                 </Form.Label>
                 <Col sm="9">
                   <Form.Control plaintext readOnly defaultValue={product.name} />
@@ -42,7 +42,7 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
               </Form.Group>
               <Form.Group as={Row} controlId="formPlainTextDescription">
                 <Form.Label column lg="3">
-                  Description
+                  <strong> Description </strong>
                 </Form.Label>
                 <Col sm="9">
                   <Form.Control plaintext readOnly defaultValue={product.description} />
@@ -51,7 +51,7 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
               {product.category !== null ? (
                 <Form.Group as={Row} controlId="formPlainTextCategory">
                   <Form.Label column lg="3">
-                    Category
+                    <strong> Category </strong>
                   </Form.Label>
                   <Col sm="9">
                     <Form.Control plaintext readOnly defaultValue={product.category} />
@@ -62,10 +62,10 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
               )}
               <Form.Group as={Row} controlId="formPlainTextPrice">
                 <Form.Label column lg="3">
-                  Price
+                  <strong> Price </strong>
                 </Form.Label>
                 <Col sm="9">
-                  <Form.Control plaintext readOnly defaultValue={product.price} />
+                  <Form.Control plaintext readOnly defaultValue={`${product.price}€`} />
                 </Col>
               </Form.Group>
             </Col>
