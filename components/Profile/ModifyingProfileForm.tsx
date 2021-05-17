@@ -4,15 +4,16 @@ import { Button, Form, Row, Col, FormControl, FormGroup, FormLabel } from "react
 
 interface ModifyingProfileFormProps {
   updateProfile;
+  errors: Map<string, string>;
 }
 
-const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
+const ModifyingProfileForm = ({ updateProfile, errors }: ModifyingProfileFormProps) => {
   return (
     <>
       <Form onSubmit={updateProfile}>
         <FormGroup as={Row}>
           <FormLabel column sm="5" htmlFor="profileName">
-            New Name
+            <strong> New Name </strong>
           </FormLabel>
           <Col sm="6">
             <FormControl
@@ -22,11 +23,18 @@ const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
               name="profileName"
               placeholder="Name"
             />
+            {errors.has("profileNameError") ? (
+              <small id="profileNameErrors" className="text-danger">
+                {errors.get("profileNameError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
           <FormLabel column sm="5" htmlFor="profileFamilyName">
-            New FamilyName
+            <strong> New FamilyName </strong>
           </FormLabel>
           <Col sm="6">
             <FormControl
@@ -35,19 +43,33 @@ const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
               name="profileFamilyName"
               placeholder="FamilyName"
             />
+            {errors.has("profileFamilyNameError") ? (
+              <small id="profileFamilyNameErrors" className="text-danger">
+                {errors.get("profileFamilyNameError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
           <FormLabel column sm="5" htmlFor="profileEmail">
-            New Email
+            <strong> New Email </strong>
           </FormLabel>
           <Col sm="6">
             <FormControl className="sm" id="profileEmail" name="profileEmail" placeholder="Email" />
+            {errors.has("profileEmailError") ? (
+              <small id="profileEmailErrors" className="text-danger">
+                {errors.get("profileEmailError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
           <FormLabel column sm="5" htmlFor="profileAddress">
-            New Address
+            <strong> New Address </strong>
           </FormLabel>
           <Col sm="6">
             <FormControl
@@ -56,6 +78,13 @@ const ModifyingProfileForm = ({ updateProfile }: ModifyingProfileFormProps) => {
               name="profileAddress"
               placeholder="Address"
             />
+            {errors.has("profileAddressError") ? (
+              <small id="profileAddressErrors" className="text-danger">
+                {errors.get("profileAddressError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <Button type="submit" variant="primary">
