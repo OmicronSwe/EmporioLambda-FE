@@ -1,5 +1,6 @@
 module.exports = (req, res, next) => {
     pureResponseMethods = ["updateProfileSuccess", "updatePasswordSuccess", "updatePasswordFail", "noOrdersFound", "deleteProfileSuccess"];
+    singleResultItemsArrayMethods = ["/order?id="];
 
     if (req.method === "POST") {
         req.method = "GET";
@@ -13,7 +14,7 @@ module.exports = (req, res, next) => {
             var newbody = "";
             if (body.includes("id_token")) {
                 newbody = body;
-            } else if (JSON.parse(body).length > 1) {
+            } else if (JSON.parse(body).length > 1 || singleResultItemsArrayMethods.some((el) => req.url.includes(el))) {
                 newbody = '{"result": { "items": ' + body + "} }";
             } else if (body.includes('"error":')) {
                 newbody = body.replace(/.$/, "").replace(/^./, "");

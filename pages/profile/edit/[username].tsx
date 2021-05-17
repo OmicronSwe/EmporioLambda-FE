@@ -18,82 +18,45 @@ class EditProfile extends React.Component<
     this.state = { updatedProfileAlert: null, errors: new Map<string, string>() };
   }
 
-  formValidation = (
-    name: string,
-    familyName: string,
-    email: string,
-    address: string
-  ) => {
+  formValidation = (name: string, familyName: string, email: string, address: string) => {
     const hasNumber = /\d/;
     const validateEmail = /\S+@\S+\.\S+/;
     let isValid: boolean = true;
     const updatedErrors: Map<string, string> = new Map<string, string>();
     this.setState({ errors: updatedErrors, updatedProfileAlert: null });
 
-    if ( 
-      name === "" &&
-      familyName === "" &&
-      email === "" &&
-      address === ""
-    ) {
+    if (name === "" && familyName === "" && email === "" && address === "") {
       this.setState({ updatedProfileAlert: false });
       return false;
     }
 
-    if (
-      name !== "" &&
-      hasNumber.test(name)
-    ) {
-      updatedErrors.set(
-        "profileNameError",
-        "The new name cannot contains numbers"
-      );
+    if (name !== "" && hasNumber.test(name)) {
+      updatedErrors.set("profileNameError", "The new name cannot contains numbers");
       isValid = false;
     }
-    if (
-      name !== "" &&
-      name.length < 2
-    ) {
-      updatedErrors.set(
-        "profileNameError",
-        "The new name must contains at least 2 characters"
-      );
+    if (name !== "" && name.length < 2) {
+      updatedErrors.set("profileNameError", "The new name must contains at least 2 characters");
       isValid = false;
     }
-    if (
-      familyName !== "" &&
-      hasNumber.test(familyName)
-    ) {
-      updatedErrors.set(
-        "profileFamilyNameError",
-        "The new family name cannot contains numbers"
-      );
+    if (familyName !== "" && hasNumber.test(familyName)) {
+      updatedErrors.set("profileFamilyNameError", "The new family name cannot contains numbers");
       isValid = false;
     }
-    if (
-      familyName !== "" &&
-      familyName.length < 2
-    ) {
+    if (familyName !== "" && familyName.length < 2) {
       updatedErrors.set(
         "profileFamilyNameError",
         "The new family name must contains at least 2 characters"
       );
       isValid = false;
     }
-    if (
-      address !== "" &&
-      address.length < 4
-    ) {
+    if (address !== "" && address.length < 4) {
       updatedErrors.set(
         "profileAddressError",
         "The new address must contains at least 4 characters"
       );
       isValid = false;
     }
-    if (
-      email !== "" &&
-      !validateEmail.test(email)
-    ) {
+    if (email !== "" && !validateEmail.test(email)) {
       updatedErrors.set(
         "profileEmailError",
         "The new email isn't in the right form (something@something.something)"
@@ -108,43 +71,37 @@ class EditProfile extends React.Component<
   updateProfile = async (event) => {
     event.preventDefault();
     const { profile, session } = this.props;
+    const updatedErrors: Map<string, string> = new Map<string, string>();
 
-    let name = event.target.profileName.value 
-      ? event.target.profileName.value 
-      : "";
-    let familyName = event.target.profileFamilyName.value
+    const name = event.target.profileName.value ? event.target.profileName.value : "";
+    const familyName = event.target.profileFamilyName.value
       ? event.target.profileFamilyName.value
       : "";
-    let email = event.target.profileEmail.value 
-      ? event.target.profileEmail.value 
-      : "";
-    let address = event.target.profileAddress.value
-      ? event.target.profileAddress.value
-      : "";
+    const email = event.target.profileEmail.value ? event.target.profileEmail.value : "";
+    const address = event.target.profileAddress.value ? event.target.profileAddress.value : "";
 
     // Validation
 
-    const isValid: boolean = this.formValidation(
-      name,
-      familyName,
-      email, 
-      address
-    );
+    const isValid: boolean = this.formValidation(name, familyName, email, address);
 
-    if(isValid) {
+    if (isValid) {
       const modifyedProfile = new Profile(
-        profile.username, 
-        address !== "" ? address : profile.address, 
-        name !== "" ? name : profile.name, 
-        familyName !== "" ? familyName : profile.family_name, 
-        email !== "" ? email : profile.email);
+        profile.username,
+        address !== "" ? address : profile.address,
+        name !== "" ? name : profile.name,
+        familyName !== "" ? familyName : profile.family_name,
+        email !== "" ? email : profile.email
+      );
 
-        const resp = await updateProfile(modifyedProfile, session);
+      const resp: string = await updateProfile(modifyedProfile, session);
 
-        if ( resp ) {
-          this.setState({ updatedProfileAlert: true });
-        }
-    }    
+      if (resp === "New email already in use") {
+        updatedErrors.set("profileEmailError", "ERROR! New email already in use");
+        this.setState({ errors: updatedErrors });
+      } else if (resp === "Failed to update user") {
+        this.setState({ updatedProfileAlert: false });
+      } else this.setState({ updatedProfileAlert: true });
+    }
   };
 
   render() {
@@ -169,7 +126,9 @@ class EditProfile extends React.Component<
               <Container>
                 <Row className="justify-content-md-center mt-3">
                   <Alert variant="success">
-                    <Alert.Heading> Profile edited Successfully! </Alert.Heading>
+                    <Alert.Heading className="text-center">
+                      Profile edited Successfully!
+                    </Alert.Heading>
                   </Alert>
                 </Row>
                 <Row className="justify-content-md-center">
@@ -183,7 +142,7 @@ class EditProfile extends React.Component<
             )}
             {updatedProfileAlert !== null && updatedProfileAlert === false ? (
               <Alert variant="danger">
-                <Alert.Heading>
+                <Alert.Heading className="text-center">
                   At least one field must be filled in to modify the profile
                 </Alert.Heading>
               </Alert>

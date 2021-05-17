@@ -9,7 +9,7 @@ export const getProfile = async (session): Promise<Profile> => {
   return response;
 };
 
-export const updateProfile = async (profile: Profile, session): Promise<boolean> => {
+export const updateProfile = async (profile: Profile, session): Promise<string> => {
   const { response } = (
     await getlambdaResponse(
       `user/${profile.username}/update`,
@@ -18,8 +18,8 @@ export const updateProfile = async (profile: Profile, session): Promise<boolean>
       JSON.stringify(profile)
     )
   ).props;
-  if (response.error !== undefined) return false;
-  return true;
+  if (response.error !== undefined) return response.error;
+  return response.message;
 };
 
 export const updatePassword = async (profile: Profile, session, pass: string): Promise<boolean> => {

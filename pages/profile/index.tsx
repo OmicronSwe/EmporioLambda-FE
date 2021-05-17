@@ -14,63 +14,82 @@ import Order from "../../src/types/Order";
 
 class ProfilePage extends React.Component<
   { profile: Profile; orders: Order[]; session },
-  { removedProfileAlert: boolean | null; updatedPasswordAlert: boolean | null; errors: Map<string, string> }
+  {
+    removedProfileAlert: boolean | null;
+    updatedPasswordAlert: boolean | null;
+    errors: Map<string, string>;
+  }
 > {
   constructor(props) {
     super(props);
-    this.state = { removedProfileAlert: null, updatedPasswordAlert: null, errors: new Map<string, string>() };
+    this.state = {
+      removedProfileAlert: null,
+      updatedPasswordAlert: null,
+      errors: new Map<string, string>(),
+    };
   }
 
-  formValidation = (
-    password: string
-  ) => {
-    const hasNumber = /\d/;
-    const hasLowerCase = /[a-z]/;
-    const hasUpperCase = /[A-Z]/;
-    const isNumber = /^\d+$/;
+  formValidation = (password: string) => {
+    const aNumber = /[0-9]/;
+    const aLowerCase = /[a-z]/;
+    const anUpperCase = /[A-Z]/;
+    const aSpecial = /[ `!@#$%^&*()_+\-={};':"\\|,.<>?~]/;
     let isValid: boolean = true;
     const updatedErrors: Map<string, string> = new Map<string, string>();
     this.setState({ errors: updatedErrors, updatedPasswordAlert: null });
 
-    if (!hasNumber.test(password)) {
-      updatedErrors.set(
-        "profilePasswordError",
-        "The new password must contains numbers"
-      );
-      isValid = false;
-    }
-    if (hasLowerCase.test(password)) {
-      updatedErrors.set(
-        "profilePasswordError",
-        "The new password must contains at least 1 uppercase letters"
-      );
-      isValid = false;
-    }
-    if (hasUpperCase.test(password)) {
-      updatedErrors.set(
-        "profilePasswordError",
-        "The new password must contains at least 1 lowercase letters"
-      );
-      isValid = false;
-    }
-    if (isNumber.test(password)) {
-      updatedErrors.set(
-        "profilePasswordError",
-        "The new password must contains at least 1 uppercase letters and 1 lowercase letters"
-      );
-      isValid = false;
-    }
     if (password.length < 8) {
       updatedErrors.set(
         "profilePasswordError",
         "The new password must contains at least 8 characters"
       );
       isValid = false;
-    }
+    } else {
+      let numUpper = 0;
+      let numLower = 0;
+      let numNums = 0;
+      let numSpecial = 0;
+      for (let i = 0; i < password.length; i += 1) {
+        if (anUpperCase.test(password[i])) {
+          numUpper += 1;
+        } else if (aLowerCase.test(password[i])) {
+          numLower += 1;
+        } else if (aNumber.test(password[i])) {
+          numNums += 1;
+        } else if (aSpecial.test(password[i])) {
+          numSpecial += 1;
+        }
+      }
 
+      if (numSpecial < 1) {
+        updatedErrors.set(
+          "profilePasswordError",
+          "The new password must contains at least 1 special character"
+        );
+        isValid = false;
+      } else if (numNums < 1) {
+        updatedErrors.set(
+          "profilePasswordError",
+          "The new password must contains at least 1 numbers"
+        );
+        isValid = false;
+      } else if (numUpper < 1) {
+        updatedErrors.set(
+          "profilePasswordError",
+          "The new password must contains at least 1 uppercase letters"
+        );
+        isValid = false;
+      } else if (numLower < 1) {
+        updatedErrors.set(
+          "profilePasswordError",
+          "The new password must contains at least 1 lowercase letters"
+        );
+        isValid = false;
+      }
+    }
     this.setState({ errors: updatedErrors });
     return isValid;
-  }
+  };
 
   removeProfile = async () => {
     const { profile, session } = this.props;
@@ -93,11 +112,9 @@ class ProfilePage extends React.Component<
 
     // Validation
 
-    const isValid: boolean = this.formValidation(
-      password
-    );
-    
-    if(isValid) {
+    const isValid: boolean = this.formValidation(password);
+
+    if (isValid) {
       const resp = await updatePassword(profile, session, password);
 
       if (resp) {
@@ -144,7 +161,7 @@ class ProfilePage extends React.Component<
         {removedProfileAlert === true ? (
           <Container>
             <Alert variant="success">
-              <Alert.Heading>Profile removed Successfully!</Alert.Heading>
+              <Alert.Heading className="text-center">Profile removed Successfully!</Alert.Heading>
             </Alert>
             <Button variant="success" onClick={() => Router.push("/")}>
               Redirect to Home page
@@ -156,7 +173,7 @@ class ProfilePage extends React.Component<
         {removedProfileAlert === false ? (
           <Container>
             <Alert variant="danger">
-              <Alert.Heading>Error in profile removal!</Alert.Heading>
+              <Alert.Heading className="text-center">Error in profile removal!</Alert.Heading>
             </Alert>
             <Button variant="primary" onClick={() => Router.push("/profile")}>
               Redirect to Profile page

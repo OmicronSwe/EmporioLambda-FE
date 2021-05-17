@@ -13,7 +13,7 @@ const ModifyingProfileForm = ({ updateProfile, errors }: ModifyingProfileFormPro
       <Form onSubmit={updateProfile}>
         <FormGroup as={Row}>
           <FormLabel column sm="5" htmlFor="profileName">
-            New Name
+            <strong> New Name </strong>
           </FormLabel>
           <Col sm="6">
             <FormControl
@@ -34,7 +34,7 @@ const ModifyingProfileForm = ({ updateProfile, errors }: ModifyingProfileFormPro
         </FormGroup>
         <FormGroup as={Row}>
           <FormLabel column sm="5" htmlFor="profileFamilyName">
-            New FamilyName
+            <strong> New FamilyName </strong>
           </FormLabel>
           <Col sm="6">
             <FormControl
@@ -54,7 +54,7 @@ const ModifyingProfileForm = ({ updateProfile, errors }: ModifyingProfileFormPro
         </FormGroup>
         <FormGroup as={Row}>
           <FormLabel column sm="5" htmlFor="profileEmail">
-            New Email
+            <strong> New Email </strong>
           </FormLabel>
           <Col sm="6">
             <FormControl className="sm" id="profileEmail" name="profileEmail" placeholder="Email" />
@@ -69,7 +69,7 @@ const ModifyingProfileForm = ({ updateProfile, errors }: ModifyingProfileFormPro
         </FormGroup>
         <FormGroup as={Row}>
           <FormLabel column sm="5" htmlFor="profileAddress">
-            New Address
+            <strong> New Address </strong>
           </FormLabel>
           <Col sm="6">
             <FormControl

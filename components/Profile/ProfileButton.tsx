@@ -27,7 +27,7 @@ const ProfileButton = ({
   removeProfile,
   updatePassword,
   updatedPasswordAlert,
-  errors
+  errors,
 }: ProfileButtonProps) => {
   return (
     <>
@@ -69,14 +69,18 @@ const ProfileButton = ({
                     </Button>
                     {updatedPasswordAlert !== null && updatedPasswordAlert === true ? (
                       <Alert variant="success">
-                        <Alert.Heading> Password edited Successfully! </Alert.Heading>
+                        <Alert.Heading className="text-center">
+                          Password edited Successfully!
+                        </Alert.Heading>
                       </Alert>
                     ) : (
                       <p />
                     )}
                     {updatedPasswordAlert !== null && updatedPasswordAlert === false ? (
                       <Alert variant="danger">
-                        <Alert.Heading> Error! Failed edit password! </Alert.Heading>
+                        <Alert.Heading className="text-center">
+                          Error! Failed edit password!
+                        </Alert.Heading>
                       </Alert>
                     ) : (
                       <p />
