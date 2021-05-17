@@ -13,7 +13,7 @@ describe("Test pdp", () => {
     cy.get("#formPlainTextName").should("have.value", "Korg Monologue");
     cy.get("#formPlainTextDescription").should("have.value", "Synthesizer Korg Monologue");
     cy.get("#formPlainTextCategory").should("have.value", "Synthesizers");
-    cy.get("#formPlainTextPrice").should("have.value", "260.5");
+    cy.get("#formPlainTextPrice").should("have.value", "260.5€");
   });
   it("Check add cart", () => {
     cy.visit("/pdp/ff60640d-e92e-4f06-a7cd-79a570474dda");

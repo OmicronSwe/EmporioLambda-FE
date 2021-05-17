@@ -32,14 +32,18 @@ const CartForm = ({ addCart, addedCartAlert }: AddCartProps) => {
         <Row className="justify-content-md-center mt-3">
           {addedCartAlert !== null && addedCartAlert === true ? (
             <Alert variant="success">
-              <Alert.Heading id="AlertSuccess" className="text-center">Product added to cart successfully!</Alert.Heading>
+              <Alert.Heading id="AlertSuccess" className="text-center">
+                Product added to cart successfully!
+              </Alert.Heading>
             </Alert>
           ) : (
             <p />
           )}
           {addedCartAlert !== null && addedCartAlert === false ? (
             <Alert variant="danger">
-              <Alert.Heading className="text-center">ERROR! Product was not correctly added to the cart!</Alert.Heading>
+              <Alert.Heading className="text-center">
+                ERROR! Product was not correctly added to the cart!
+              </Alert.Heading>
             </Alert>
           ) : (
             <p />
