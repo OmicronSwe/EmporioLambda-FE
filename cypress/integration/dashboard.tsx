@@ -6,7 +6,7 @@ describe("Test dashboard", () => {
     );
   });
 
-  it("Successfully loads", () => {
+  it("Successfully loads Dashboard Page", () => {
     cy.visit("/dashboard");
   });
   it("Check if the add new product button is present", () => {
@@ -58,7 +58,7 @@ describe("Test dashboard", () => {
     cy.get("div").should("contain", "Product created successfully!");
   });
   it("Check if the created product is present in the product list", () => {
-    cy.wait(4000);
+    cy.wait(1000);
     cy.visit("/dashboard");
 
     cy.get("#productList").find("td").should("contain", "CypressTest");
@@ -75,7 +75,7 @@ describe("Test dashboard", () => {
 
     cy.url().should("include", "/dashboard/modify/");
   });
-  it("Check if the Cancel button redirect to the dashboard", () => {
+  it("Check if the Cancel button of the Modifying Product Page redirect to the dashboard", () => {
     cy.visit("/dashboard");
     cy.get("#productList")
       .find("td")
@@ -160,6 +160,23 @@ describe("Test dashboard", () => {
 
     cy.get("#productList").find("td").should("not.contain", "t8QXCHw");
     cy.get("div").should("contain", "Product deleted successfully!");
+  });
+
+  it("Failing product elimination", () => {
+    cy.visit("/dashboard");
+    cy.get("#productList")
+      .find("td")
+      .contains("1a3f1905-45b7-4a31-9af4-ec5b9862f794")
+      .parent("tr")
+      .within(() => {
+        cy.get("td").contains("button", "Remove").click();
+      });
+    cy.wait(2000);
+
+    cy.get("div").should(
+      "contain",
+      "A Server Error occured deleting the product, please refresh the page and retry"
+    );
   });
 
   it("Check if 'the add new category' button is present", () => {

@@ -14,13 +14,13 @@ module.exports = (req, res, next) => {
             if (positiveResponseProduct.some((el) => req.url.includes(el))) {
                 res.json({ message: "Product edited successfully" });
             } else {
-                res.json({ message: "Error product edit" });
+                res.json({ err: "Error product edit" });
             }
         } else if (req.method == "DELETE") {
             if (positiveResponseProduct.some((el) => req.url.includes(el))) {
                 res.json({ message: "Product deleted successfully" });
             } else {
-                res.json({ message: "Error product delete" });
+                res.json({ err: "Error product delete" });
             }
         }
     }else if(!pureResponseMethods.some((el) => req.url.includes(el))) {
