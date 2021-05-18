@@ -3,5 +3,6 @@
     "/product/search/category=:category": "/product?category=:category",
     "/product/:id": "/product?id=:id",
 	"/cart/toEmpty/:id": "/cart/1",
-	"/cart/:id": "/cart?username=:id&_limit=1"
+	"/cart/:id": "/cart?username=:id&_limit=1",
+	"/createSessionStripe": "/stripe?username=93edaf82-37fe-420d-af28-44d3693c8bdf"
 }

@@ -63,7 +63,7 @@ const CartProductList = ({
                     ""
                   )}
                 </td>
-                <td>{cartProduct.product.name}</td>
+                <td id={`${cartProduct.product.id}name`}>{cartProduct.product.name}</td>
                 <td>{cartProduct.product.description}</td>
                 <td id={`${cartProduct.product.id}price`}>{`€${cartProduct.product.price}`}</td>
                 <td>
