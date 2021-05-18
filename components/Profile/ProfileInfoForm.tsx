@@ -12,7 +12,7 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
       <Form>
         <Form.Group as={Row} controlId="formPlainTextName">
           <Form.Label column lg="3">
-            Name
+            <strong> Name </strong>
           </Form.Label>
           <Col sm="9">
             <Form.Control plaintext readOnly defaultValue={profile.name} />
@@ -20,7 +20,7 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
         </Form.Group>
         <Form.Group as={Row} controlId="formPlainTextFamilyName">
           <Form.Label column lg="3">
-            Family Name
+            <strong> Family Name </strong>
           </Form.Label>
           <Col sm="9">
             <Form.Control plaintext readOnly defaultValue={profile.family_name} />
@@ -28,7 +28,7 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
         </Form.Group>
         <Form.Group as={Row} controlId="formPlainTextEmail">
           <Form.Label column lg="3">
-            Email
+            <strong> Email </strong>
           </Form.Label>
           <Col sm="9">
             <Form.Control plaintext readOnly defaultValue={profile.email} />
@@ -36,7 +36,7 @@ const ProfileForm = ({ profile }: ProfileFormProps) => {
         </Form.Group>
         <Form.Group as={Row} controlId="formPlainTextAddress">
           <Form.Label column lg="3">
-            Address
+            <strong> Address </strong>
           </Form.Label>
           <Col sm="9">
             <Form.Control plaintext readOnly defaultValue={profile.address} />

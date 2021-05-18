@@ -11,7 +11,7 @@ const ProductList = ({ orders }: ProductListProps) => {
   return (
     <>
       {orders ? (
-        <Table>
+        <Table id="orderList">
           <thead className="thead-light">
             <tr>
               <th>ID ordine</th>
