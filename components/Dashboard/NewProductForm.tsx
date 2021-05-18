@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
+
 import {
   Button,
   Accordion,
@@ -16,14 +17,17 @@ import {
 interface NewProductFormProps {
   insertProduct;
   categories: string[];
-  productInsertedAlert: boolean;
+  isProductInserted: boolean | null;
+  errors: Map<string, string>;
 }
 
 const NewProductForm = ({
   insertProduct,
   categories,
-  productInsertedAlert,
+  isProductInserted,
+  errors,
 }: NewProductFormProps) => {
+  const [show, setShow] = useState(true);
   return (
     <>
       <Accordion>
@@ -48,6 +52,13 @@ const NewProductForm = ({
                       name="productName"
                       placeholder="Name"
                     />
+                    {errors.has("productNameError") ? (
+                      <small id="productNameErrors" className="text-danger">
+                        {errors.get("productNameError")}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <FormGroup as={Row}>
@@ -63,6 +74,13 @@ const NewProductForm = ({
                       placeholder="Description"
                       rows={3}
                     />
+                    {errors.has("productDescriptionError") ? (
+                      <small id="productDescriptionErrors" className="text-danger">
+                        {errors.get("productDescriptionError")}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <FormGroup as={Row}>
@@ -81,6 +99,13 @@ const NewProductForm = ({
                         <InputGroup.Text>€</InputGroup.Text>
                       </InputGroup.Append>
                     </InputGroup>
+                    {errors.has("productPriceError") ? (
+                      <small id="productPriceErrors" className="text-danger">
+                        {errors.get("productPriceError")}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <FormGroup as={Row}>
@@ -94,6 +119,13 @@ const NewProductForm = ({
                       id="productImage"
                       name="productImage"
                     />
+                    {errors.has("productImageError") ? (
+                      <small id="productImageErrors" className="text-danger">
+                        {errors.get("productImageError")}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <FormGroup as={Row}>
@@ -104,36 +136,47 @@ const NewProductForm = ({
                     <FormControl
                       as="select"
                       className="form-control-sm"
+                      defaultValue="Choose..."
                       id="productCategorySelection"
                       name="productCategorySelection"
                     >
+                      <option>Choose...</option>
                       {categories ? (
-                        categories.map((item) => <option>{item}</option>)
+                        categories.map((item) => <option key={item}>{item}</option>)
                       ) : (
-                        <option>no category found</option>
+                        <option key="noCategory">no category found</option>
                       )}
                     </FormControl>
+                    {errors.has("productCategoryError") ? (
+                      <small id="productCategoryErrors" className="text-danger">
+                        {errors.get("productCategoryError")}
+                      </small>
+                    ) : (
+                      <p />
+                    )}
                   </Col>
                 </FormGroup>
                 <Form.Row className="text-center">
                   <Col sm="12">
-                    <Button type="submit" variant="primary">
+                    <Button type="submit" variant="primary" onClick={() => setShow(true)}>
                       Submit
                     </Button>
                   </Col>
                 </Form.Row>
               </Form>
-              {productInsertedAlert !== null && productInsertedAlert === true ? (
-                <Alert variant="success">
-                  <Alert.Heading>Product created successfully!</Alert.Heading>
+              {isProductInserted !== null && isProductInserted === true ? (
+                <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
+                  <Alert.Heading className="text-center">
+                    Product created successfully!
+                  </Alert.Heading>
                 </Alert>
               ) : (
                 <p />
               )}
-              {productInsertedAlert !== null && productInsertedAlert === false ? (
-                <Alert variant="danger">
-                  <Alert.Heading>
-                    All fields must be filled in to create a new product
+              {isProductInserted !== null && isProductInserted === false ? (
+                <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
+                  <Alert.Heading className="text-center">
+                    A Server Error occured creating the product, please retry
                   </Alert.Heading>
                 </Alert>
               ) : (

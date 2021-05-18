@@ -9,20 +9,15 @@ import {
   FormControl,
   FormGroup,
   FormLabel,
-  Alert,
 } from "react-bootstrap";
 
 interface ModifyingProductFormProps {
   updateProduct;
   categories: string[];
-  productModifiedAlert: boolean;
+  errors: Map<string, string>;
 }
 
-const ModifyingProductForm = ({
-  updateProduct,
-  categories,
-  productModifiedAlert,
-}: ModifyingProductFormProps) => {
+const ModifyingProductForm = ({ updateProduct, categories, errors }: ModifyingProductFormProps) => {
   return (
     <>
       <Form onSubmit={updateProduct} className="border border-dark p-3">
@@ -38,6 +33,13 @@ const ModifyingProductForm = ({
               name="productName"
               placeholder="Name"
             />
+            {errors.has("productNameError") ? (
+              <small id="productNameErrors" className="text-danger">
+                {errors.get("productNameError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
@@ -54,9 +56,13 @@ const ModifyingProductForm = ({
               rows={3}
               aria-describedby="productDescriptionHelpBlock"
             />
-            <small id="productDescriptionHelpBlock" className="form-text text-muted">
-              Maximum x characters.
-            </small>
+            {errors.has("productDescriptionError") ? (
+              <small id="productDescriptionErrors" className="text-danger">
+                {errors.get("productDescriptionError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
@@ -75,6 +81,13 @@ const ModifyingProductForm = ({
                 <InputGroup.Text>€</InputGroup.Text>
               </InputGroup.Append>
             </InputGroup>
+            {errors.has("productPriceError") ? (
+              <small id="productPriceErrors" className="text-danger">
+                {errors.get("productPriceError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
@@ -88,6 +101,13 @@ const ModifyingProductForm = ({
               id="productImage"
               name="productImage"
             />
+            {errors.has("productImageError") ? (
+              <small id="productImageErrors" className="text-danger">
+                {errors.get("productImageError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <FormGroup as={Row}>
@@ -109,6 +129,13 @@ const ModifyingProductForm = ({
                 <option>no category found</option>
               )}
             </FormControl>
+            {errors.has("productCategoryError") ? (
+              <small id="productCategoryErrors" className="text-danger">
+                {errors.get("productCategoryError")}
+              </small>
+            ) : (
+              <p />
+            )}
           </Col>
         </FormGroup>
         <Form.Row className="text-center">
@@ -122,13 +149,6 @@ const ModifyingProductForm = ({
           </Col>
         </Form.Row>
       </Form>
-      {productModifiedAlert !== null && productModifiedAlert === false ? (
-        <Alert variant="danger">
-          <Alert.Heading>At least one field must be filled in to modify the product</Alert.Heading>
-        </Alert>
-      ) : (
-        <p />
-      )}
     </>
   );
 };

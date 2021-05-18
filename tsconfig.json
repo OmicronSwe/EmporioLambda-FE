@@ -20,7 +20,7 @@
     "skipLibCheck": true,
     "target": "esnext",
     "types": [
-      "cypress"
+      "cypress", "cypress-file-upload"
     ],
     "strict": false
   },

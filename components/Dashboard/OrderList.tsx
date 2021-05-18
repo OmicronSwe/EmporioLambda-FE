@@ -1,3 +1,4 @@
+import Router from "next/router";
 import React from "react";
 import { Table, Button } from "react-bootstrap";
 import Order from "../../src/types/Order";
@@ -27,7 +28,13 @@ const OrderList = ({ orders }: OrderListProps) => {
                 <td>{`${item.totalPrice.toFixed(2)}€`}</td>
                 <td>{`${new Date(item.date).toLocaleDateString()}`}</td>
                 <td>
-                  <Button variant="primary">Details</Button>
+                  <Button
+                    variant="primary"
+                    title={item.id}
+                    onClick={() => Router.push(`/order/${item.id}`)}
+                  >
+                    Details
+                  </Button>
                 </td>
               </tr>
             ))}

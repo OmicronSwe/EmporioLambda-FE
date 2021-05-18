@@ -31,7 +31,7 @@ const OldProductInformations = ({ product }: OldProductInformationsProps) => {
             Actual Price
           </Form.Label>
           <Col sm="9">
-            <Form.Control plaintext readOnly defaultValue={product.price} />
+            <Form.Control plaintext readOnly defaultValue={`${product.price.toFixed(2)}€`} />
           </Col>
         </Form.Group>
         <Form.Group as={Row} controlId="formPlainTextID">
