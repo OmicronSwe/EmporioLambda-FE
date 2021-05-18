@@ -242,7 +242,7 @@ describe("Test profile", () => {
         cy.get("td").contains("button", "Details").click();
       });
     cy.wait(1000);
-    cy.contains("Order Details");
+    cy.contains("Order Id");
   });
   it("Successfully delete profile", () => {
     cy.setCookie(
