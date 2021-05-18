@@ -19,10 +19,8 @@ describe("Test plp", () => {
     cy.get("button").contains("Filter");
   });
 
-
   it("Check if category contains items", () => {
     cy.visit("/plp/Speakers");
-    cy.wait(1000);
     cy.get("button").contains("View Product");
   });
 

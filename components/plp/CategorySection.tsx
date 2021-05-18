@@ -13,15 +13,14 @@ class CategorySection extends React.Component<{
   }
 
   render() {
-    const { categories } = this.props;
-    if(categories){
-    return (
+    const { categories } = this.props;{
+    return (categories ? (
       <>
         <h1>Category Section</h1>
         <CategoryList categories={categories} />
-      </>
+      </>) :
+      (<p>No category found</p>)
     )}
-    else (<p>No category found</p>)
   }
 }
 
