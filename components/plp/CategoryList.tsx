@@ -11,7 +11,7 @@ class CategoryList extends React.Component<{ categories: Category[] }> {
 
   render() {
     const { categories } = this.props; {
-      return (categories ?(
+      return (
         <>
           <CardColumns>
             {categories ? (
@@ -28,11 +28,10 @@ class CategoryList extends React.Component<{ categories: Category[] }> {
                 </Card>
               ))
               ): (
-                <p></p>
+                <p>No category found</p>
               )}
           </CardColumns>
         </>
-      ): (<p>No category found</p>)
       );
     }
   }

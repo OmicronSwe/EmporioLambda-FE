@@ -15,7 +15,7 @@ class CategoryProductList extends React.Component<{
 
   render() {
     const { products, addToCart, toggleSelect } = this.props;
-    return (products ?(
+    return (
       <>
         <CardColumns>
           {products ? (
@@ -49,12 +49,11 @@ class CategoryProductList extends React.Component<{
                 </Card.Body>
               </Card>
             ))
-          ) : (<p></p>)
-          }
+          ) : (
+            <p>No product found</p>
+          )}
         </CardColumns>
       </>
-    ) :
-      (<p>No product found</p>)
     );
   }
 }
