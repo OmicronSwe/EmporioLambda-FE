@@ -63,9 +63,9 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   }
   return {
     props: {
-      products: await getProducts(session.accessToken),
-      categories: await getCategories(session.accessToken),
-      orders: await getOrders(session.accessToken),
+      products: await getProducts(session),
+      categories: await getCategories(session),
+      orders: await getOrders(session),
       session,
     },
   };

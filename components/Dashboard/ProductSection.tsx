@@ -68,6 +68,7 @@ class ProductSection extends React.Component<
   };
 
   removeProduct = async (id: string) => {
+    // TODO: aggiunta alert di avvenuta cancellazione
     const { session } = this.props;
     await removeProduct(id, session);
     const prod = await getProducts(session);

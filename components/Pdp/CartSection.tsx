@@ -1,7 +1,7 @@
 import React from "react";
-import { Button, Form } from "react-bootstrap";
 import { insertCart } from "../../src/Services/product";
 import StoredProduct from "../../src/types/StoredProduct";
+import CartForm from "./CartForm";
 
 class CartSection extends React.Component<{ session; product: StoredProduct }> {
   constructor(props) {
@@ -20,23 +20,7 @@ class CartSection extends React.Component<{ session; product: StoredProduct }> {
   render() {
     return (
       <>
-        <Form inline onSubmit={this.addCart}>
-          <Form.Control
-            as="select"
-            className="addCart"
-            id="inlineFormCustomSelectPref"
-            name="quantity"
-            custom
-          >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </Form.Control>
-          <Button type="submit" className="add">
-            Add to cart
-          </Button>
-        </Form>
+        <CartForm addCart={this.addCart} />
       </>
     );
   }

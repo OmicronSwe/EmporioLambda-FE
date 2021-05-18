@@ -48,7 +48,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "babel-plugin-istanbul": "^6.0.0",
     "codecov": "^3.8.1",
-    "cypress": "^6.6.0",
+    "cypress": "^6.9.1",
     "env-cmd": "^10.1.0",
     "eslint": "^7.19.0",
     "eslint-config-airbnb-typescript": "^12.3.1",
@@ -67,6 +67,8 @@
     "exclude": [
       "pages/api/_coverage_.ts"
     ],
-    "reporter": ["clover"]
+    "reporter": [
+      "clover"
+    ]
   }
 }
