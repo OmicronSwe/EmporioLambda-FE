@@ -1,3 +1,4 @@
+import { props } from "cypress/types/bluebird";
 import { decode } from "jsonwebtoken";
 import { Product } from "../../../src/objects/Product";
 import getlambdaResponse from "../lib/lambdas";
@@ -10,7 +11,7 @@ const getProductsByCategory = async (category: string, session): Promise<Product
       session ? session.accessToken : null
     )
   ).props.response.result.items;
-  return response;
+  return (response ? response : null);
 };
 
 export const insertCart = async (id: string, session) => {
@@ -82,8 +83,6 @@ export const filterByPrice = async (category: string, session, min: number, max:
       )
     ).props.response.result.items;
   }
-  if(response== null)
-    return (<p>no product found</p>);
   return response;
 };
 
