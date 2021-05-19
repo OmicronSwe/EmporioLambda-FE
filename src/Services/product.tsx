@@ -83,7 +83,7 @@ export const insertCart = async (
     }
   }
 };
-/* eslint-enable*/
+/* eslint-enable */
 
 export const getProductsFiltered = async (
   name,
