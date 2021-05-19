@@ -1,4 +1,4 @@
-const checkIfLocalStorageContains = (array): boolean => {
+/* const checkIfLocalStorageContains = (array): boolean => {
   const keys = Object.keys(array.items);
   let result = false;
   for (let i = 0; i < keys.length; i += 1) {
@@ -15,7 +15,7 @@ const checkIfLocalStorageContains = (array): boolean => {
     result = false;
   }
   return true;
-};
+}; */
 
 describe("Test cart", () => {
   /* it("Check empty cart while signed out", () => {
@@ -38,7 +38,7 @@ describe("Test cart", () => {
     });
   }); */
 
-  it("Check cart remove single item while signed out", () => {
+  /* it("Check cart remove single item while signed out", () => {
     cy.visit("/");
     cy.wait(1000);
     cy.get('[title="Synthesizers"]').click();
@@ -124,7 +124,7 @@ describe("Test cart", () => {
     cy.wait(1000).then(() => {
       expect(localStorage.getItem("cart")).to.equal("{items: []}");
     });
-  });
+  }); */
 
   it("Check cart items while signed in", () => {
     cy.setCookie(
