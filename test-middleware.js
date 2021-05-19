@@ -23,6 +23,9 @@ module.exports = (req, res, next) => {
                 res.json({ err: "Error product delete" });
             }
         }
+        else if (req.method == "POST") {
+            res.json({ message: "Product \"CypressTest\" created correctly" });
+        }
     }else if (!pureResponseMethods.some((el) => req.url.includes(el))) {
         var send = res.send;
         res.send = function (string) {

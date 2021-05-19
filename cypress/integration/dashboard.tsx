@@ -57,12 +57,6 @@ describe("Test dashboard", () => {
 
     cy.get("div").should("contain", "Product created successfully!");
   });
-  it("Check if the created product is present in the product list", () => {
-    cy.wait(1000);
-    cy.visit("/dashboard");
-
-    cy.get("#productList").find("td").should("contain", "CypressTest");
-  });
   it("Successfully loads Modifying Product Page", () => {
     cy.visit("/dashboard");
     cy.get("#productList")
@@ -130,13 +124,13 @@ describe("Test dashboard", () => {
     cy.visit("/dashboard");
     cy.get("#productList")
       .find("td")
-      .contains(/^CypressTest$/)
+      .contains(/^CypressTest1$/)
       .parent("tr")
       .within(() => {
         cy.get("td").contains("button", "Modify").click();
       });
     cy.wait(1000);
-    cy.get("#productName").type("CypressTest");
+    cy.get("#productName").type("CypressTest1");
     cy.get("#productPrice").type("a");
     cy.get("select").select("Headphones");
     cy.get("button").contains("Submit").click();
