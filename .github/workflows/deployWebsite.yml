@@ -18,9 +18,6 @@ jobs:
       - name: Test ESLint 🛂
         run: npm run checkWithLint
       
-      - name: Build next app
-        run: npm run build
-      
       - name: Test Cypress 🌲👮
         run: npm run test
 
