@@ -18,7 +18,7 @@ const checkIfLocalStorageContains = (array): boolean => {
 };
 
 describe("Test cart", () => {
-  it("Check empty cart while signed out", () => {
+  /* it("Check empty cart while signed out", () => {
     cy.visit("/");
     cy.wait(1000);
     cy.get("a[href]").contains("Cart").click();
@@ -36,7 +36,7 @@ describe("Test cart", () => {
       const text = $div.text();
       expect(text).to.equal("Products cost:€0Tax cost:20%Total cost:€0.00");
     });
-  });
+  }); */
 
   it("Check cart remove single item while signed out", () => {
     cy.visit("/");
