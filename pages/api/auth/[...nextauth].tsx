@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import jwt from "jsonwebtoken";
+import jose from "jose";
 
 async function refreshAccessToken(token) {
   try {
@@ -24,6 +25,7 @@ async function refreshAccessToken(token) {
     return {
       ...token,
       accessToken: refreshedTokens.access_token ?? token.accessToken,
+      e: Date.now() + refreshedTokens.expires_in * 1000,
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
@@ -41,16 +43,27 @@ const options = {
     verificationOptions: {
       algorithms: ["HS256"],
     },
+    async encode({ token, signingKey }){
+      const _token = token;
+      const _signingKey = jose.JWK.asKey(JSON.parse(signingKey));
+      const signedToken = jose.JWT.sign(_token, _signingKey, { algorithm: 'HS256', iat: false })
+      return signedToken
+    },
+    async decode({ signingKey, token, verificationOptions }){
+      const _signingKey = jose.JWK.asKey(JSON.parse(signingKey));
+      return jose.JWT.verify(token, _signingKey, verificationOptions)
+    },
   },
   callbacks: {
     async jwt(token, user, account) {
       if (account?.accessToken && user) {
         return {
           accessToken: account.accessToken,
+          e: Date.now() + account.expires_in * 1000,
           refreshToken: account.refresh_token,
         };
       }
-      if (Math.floor(Date.now() / 1000) < jwt.decode(token.accessToken).exp) {
+      if (Date.now() < token.e) {
         return token;
       }
       return refreshAccessToken(token);
@@ -60,6 +73,7 @@ const options = {
         const decoded = jwt.decode(token.accessToken);
         return {
           accessToken: token.accessToken,
+          e: token.e,
           adm: decoded["cognito:groups"]?.includes("VenditoreAdmin") ? true : undefined,
           expires: session.expires,
         };
