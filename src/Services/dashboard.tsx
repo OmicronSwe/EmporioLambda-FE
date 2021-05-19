@@ -37,7 +37,7 @@ export const updateProduct = async (
       JSON.stringify(modifiedProduct)
     )
   ).props;
-  if (response.err !== undefined) return false;
+  if (response.error !== undefined) return false;
   return true;
 };
 
@@ -68,8 +68,10 @@ export const removeCategory = async (name: string, ses): Promise<boolean> => {
 
 export const getCategories = async (ses): Promise<string[]> => {
   const response = (await getlambdaResponse("category", "GET", ses ? ses.accessToken : null)).props
-    .response.result.items;
-  return response;
+    .response;
+
+  if(response.error || !response.result.items) return []
+  return response.result.items;
 };
 
 export const fileToBase64 = async (file): Promise<string> => {
