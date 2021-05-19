@@ -24,7 +24,6 @@ async function refreshAccessToken(token) {
     return {
       ...token,
       accessToken: refreshedTokens.access_token ?? token.accessToken,
-      e: Date.now() + refreshedTokens.expires_in * 1000,
       refreshToken: refreshedTokens.refresh_token ?? token.refreshToken,
     };
   } catch (error) {
@@ -48,11 +47,10 @@ const options = {
       if (account?.accessToken && user) {
         return {
           accessToken: account.accessToken,
-          e: Date.now() + account.expires_in * 1000,
           refreshToken: account.refresh_token,
         };
       }
-      if (Date.now() < token.e) {
+      if (Math.floor(Date.now() / 1000) < jwt.decode(token.accessToken).exp) {
         return token;
       }
       return refreshAccessToken(token);
@@ -62,7 +60,6 @@ const options = {
         const decoded = jwt.decode(token.accessToken);
         return {
           accessToken: token.accessToken,
-          e: token.e,
           adm: decoded["cognito:groups"]?.includes("VenditoreAdmin") ? true : undefined,
           expires: session.expires,
         };
