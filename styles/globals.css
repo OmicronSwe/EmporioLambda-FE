@@ -84,3 +84,10 @@ header nav {
   transition: opacity 0.5s;
   opacity: 1;
 }
+
+.insertListCheckbox {
+  float: right;
+  margin-top: 2em;
+  width: 1em;
+  transform: scale(2);
+}

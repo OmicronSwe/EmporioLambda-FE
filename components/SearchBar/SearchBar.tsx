@@ -38,17 +38,18 @@ class SearchBar extends React.Component<{
               All categories
             </Dropdown.Item>
 
-            {categories.map((item) => (
-              <Dropdown.Item
-                key={item}
-                href="#"
-                onClick={() => {
-                  changeCategory(item);
-                }}
-              >
-                {item}
-              </Dropdown.Item>
-            ))}
+            {categories &&
+              categories.map((item) => (
+                <Dropdown.Item
+                  key={item}
+                  href="#"
+                  onClick={() => {
+                    changeCategory(item);
+                  }}
+                >
+                  {item}
+                </Dropdown.Item>
+              ))}
           </DropdownButton>
 
           <FormControl
