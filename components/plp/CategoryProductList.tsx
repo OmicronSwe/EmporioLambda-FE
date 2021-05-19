@@ -17,11 +17,9 @@ class CategoryProductList extends React.Component<{
     const { products, addToCart, toggleSelect } = this.props;
     return (
       <>
-        
-          {products ? (
-            <CardColumns>{
-            products.map((item) => (
-              
+        {products ? (
+          <CardColumns>
+            {products.map((item) => (
               <Card key={item.id}>
                 {item.imageUrl ? <Card.Img src={item.imageUrl} /> : ""}
                 <Card.Body>
@@ -48,11 +46,10 @@ class CategoryProductList extends React.Component<{
                 </Card.Body>
               </Card>
             ))}
-            </CardColumns>
-          ) : (
-            <h2>No products found</h2>
-          )}
-        
+          </CardColumns>
+        ) : (
+          <h2>No products found</h2>
+        )}
       </>
     );
   }

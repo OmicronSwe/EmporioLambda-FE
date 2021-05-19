@@ -40,7 +40,7 @@ class ProductPage extends React.Component<{
   }
 }
 
-export const getStaticSideProps: GetServerSideProps = async ({ params, req }) => {
+export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
   const session = await getSession({ req });
   return {
     props: {

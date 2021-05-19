@@ -4,17 +4,15 @@ import getlambdaResponse from "../../pages/api/lib/lambdas";
 
 export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
   try {
-    const response = (
+    const { response } = (
       await getlambdaResponse(`product/${id}`, "GET", ses ? ses.accessToken : undefined)
-    ).props.response;
+    ).props;
 
-    if(response.error || !response.result) return null
+    if (response.error || !response.result) return null;
     return response.result;
   } catch (error) {
-    return null
+    return null;
   }
-  
-  
 };
 
 export const insertCart = async (

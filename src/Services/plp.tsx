@@ -6,14 +6,14 @@ export const getProductsByCategory = async (
   category: string,
   session
 ): Promise<StoredProduct[]> => {
-  const response = (
+  const { response } = (
     await getlambdaResponse(
       `product/search/category=${category}`,
       "GET",
       session ? session.accessToken : null
     )
-  ).props.response;
-  if(response.error || !response.result.items) return null;
+  ).props;
+  if (response.error || !response.result.items) return null;
   return response.result.items;
 };
 
