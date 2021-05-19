@@ -63,6 +63,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       categories: await getCategories(null),
       category: decodeURI(params.category.toString()),
     },
+    revalidate: 60,
   };
 };
 
