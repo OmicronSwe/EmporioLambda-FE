@@ -19,7 +19,7 @@ export const removeProduct = async (id: string, ses): Promise<boolean> => {
 };
 
 export const getProducts = async (ses): Promise<StoredProduct[]> => {
-  const response = (await getlambdaResponse("product", "GET", ses.accessToken)).props.response;
+  const { response } = (await getlambdaResponse("product", "GET", ses.accessToken)).props;
 
   if (response.error || !response.result.items) return [];
   return response.result.items;
