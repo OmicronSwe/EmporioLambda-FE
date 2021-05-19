@@ -12,16 +12,17 @@ export const insertProduct = async (product: ProductSend, ses): Promise<boolean>
   return true;
 };
 
-export const removeProduct = async (id: string, ses) => {
+export const removeProduct = async (id: string, ses): Promise<boolean> => {
   const { response } = (await getlambdaResponse(`product/${id}`, "DELETE", ses.accessToken)).props;
   if (response.err !== undefined) return false;
   return true;
 };
 
 export const getProducts = async (ses): Promise<StoredProduct[]> => {
-  const response = (await getlambdaResponse("product", "GET", ses.accessToken)).props.response
-    .result.items;
-  return response;
+  const { response } = (await getlambdaResponse("product", "GET", ses.accessToken)).props;
+
+  if (response.error || !response.result.items) return [];
+  return response.result.items;
 };
 
 export const updateProduct = async (
@@ -37,7 +38,7 @@ export const updateProduct = async (
       JSON.stringify(modifiedProduct)
     )
   ).props;
-  if (response.err !== undefined) return false;
+  if (response.error !== undefined) return false;
   return true;
 };
 
@@ -54,7 +55,7 @@ export const insertCategory = async (category: string, ses): Promise<boolean> =>
   const { response } = (
     await getlambdaResponse("category", "POST", ses.accessToken, JSON.stringify(body))
   ).props;
-  if (response.err) return false;
+  if (response.error) return false;
   return true;
 };
 
@@ -62,14 +63,17 @@ export const removeCategory = async (name: string, ses): Promise<boolean> => {
   const { response } = (
     await getlambdaResponse(`category/${name}`, "DELETE", ses.accessToken)
   ).props;
-  if (response.err) return false;
+  if (response.error) return false;
   return true;
 };
 
 export const getCategories = async (ses): Promise<string[]> => {
-  const response = (await getlambdaResponse("category", "GET", ses ? ses.accessToken : null)).props
-    .response.result.items;
-  return response;
+  const { response } = (
+    await getlambdaResponse("category", "GET", ses ? ses.accessToken : null)
+  ).props;
+
+  if (response.error || !response.result.items) return [];
+  return response.result.items;
 };
 
 export const fileToBase64 = async (file): Promise<string> => {

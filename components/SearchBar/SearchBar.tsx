@@ -20,7 +20,7 @@ class SearchBar extends React.Component<{
     const { categories, category, changeCategory, onSearch, minPrice, maxPrice, name } = this.props;
     return (
       <>
-        <InputGroup>
+        <InputGroup id="searchBar">
           <DropdownButton
             as={InputGroup.Append}
             variant="info"
@@ -38,17 +38,18 @@ class SearchBar extends React.Component<{
               All categories
             </Dropdown.Item>
 
-            {categories.map((item) => (
-              <Dropdown.Item
-                key={item}
-                href="#"
-                onClick={() => {
-                  changeCategory(item);
-                }}
-              >
-                {item}
-              </Dropdown.Item>
-            ))}
+            {categories &&
+              categories.map((item) => (
+                <Dropdown.Item
+                  key={item}
+                  href="#"
+                  onClick={() => {
+                    changeCategory(item);
+                  }}
+                >
+                  {item}
+                </Dropdown.Item>
+              ))}
           </DropdownButton>
 
           <FormControl
@@ -85,7 +86,7 @@ class SearchBar extends React.Component<{
             defaultValue={maxPrice}
           />
 
-          <Button onClick={() => onSearch()}>
+          <Button onClick={() => onSearch()} id="searchButton">
             <BsSearch />
           </Button>
         </InputGroup>

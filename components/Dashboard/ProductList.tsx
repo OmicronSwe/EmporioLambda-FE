@@ -1,32 +1,81 @@
 import Router from "next/router";
-import React from "react";
+import React, { useState } from "react";
+
 import { Table, Button } from "react-bootstrap";
+import Alert from "react-bootstrap/Alert";
 import StoredProduct from "../../src/types/StoredProduct";
 
-class ProductList extends React.Component<{ products: StoredProduct[]; removeProduct }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+interface ProductListProps {
+  products: StoredProduct[];
+  removeProduct;
+  isProductDeleted: boolean | null;
+  productDeletedId: string;
+}
 
-  render() {
-    const { products, removeProduct } = this.props;
-    return (
-      <>
-        <Table>
-          <thead className="thead-light">
-            <tr>
-              <th>ID</th>
-              <th>Image</th>
-              <th>Name</th>
-              <th>Description</th>
-              <th>Category</th>
-              <th>Price</th>
-            </tr>
-          </thead>
-          <tbody>
-            {products ? (
-              products.map((item) => (
+const ProductList = ({
+  products,
+  removeProduct,
+  isProductDeleted,
+  productDeletedId,
+}: ProductListProps) => {
+  const [show, setShow] = useState(true);
+
+  return (
+    <>
+      <Table id="productList">
+        <thead className="thead-light">
+          <tr>
+            <th>ID</th>
+            <th>Image</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Category</th>
+            <th>Price</th>
+          </tr>
+        </thead>
+        <tbody>
+          {products ? (
+            products.map((item) => {
+              if (item.id === productDeletedId) {
+                return (
+                  <>
+                    {isProductDeleted !== null && isProductDeleted === true && (
+                      <tr>
+                        <td colSpan={8}>
+                          <Alert
+                            variant="success"
+                            show={show}
+                            onClose={() => setShow(false)}
+                            dismissible
+                          >
+                            <Alert.Heading className="text-center">
+                              Product deleted successfully!
+                            </Alert.Heading>
+                          </Alert>
+                        </td>
+                      </tr>
+                    )}
+                    {isProductDeleted !== null && isProductDeleted === false && (
+                      <tr>
+                        <td colSpan={8}>
+                          <Alert
+                            variant="danger"
+                            show={show}
+                            onClose={() => setShow(false)}
+                            dismissible
+                          >
+                            <Alert.Heading className="text-center">
+                              A Server Error occured deleting the product, please refresh the page
+                              and retry
+                            </Alert.Heading>
+                          </Alert>
+                        </td>
+                      </tr>
+                    )}
+                  </>
+                );
+              }
+              return (
                 <tr key={item.id}>
                   <td>{item.id}</td>
                   <td>
@@ -54,21 +103,22 @@ class ProductList extends React.Component<{ products: StoredProduct[]; removePro
                       variant="danger"
                       onClick={() => {
                         removeProduct(item.id);
+                        setShow(true);
                       }}
                     >
                       Remove
                     </Button>
                   </td>
                 </tr>
-              ))
-            ) : (
-              <p>No product found</p>
-            )}
-          </tbody>
-        </Table>
-      </>
-    );
-  }
-}
+              );
+            })
+          ) : (
+            <p>No product found</p>
+          )}
+        </tbody>
+      </Table>
+    </>
+  );
+};
 
 export default ProductList;

@@ -45,7 +45,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
                 signIn("cognito");
               }}
             >
-              Sign in
+              Register / Sign in
             </Button>
           )}
           {session && (

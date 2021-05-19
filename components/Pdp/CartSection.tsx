@@ -1,12 +1,15 @@
 import React from "react";
-import { Button, Form } from "react-bootstrap";
 import { insertCart } from "../../src/Services/product";
 import StoredProduct from "../../src/types/StoredProduct";
+import CartForm from "./CartForm";
 
-class CartSection extends React.Component<{ session; product: StoredProduct }> {
+class CartSection extends React.Component<
+  { session; product: StoredProduct },
+  { addedCartAlert: boolean | null }
+> {
   constructor(props) {
     super(props);
-    this.state = {};
+    this.state = { addedCartAlert: null };
   }
 
   addCart = async (event) => {
@@ -14,29 +17,21 @@ class CartSection extends React.Component<{ session; product: StoredProduct }> {
     event.preventDefault();
 
     const { session, product } = this.props;
-    await insertCart(session, product, Number(event.target.quantity.value));
+
+    const resp = await insertCart(session, product, Number(event.target.quantity.value));
+
+    if (resp) {
+      this.setState({ addedCartAlert: true });
+    } else {
+      this.setState({ addedCartAlert: false });
+    }
   };
 
   render() {
+    const { addedCartAlert } = this.state;
     return (
       <>
-        <Form inline onSubmit={this.addCart}>
-          <Form.Control
-            as="select"
-            className="addCart"
-            id="inlineFormCustomSelectPref"
-            name="quantity"
-            custom
-          >
-            <option value="1">1</option>
-            <option value="2">2</option>
-            <option value="3">3</option>
-            <option value="4">4</option>
-          </Form.Control>
-          <Button type="submit" className="add">
-            Add to cart
-          </Button>
-        </Form>
+        <CartForm addCart={this.addCart} addedCartAlert={addedCartAlert} />
       </>
     );
   }

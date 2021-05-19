@@ -3,34 +3,57 @@ import StoredProduct from "../types/StoredProduct";
 import getlambdaResponse from "../../pages/api/lib/lambdas";
 
 export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
-  const response = (
-    await getlambdaResponse(`product/${id}`, "GET", ses ? ses.accessToken : undefined)
-  ).props.response.result;
-  return response;
+  try {
+    const { response } = (
+      await getlambdaResponse(`product/${id}`, "GET", ses ? ses.accessToken : undefined)
+    ).props;
+
+    if (response.error || !response.result) return null;
+    return response.result;
+  } catch (error) {
+    return null;
+  }
 };
 
-export const insertCart = async (session, product: StoredProduct, quantity: number) => {
+export const insertCart = async (
+  session,
+  product: StoredProduct,
+  quantity: number
+): Promise<boolean> => {
   if (session) {
     // authenticated
-
     const stringJSON = JSON.stringify({
       id: product.id,
       quantity,
     });
 
-    await getlambdaResponse(
-      `cart/addProduct/${decode(session.accessToken).sub}`,
-      "PUT",
-      session ? session.accessToken : null,
-      stringJSON
-    );
+    try {
+      const { response } = (
+        await getlambdaResponse(
+          `cart/addProduct/${decode(session.accessToken).sub}`,
+          "PUT",
+          session ? session.accessToken : null,
+          stringJSON
+        )
+      ).props;
+      if (response.error !== undefined) return false;
+      return true;
+    } catch (e) {
+      return null;
+    }
   } else {
     // not authenticated -> add product to localstorage
     const cart = localStorage.getItem("cart"); // retrieve cart
     let jsonCart;
 
     if (cart != null) {
-      jsonCart = JSON.parse(cart);
+      try {
+        jsonCart = JSON.parse(cart);
+      } catch (error) {
+        jsonCart = {
+          items: [],
+        };
+      }
     } else {
       jsonCart = {
         items: [],
@@ -48,7 +71,12 @@ export const insertCart = async (session, product: StoredProduct, quantity: numb
     if (!change) {
       jsonCart.items.push({ id: product.id, quantity }); // push new id to the cart
     }
-    localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
+    try {
+      localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
+      return true;
+    } catch (error) {
+      return false;
+    }
   }
 };
 

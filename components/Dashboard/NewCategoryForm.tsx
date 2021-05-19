@@ -1,16 +1,20 @@
 import React from "react";
-import { Button, Accordion, Card, Form, Col, Row } from "react-bootstrap";
+import { Button, Accordion, Card, Form, Col, Row, Alert } from "react-bootstrap";
 
-class NewCategoryForm extends React.Component<{ insertCategory }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+interface NewCategoryFormProps {
+  insertCategory;
+  categoryInsertedAlert: boolean;
+  handleInsertAlert;
+}
 
-  render() {
-    const { insertCategory } = this.props;
-    return (
-      <>
+const NewCategoryForm = ({
+  insertCategory,
+  categoryInsertedAlert,
+  handleInsertAlert,
+}: NewCategoryFormProps) => {
+  return (
+    <>
+      <div>
         <Accordion style={{ width: "50%" }}>
           <Card>
             <Card.Header>
@@ -27,10 +31,10 @@ class NewCategoryForm extends React.Component<{ insertCategory }> {
                     </Form.Label>
                     <Col sm="8">
                       {" "}
-                      <Form.Control placeholder="Name" name="name" />
+                      <Form.Control placeholder="Name" name="name" id="categoryName" />
                     </Col>
                   </Form.Group>
-                  <Button variant="primary" type="submit">
+                  <Button variant="primary" type="submit" id="categoryInsertSubmit">
                     Submit
                   </Button>
                 </Form>
@@ -38,9 +42,23 @@ class NewCategoryForm extends React.Component<{ insertCategory }> {
             </Accordion.Collapse>
           </Card>
         </Accordion>
-      </>
-    );
-  }
-}
+        {categoryInsertedAlert !== null && categoryInsertedAlert === true ? (
+          <Alert variant="success" onClose={() => handleInsertAlert()} dismissible>
+            <Alert.Heading>Category created successfully!</Alert.Heading>
+          </Alert>
+        ) : (
+          <p />
+        )}
+        {categoryInsertedAlert !== null && categoryInsertedAlert === false ? (
+          <Alert variant="danger" onClose={() => handleInsertAlert()} dismissible>
+            <Alert.Heading>Error on category creation, check if it already exists</Alert.Heading>
+          </Alert>
+        ) : (
+          <p />
+        )}
+      </div>
+    </>
+  );
+};
 
 export default NewCategoryForm;
