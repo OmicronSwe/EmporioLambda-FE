@@ -1,16 +1,15 @@
 import React from "react";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+import { GetStaticProps, GetStaticPaths } from "next";
 import Layout from "../../components/layout";
 import StoredProduct from "../../src/types/StoredProduct";
 import { getProductsByCategory } from "../../src/Services/plp";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 import { getCategories } from "../../src/Services/dashboard";
 import ListingSection from "../../components/plp/ListingSection";
+import { getSession } from "next-auth/client";
 
 class ProductListingPage extends React.Component<{
   products: StoredProduct[];
-  session;
   category: string;
   categories: string[];
 }> {
@@ -20,15 +19,17 @@ class ProductListingPage extends React.Component<{
   }
 
   render() {
-    const { products, category, categories, session } = this.props;
+    const session = getSession();
+    const { products, category, categories } = this.props;
+    
     return (
       <>
         <Layout title="Category Products">
           <SearchBarSection
             categories={categories}
             category={category}
-            minPrice={null}
-            maxPrice={null}
+            minPrice={undefined}
+            maxPrice={undefined}
             name=""
           />
           <ListingSection products={products} session={session} />
@@ -38,15 +39,24 @@ class ProductListingPage extends React.Component<{
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
-  const session = await getSession({ req });
+export const getStaticPaths: GetStaticPaths = async () => {
+
+  const categories = await getCategories(null)
+
+  const paths = categories.map((category) => ({
+    params: { category: category },
+  }))
+
+  return { paths, fallback: true }
+};
+
+export const getStaticProps: GetStaticProps = async ({ params }) => {
 
   return {
     props: {
-      products: await getProductsByCategory(decodeURI(params.category.toString()), session),
-      categories: await getCategories(session),
-      category: decodeURI(params.category.toString()),
-      session,
+      products: await getProductsByCategory(decodeURI(params.category.toString()), null),
+      categories: await getCategories(null),
+      category: decodeURI(params.category.toString())
     },
   };
 };

@@ -28,8 +28,8 @@ class ProductPage extends React.Component<{
           <SearchBarSection
             categories={categories}
             category={product.category}
-            maxPrice={null}
-            minPrice={null}
+            maxPrice={undefined}
+            minPrice={undefined}
             name=""
           />
           <ProductSection product={product} />
@@ -40,7 +40,7 @@ class ProductPage extends React.Component<{
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ params, req }) => {
+export const getStaticSideProps: GetServerSideProps = async ({ params, req }) => {
   const session = await getSession({ req });
   return {
     props: {

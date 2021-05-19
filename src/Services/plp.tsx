@@ -12,8 +12,9 @@ export const getProductsByCategory = async (
       "GET",
       session ? session.accessToken : null
     )
-  ).props.response.result.items;
-  return response;
+  ).props.response;
+  if(response.error || !response.result.items) return null;
+  return response.result.items;
 };
 
 export const insertCart = async (id: string, session) => {

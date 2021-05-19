@@ -17,15 +17,18 @@ class CategoryProductList extends React.Component<{
     const { products, addToCart, toggleSelect } = this.props;
     return (
       <>
-        <CardColumns>
+        
           {products ? (
+            <CardColumns>{
             products.map((item) => (
+              
               <Card key={item.id}>
                 {item.imageUrl ? <Card.Img src={item.imageUrl} /> : ""}
                 <Card.Body>
                   <Card.Title>{item.name}</Card.Title>
                   <Card.Subtitle>{item.price}</Card.Subtitle>
                   <input
+                    className="insertListCheckbox"
                     type="checkbox"
                     value="{{item.id}}"
                     onChange={() => toggleSelect(item.id)}
@@ -44,11 +47,12 @@ class CategoryProductList extends React.Component<{
                   </Button>
                 </Card.Body>
               </Card>
-            ))
+            ))}
+            </CardColumns>
           ) : (
-            <p>No product found</p>
+            <h2>No products found</h2>
           )}
-        </CardColumns>
+        
       </>
     );
   }

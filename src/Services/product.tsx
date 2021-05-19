@@ -3,10 +3,18 @@ import StoredProduct from "../types/StoredProduct";
 import getlambdaResponse from "../../pages/api/lib/lambdas";
 
 export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
-  const response = (
-    await getlambdaResponse(`product/${id}`, "GET", ses ? ses.accessToken : undefined)
-  ).props.response.result;
-  return response;
+  try {
+    const response = (
+      await getlambdaResponse(`product/${id}`, "GET", ses ? ses.accessToken : undefined)
+    ).props.response;
+
+    if(response.error || !response.result) return null
+    return response.result;
+  } catch (error) {
+    return null
+  }
+  
+  
 };
 
 export const insertCart = async (
