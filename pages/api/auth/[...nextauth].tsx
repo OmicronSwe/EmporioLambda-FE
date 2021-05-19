@@ -43,15 +43,14 @@ const options = {
     verificationOptions: {
       algorithms: ["HS256"],
     },
-    async encode({ token, signingKey }){
-      const _token = token;
-      const _signingKey = jose.JWK.asKey(JSON.parse(signingKey));
-      const signedToken = jose.JWT.sign(_token, _signingKey, { algorithm: 'HS256', iat: false })
-      return signedToken
+    async encode({ token, signingKey }) {
+      const signingKeyBytes = jose.JWK.asKey(JSON.parse(signingKey));
+      const signedToken = jose.JWT.sign(token, signingKeyBytes, { algorithm: "HS256", iat: false });
+      return signedToken;
     },
-    async decode({ signingKey, token, verificationOptions }){
-      const _signingKey = jose.JWK.asKey(JSON.parse(signingKey));
-      return jose.JWT.verify(token, _signingKey, verificationOptions)
+    async decode({ signingKey, token, verificationOptions }) {
+      const signingKeyBytes = jose.JWK.asKey(JSON.parse(signingKey));
+      return jose.JWT.verify(token, signingKeyBytes, verificationOptions);
     },
   },
   callbacks: {
