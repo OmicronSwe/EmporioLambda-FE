@@ -1,6 +1,5 @@
 import React from "react";
-import { GetServerSideProps } from "next";
-import { getSession } from "next-auth/client";
+import { GetStaticProps } from "next";
 import CategoryList from "../components/home/CategoryList";
 import Layout from "../components/layout";
 import { getCategories } from "../src/Services/dashboard";
@@ -32,11 +31,10 @@ class CategoryListHome extends React.Component<{ categories: string[] }> {
   }
 }
 
-export const getServerSideProps: GetServerSideProps = async ({ req }) => {
-  const session = await getSession({ req });
+export const getStaticProps: GetStaticProps = async () => {
   return {
     props: {
-      categories: await getCategories(session),
+      categories: await getCategories(null),
     },
   };
 };

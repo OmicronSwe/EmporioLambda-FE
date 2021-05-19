@@ -28,8 +28,8 @@ class ProductPage extends React.Component<{
           <SearchBarSection
             categories={categories}
             category={product.category}
-            maxPrice={null}
-            minPrice={null}
+            maxPrice={undefined}
+            minPrice={undefined}
             name=""
           />
           <ProductSection product={product} />
