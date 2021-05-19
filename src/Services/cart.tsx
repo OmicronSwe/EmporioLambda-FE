@@ -95,7 +95,7 @@ export const insertProductInCart = async (
     await getlambdaResponse(
       `cart/addProduct/${decode(session.accessToken).sub}`,
       "PUT",
-      session,
+      session.accessToken,
       JSON.stringify(body)
     )
   ).props;
