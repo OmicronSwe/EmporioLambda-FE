@@ -43,15 +43,17 @@ const options = {
     verificationOptions: {
       algorithms: ["HS256"],
     },
-    async encode({ token, signingKey }) {
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    async encode({ token, secret, signingKey }) {
       const signingKeyBytes = jose.JWK.asKey(JSON.parse(signingKey));
       const signedToken = jose.JWT.sign(token, signingKeyBytes, { algorithm: "HS256", iat: false });
       return signedToken;
     },
-    async decode({ signingKey, token, verificationOptions }) {
+    async decode({ signingKey, secret, token, verificationOptions }) {
       const signingKeyBytes = jose.JWK.asKey(JSON.parse(signingKey));
       return jose.JWT.verify(token, signingKeyBytes, verificationOptions);
     },
+    /* eslint-enable @typescript-eslint/no-unused-vars */
   },
   callbacks: {
     async jwt(token, user, account) {
