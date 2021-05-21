@@ -22,22 +22,6 @@ const CartPage = (props: { response: Cart; session }) => {
   );
 };
 
-/* export async function getStaticPaths(req){
-  return{
-    paths: [{params: {req: req}}],
-    fallback: true,
-  }
-}
-
-export const getStaticProps: GetStaticProps = async ({params}) => {
-  const session = await getSession(params); // get session data
-  if (session) {
-    const resp: any = await getProductsInCart(session); // external API call to get cart's product ids
-    return { props: { response: JSON.parse(JSON.stringify(resp)), session } };
-  }
-  return { props: { response: { products: [] }, session: null } }; // if not authenticated, return empty response and null session
-} */
-
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req }); // get session data
   if (session) {

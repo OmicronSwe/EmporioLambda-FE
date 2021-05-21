@@ -186,7 +186,6 @@ class CartListSection extends React.Component<
     }
   };
 
-  // TODO
   render() {
     const { cart, insertAlert, removeAlert, fetchAlert, disabled } = this.state;
     return (

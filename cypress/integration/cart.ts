@@ -1,4 +1,4 @@
-/* const checkIfLocalStorageContains = (array): boolean => {
+const checkIfLocalStorageContains = (array): boolean => {
   const keys = Object.keys(array.items);
   let result = false;
   for (let i = 0; i < keys.length; i += 1) {
@@ -15,38 +15,30 @@
     result = false;
   }
   return true;
-}; */
+};
 
 describe("Test cart", () => {
-  /* it("Check empty cart while signed out", () => {
-    cy.visit("/");
-    cy.wait(1000);
-    cy.get("a[href]").contains("Cart").click();
-    cy.get("button")
-      .contains("Sign in")
-      .should(($button) => {
-        const text = $button.text();
-        expect(text).to.equal("Sign in");
+  it("Check empty cart while signed out", () => {
+    cy.visit("/cart").then(() => {
+      cy.get("h2").then(($h2) => {
+        const text = $h2.text();
+        expect(text).to.equal("Your cart is empty");
       });
-    cy.get("h2").should(($h2) => {
-      const text = $h2.text();
-      expect(text).to.equal("Your cart is empty");
+      cy.get('div[id="summaryInfo"]').then(($div) => {
+        const text = $div.text();
+        expect(text).to.equal("Products cost:€0Tax cost:20%Total cost:€0.00");
+      });
     });
-    cy.get('div[id="summaryInfo"]').should(($div) => {
-      const text = $div.text();
-      expect(text).to.equal("Products cost:€0Tax cost:20%Total cost:€0.00");
-    });
-  }); */
+  });
 
-  /* it("Check cart remove single item while signed out", () => {
-    cy.visit("/");
-    cy.wait(1000);
-    cy.get('[title="Synthesizers"]').click();
-    cy.get('input[type="checkbox"]').check();
-    cy.get("button").contains("Add Selected to Cart").click();
-    cy.wait(2000);
-    cy.get("a[href]").contains("Cart").click();
-    cy.wait(5000).then(() => {
+  it("Check cart remove single item while signed out", () => {
+    localStorage.setItem(
+      "cart",
+      `{"items": [{"id": "1a3f1905-45b7-4a31-9af4-ec5b9862f794", "quantity": "1"},{"id": "ff60640d-e92e-4f06-a7cd-79a570474dda", "quantity": "1"},{"id": "022fd11f-624a-4f87-b4a1-8547d698027b", "quantity": "1"}]}`
+    );
+    cy.intercept("http://127.0.0.1:3001/local/product/*").as("getProducts");
+    cy.visit("/cart");
+    cy.wait("@getProducts").then(() => {
       const lsContent: any = JSON.parse(localStorage.getItem("cart"));
       const toRemove = lsContent.items[0].id;
       lsContent.items.splice(0, 1);
@@ -65,37 +57,36 @@ describe("Test cart", () => {
   });
 
   it("Check cart remove all button while signed out", () => {
-    cy.visit("/");
-    cy.wait(1000);
-    cy.get('[title="Synthesizers"]').click();
-    cy.get('input[type="checkbox"]').check();
-    cy.get("button").contains("Add Selected to Cart").click();
-    cy.wait(2000);
-    cy.get("a[href]").contains("Cart").click();
-    cy.wait(4000);
-    cy.get("button").contains("Remove All").click();
-    cy.get('div[id="summaryInfo"]').should(($div) => {
-      const text = $div.text();
-      expect(text).to.equal("Products cost:€0Tax cost:20%Total cost:€0.00");
-      expect(localStorage.getItem("cart")).to.equal('{"items": []}');
+    localStorage.setItem(
+      "cart",
+      `{"items": [{"id": "1a3f1905-45b7-4a31-9af4-ec5b9862f794", "quantity": "1"},{"id": "ff60640d-e92e-4f06-a7cd-79a570474dda", "quantity": "1"},{"id": "022fd11f-624a-4f87-b4a1-8547d698027b", "quantity": "1"}]}`
+    );
+    cy.intercept("http://127.0.0.1:3001/local/product/*").as("getProducts");
+    cy.visit("/cart");
+    cy.wait("@getProducts").then(() => {
+      cy.wait(2000);
+      cy.get("button").contains("Remove All").click();
+      cy.get('div[id="summaryInfo"]').then(($div) => {
+        const text = $div.text();
+        expect(text).to.equal("Products cost:€0Tax cost:20%Total cost:€0.00");
+        expect(localStorage.getItem("cart")).to.equal('{"items": []}');
+      });
     });
   });
 
   it("Check cart product increase and decrease while signed out", () => {
-    cy.visit("/");
-    cy.wait(1000);
-    cy.get('[title="Synthesizers"]').click();
-    cy.get('input[type="checkbox"]').check();
-    cy.get("button").contains("Add Selected to Cart").click();
-    cy.wait(2000);
-    cy.get("a[href]").contains("Cart").click();
-    cy.wait(4000).then(() => {
+    localStorage.setItem(
+      "cart",
+      `{"items": [{"id": "1a3f1905-45b7-4a31-9af4-ec5b9862f794", "quantity": "1"},{"id": "ff60640d-e92e-4f06-a7cd-79a570474dda", "quantity": "1"},{"id": "022fd11f-624a-4f87-b4a1-8547d698027b", "quantity": "1"}]}`
+    );
+    cy.intercept("http://127.0.0.1:3001/local/product/*").as("getProducts");
+    cy.visit("/cart");
+    cy.wait("@getProducts").then(() => {
       const lsContent: any = JSON.parse(localStorage.getItem("cart"));
-
       cy.get(`input[id=${lsContent.items[0].id}]`)
         .type("2 {leftarrow} {backspace}")
         .trigger("change")
-        .should(() => {
+        .then(() => {
           lsContent.items[0].quantity = "2";
           lsContent.items.forEach((element) => {
             element.quantity = element.quantity.toString();
@@ -107,7 +98,7 @@ describe("Test cart", () => {
       cy.get(`input[id=${lsContent.items[0].id}]`)
         .type("1 {rightarrow} {backspace}")
         .trigger("change")
-        .should(() => {
+        .then(() => {
           lsContent.items[0].quantity = "1";
           lsContent.items.forEach((element) => {
             element.quantity = element.quantity.toString();
@@ -120,11 +111,10 @@ describe("Test cart", () => {
 
   it("Check localstorage integrity on cart open while signed out", () => {
     localStorage.setItem("cart", "{items : [");
-    cy.visit("/cart");
-    cy.wait(1000).then(() => {
+    cy.visit("/cart").then(() => {
       expect(localStorage.getItem("cart")).to.equal("{items: []}");
     });
-  }); */
+  });
 
   it("Check cart items while signed in", () => {
     cy.setCookie(
