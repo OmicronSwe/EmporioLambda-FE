@@ -5,7 +5,7 @@ import { getSession } from "next-auth/client";
 import Layout from "../../../components/layout";
 import OrderDetail from "../../../components/Order/OrderDetail";
 
-import { getOrderDetails } from "../../../src/Services/order";
+import { getOrderDetailsByUser } from "../../../src/Services/order";
 import Order from "../../../src/types/Order";
 
 class OrderPage extends React.Component<{ order: Order }> {
@@ -31,7 +31,7 @@ export const getServerSideProps: GetServerSideProps = async ({ params, req }) =>
 
   return {
     props: {
-      order: await getOrderDetails(params.id.toString(), session),
+      order: await getOrderDetailsByUser(params.id.toString(), session),
     },
   };
 };
