@@ -55,7 +55,37 @@
   "profile": {
     "name": "typicode"
   },
-  "order": [
+  "orderAdmin": [
+    {
+      "date": "2021-04-23T09:38:55.823Z",
+      "totalPrice": 841.1880000000001,
+      "products": [
+        {
+          "quantity": 2,
+          "price": 260.5,
+          "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/9669d5bd-c448-4c03-a47b-bfe43586c904.jpg",
+          "name": "Korg Monologue",
+          "description": "Synthesizer Korg Monologue",
+          "id": "ff60640d-e92e-4f06-a7cd-79a570474dda",
+          "category": "Synthesizers"
+        },
+        {
+          "quantity": 1,
+          "price": 179.99,
+          "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/beb57d31-a9e3-4182-8f43-a7a377e2bdd7.jpg",
+          "name": "Korg Minilogue",
+          "description": "Synthesizer Korg Minilogue",
+          "id": "1a3f1905-45b7-4a31-9af4-ec5b9862f794",
+          "category": "Synthesizers"
+        }
+      ],
+      "username": "3184a143-558f-4461-9b91-d0047037a53b",
+      "taxesApplied": 20,
+      "id": "9aaee67c-cde7-4e4d-9bc9-2a429bc98d02",
+      "email": "Testdemo0@test.com"
+    }
+  ],
+  "orderUser": [
     {
       "date": "2021-04-23T09:38:55.823Z",
       "totalPrice": 841.1880000000001,
