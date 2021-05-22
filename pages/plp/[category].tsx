@@ -21,9 +21,9 @@ class ProductListingPage extends React.Component<
     this.state = { session: null };
   }
 
-  async componentDidMount() {
+  componentDidMount = async () => {
     this.setState({ session: await getSession() });
-  }
+  };
 
   render() {
     const { session } = this.state;

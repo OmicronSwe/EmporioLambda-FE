@@ -2,6 +2,7 @@ import ProductInCart from "./ProductInCart";
 
 export default class Cart {
   products: ProductInCart[];
+
   tax: number;
 
   constructor(products: ProductInCart[], tax: number) {
@@ -30,7 +31,7 @@ export default class Cart {
   }
 
   public getCartTotal(): number {
-    const totalWithoutTax = this.getProductsSum()
-    return totalWithoutTax + totalWithoutTax*this.tax;
+    const totalWithoutTax = this.getProductsSum();
+    return totalWithoutTax + totalWithoutTax * this.tax;
   }
 }

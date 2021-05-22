@@ -8,7 +8,7 @@ interface ProductListProps {
 }
 
 const RemoveAllButton = ({ cart, removeAllProduct }: ProductListProps) => {
-  if (cart.products.length > 0)
+  if (cart && cart.products.length > 0)
     return (
       <>
         <Button variant="primary" onClick={() => removeAllProduct()}>
@@ -18,25 +18,5 @@ const RemoveAllButton = ({ cart, removeAllProduct }: ProductListProps) => {
     );
   return null;
 };
-
-/* class RemoveAllButton extends React.Component<{ cart: Cart; removeAllProduct }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    const { cart, removeAllProduct } = this.props;
-    if (cart.products.length > 0)
-      return (
-        <>
-          <Button variant="primary" onClick={() => removeAllProduct()}>
-            Remove All
-          </Button>
-        </>
-      );
-    return null;
-  }
-} */
 
 export default RemoveAllButton;

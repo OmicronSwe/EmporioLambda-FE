@@ -122,8 +122,8 @@ export const getTax = async (session): Promise<number> => {
     const { response } = (
       await getlambdaResponse(`tax/IVA`, "GET", session ? session.accessToken : null)
     ).props;
-    return response.result.rate;
+    return response.rate;
   } catch (e) {
-    return 0
-  } 
+    return 0;
+  }
 };

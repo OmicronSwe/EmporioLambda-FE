@@ -27,7 +27,7 @@ const CartProductList = ({
   const router = useRouter();
   const { error } = router.query;
 
-  if (cart.products.length > 0)
+  if (cart !== null && cart.products.length > 0)
     return (
       <>
         {error ? (

@@ -8,27 +8,44 @@ import { getProductsInCart } from "../../src/Services/cart";
 import PayButton from "../../components/Cart/PayButton";
 import Cart from "../../src/types/Cart";
 
-const CartPage = (props: { response: Cart; session }) => {
-  const { response, session } = props;
-  const username = session ? decode(session.accessToken).sub : null;
-  // <CheckoutSection/>
-  return (
-    <>
-      <Layout title="Cart page">
-        <CartListSection session={session} cart={response ? new Cart(response.products, response.tax) : null} />
-        <PayButton username={username} />
-      </Layout>
-    </>
-  );
-};
+class CartPage extends React.Component<{ cart: Cart; session }, { payButtonEnabled: boolean }> {
+  constructor(props) {
+    super(props);
+    const { cart } = this.props;
+    this.state = { payButtonEnabled: cart ? cart.products.length !== 0 : false };
+  }
+
+  updatePayButton = (length: number) => {
+    if (length !== 0) this.setState({ payButtonEnabled: true });
+    else this.setState({ payButtonEnabled: false });
+  };
+
+  render() {
+    const { cart, session } = this.props;
+    const { payButtonEnabled } = this.state;
+    const username = session ? decode(session.accessToken).sub : null;
+    return (
+      <>
+        <Layout title="Cart page">
+          <CartListSection
+            session={session}
+            cart={cart ? new Cart(cart.products, cart.tax) : new Cart([], 0)}
+            updatePayButton={this.updatePayButton}
+          />
+          <PayButton username={username} payButtonEnabled={payButtonEnabled} />
+        </Layout>
+      </>
+    );
+  }
+}
 
 export const getServerSideProps: GetServerSideProps = async ({ req }) => {
   const session = await getSession({ req }); // get session data
   if (session) {
     const resp: Cart = await getProductsInCart(session); // external API call to get cart's product ids
-    return { props: { response: JSON.parse(JSON.stringify(resp)), session } };
+    return { props: { cart: JSON.parse(JSON.stringify(resp)), session } };
   }
-  return { props: { response: null, session: null } }; // if not authenticated, return empty response and null session
+  return { props: { cart: null, session: null } }; // if not authenticated, return empty response and null session
 };
 
 export default CartPage;

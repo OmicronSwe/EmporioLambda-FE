@@ -17,7 +17,7 @@ const SummaryInfo = ({ cart }: SummaryInfoProps) => {
         {`${(cart.tax * 100).toString()}%`}
         <br />
         Total cost:
-        {`€${(cart.getCartTotal()).toFixed(2)}`}
+        {`€${cart.getCartTotal().toFixed(2)}`}
       </div>
     </>
   );

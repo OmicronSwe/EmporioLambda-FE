@@ -8,7 +8,10 @@ declare global {
   }
 }
 
-export default class PayButton extends React.Component<{ username: string }, { stripe: string }> {
+export default class PayButton extends React.Component<
+  { username: string; payButtonEnabled: boolean },
+  { stripe: string }
+> {
   constructor(props) {
     super(props);
     this.state = { stripe: null };
@@ -27,18 +30,16 @@ export default class PayButton extends React.Component<{ username: string }, { s
   }
 
   render() {
-    const { username } = this.props;
+    const { username, payButtonEnabled } = this.props;
     const { stripe } = this.state;
     return (
       <div>
-        {username ? (
+        {username && payButtonEnabled && (
           <StripeProvider stripe={stripe}>
             <Elements>
               <PayButtonContent username={username} />
             </Elements>
           </StripeProvider>
-        ) : (
-          ""
         )}
       </div>
     );

@@ -14,7 +14,7 @@ import RemoveAllButton from "./RemoveAllButton";
 import { getTax } from "../../src/Services/product";
 
 class CartListSection extends React.Component<
-  { cart: Cart; session },
+  { cart: Cart; session; updatePayButton },
   {
     cart: Cart;
     insertAlert: boolean | null;
@@ -30,7 +30,7 @@ class CartListSection extends React.Component<
   }
 
   componentDidMount = async () => {
-    const { session } = this.props;
+    const { session, updatePayButton } = this.props;
 
     if (!session) {
       try {
@@ -39,7 +39,7 @@ class CartListSection extends React.Component<
       } catch (e) {
         localStorage.setItem("cart", "{items: []}");
         const tax = await getTax(session);
-        const cart = new Cart([],tax);
+        const cart = new Cart([], tax);
         this.setState({ cart });
       }
     } else {
@@ -57,6 +57,9 @@ class CartListSection extends React.Component<
         localStorage.removeItem("cart");
       }
     }
+
+    const { cart } = this.state;
+    updatePayButton(cart.products.length);
   };
 
   setDisabledState = (val: boolean) => {
@@ -65,26 +68,27 @@ class CartListSection extends React.Component<
 
   removeAllProduct = async () => {
     this.setState({ removeAlert: null });
-    const { session } = this.props;
+    const { session, updatePayButton } = this.props;
     const { cart } = this.state;
     if (session) {
       // authenticated -> internal API to call external API to delete the cart
       const resp = await removeAllProductsFromCart(session);
       if (resp) {
-        this.setState({ cart: new Cart([],cart.tax), removeAlert: false });
+        this.setState({ cart: new Cart([], cart.tax), removeAlert: false });
       } else {
         this.setState({ removeAlert: true });
       }
     } else if (localStorage) {
       // not authenticated -> empty the localStorage
       localStorage.setItem("cart", '{"items": []}');
-      this.setState({ cart: new Cart([],cart.tax), removeAlert: false });
+      this.setState({ cart: new Cart([], cart.tax), removeAlert: false });
     }
+    updatePayButton(0);
   };
 
   removeProduct = async (id: string) => {
     this.setState({ removeAlert: null, fetchAlert: null });
-    const { session } = this.props;
+    const { session, updatePayButton } = this.props;
     const { cart } = this.state;
     if (id) {
       if (session) {
@@ -93,6 +97,7 @@ class CartListSection extends React.Component<
           const respGetCart: any = await getProductsInCart(session);
           if (respGetCart != null) {
             this.setState({ cart: respGetCart, removeAlert: false });
+            updatePayButton(respGetCart.products.length);
           } else {
             // Mostra messaggio di errore
             this.setState({ fetchAlert: true });
@@ -115,8 +120,9 @@ class CartListSection extends React.Component<
           localStorage.setItem("cart", '{"items": []}');
           this.setState({ removeAlert: true });
         }
-        localStorage.setItem("cart", cart.toStringForLocalStorage());
+        localStorage.setItem("cart", stateCart.toStringForLocalStorage());
         this.setState({ cart: stateCart, removeAlert: false });
+        updatePayButton(stateCart.products.length);
       }
     }
   };
@@ -202,7 +208,7 @@ class CartListSection extends React.Component<
           setDisabledState={this.setDisabledState}
         />
         <RemoveAllButton cart={cart} removeAllProduct={this.removeAllProduct} />
-        <SummaryInfo tax={cart.tax} cart={cart} />
+        <SummaryInfo cart={cart} />
       </>
     );
   }

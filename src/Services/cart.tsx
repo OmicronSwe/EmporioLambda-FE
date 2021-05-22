@@ -23,7 +23,7 @@ export const getProductsInCart = async (session): Promise<Cart> => {
       await getlambdaResponse(`cart/${decode(session.accessToken).sub}`, "GET", session.accessToken)
     ).props;
     if (response.error === "Cart not found") {
-      if (createEmptyCart(session)) return new Cart([],0);
+      if (createEmptyCart(session)) return new Cart([], 0);
       return null;
     }
     if (response.error !== undefined) {
@@ -31,7 +31,6 @@ export const getProductsInCart = async (session): Promise<Cart> => {
     }
 
     const productArray: ProductInCart[] = [];
-    console.log(response)
     response.result.products.forEach((product) => {
       const stored = new StoredProduct(
         product.id,
@@ -44,7 +43,7 @@ export const getProductsInCart = async (session): Promise<Cart> => {
       productArray.push(new ProductInCart(stored, product.quantity));
     });
 
-    return new Cart(productArray, response.result.taxesApplied/100);
+    return new Cart(productArray, response.result.taxesApplied / 100);
   } catch (e) {
     return null;
   }
@@ -135,19 +134,18 @@ export const getProduct = async (id: string, session): Promise<StoredProduct> =>
 };
 
 export const getProductsFromLocalStorage = async (session): Promise<Cart> => {
-  let tax : number; 
+  let tax: number;
 
   try {
     const { response } = (
       await getlambdaResponse(`tax/IVA`, "GET", session ? session.accessToken : null)
     ).props;
-    tax = response.result.rate;
+    tax = response.rate;
   } catch (e) {
-    tax = 0
-  } 
+    tax = 0;
+  }
 
   if (localStorage) {
-    
     const products: ProductInCart[] = [];
     const jsonCart = localStorage.getItem("cart")
       ? JSON.parse(localStorage.getItem("cart")).items
@@ -172,9 +170,9 @@ export const getProductsFromLocalStorage = async (session): Promise<Cart> => {
         })
       );
     }
-    return new Cart(products,tax/100);
+    return new Cart(products, tax / 100);
   }
-  return new Cart([],tax/100);
+  return new Cart([], tax / 100);
 };
 
 // This is needed, as there was a weird interation happening when the insertion of a product was being called in a parallel loop.
