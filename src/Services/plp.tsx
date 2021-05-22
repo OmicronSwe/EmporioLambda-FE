@@ -38,7 +38,11 @@ export const insertCart = async (id: string, session) => {
     let jsonCart;
 
     if (cart != null) {
-      jsonCart = JSON.parse(cart);
+      try {
+        jsonCart = JSON.parse(cart);
+      } catch (e) {
+        jsonCart = { items: [] };
+      }
     } else {
       jsonCart = {
         items: [],

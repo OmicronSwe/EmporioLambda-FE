@@ -6,39 +6,47 @@ import getlambdaResponse from "../../pages/api/lib/lambdas";
 
 export const createEmptyCart = async (params): Promise<boolean> => {
   const JSONData = { username: decode(params.accessToken).sub, products: [] };
-  const { response } = (
-    await getlambdaResponse("cart/", "POST", params.accessToken, JSON.stringify(JSONData))
-  ).props;
-  if (response.error !== undefined) return false;
-  return true;
+  try {
+    const { response } = (
+      await getlambdaResponse("cart/", "POST", params.accessToken, JSON.stringify(JSONData))
+    ).props;
+    if (response.error !== undefined) return false;
+    return true;
+  } catch (e) {
+    return null;
+  }
 };
 
 export const getProductsInCart = async (session): Promise<Cart> => {
-  const { response } = (
-    await getlambdaResponse(`cart/${decode(session.accessToken).sub}`, "GET", session.accessToken)
-  ).props;
-  if (response.error === "Cart not found") {
-    if (createEmptyCart(session)) return new Cart([]);
+  try {
+    const { response } = (
+      await getlambdaResponse(`cart/${decode(session.accessToken).sub}`, "GET", session.accessToken)
+    ).props;
+    if (response.error === "Cart not found") {
+      if (createEmptyCart(session)) return new Cart([]);
+      return null;
+    }
+    if (response.error !== undefined) {
+      return null;
+    }
+
+    const productArray: ProductInCart[] = [];
+    response.result.products.forEach((product) => {
+      const stored = new StoredProduct(
+        product.id,
+        product.name,
+        product.description,
+        product.imageUrl,
+        product.price,
+        product.category
+      );
+      productArray.push(new ProductInCart(stored, product.quantity));
+    });
+
+    return new Cart(productArray);
+  } catch (e) {
     return null;
   }
-  if (response.error !== undefined) {
-    return null;
-  }
-
-  const productArray: ProductInCart[] = [];
-  response.result.products.forEach((product) => {
-    const stored = new StoredProduct(
-      product.id,
-      product.name,
-      product.description,
-      product.imageUrl,
-      product.price,
-      product.category
-    );
-    productArray.push(new ProductInCart(stored, product.quantity));
-  });
-
-  return new Cart(productArray);
 };
 
 export const removeProductFromCart = async (
@@ -57,29 +65,36 @@ export const removeProductFromCart = async (
       id,
     };
   }
-
-  const { response } = (
-    await getlambdaResponse(
-      `cart/removeProduct/${decode(session.accessToken).sub}`,
-      "PUT",
-      session.accessToken,
-      JSON.stringify(body)
-    )
-  ).props;
-  if (response.error !== undefined) return false;
-  return true;
+  try {
+    const { response } = (
+      await getlambdaResponse(
+        `cart/removeProduct/${decode(session.accessToken).sub}`,
+        "PUT",
+        session.accessToken,
+        JSON.stringify(body)
+      )
+    ).props;
+    if (response.error !== undefined) return false;
+    return true;
+  } catch (e) {
+    return null;
+  }
 };
 
 export const removeAllProductsFromCart = async (session): Promise<boolean> => {
-  const { response } = (
-    await getlambdaResponse(
-      `cart/toEmpty/${decode(session.accessToken).sub}`,
-      "PUT",
-      session.accessToken
-    )
-  ).props;
-  if (response.error !== undefined) return false;
-  return true;
+  try {
+    const { response } = (
+      await getlambdaResponse(
+        `cart/toEmpty/${decode(session.accessToken).sub}`,
+        "PUT",
+        session.accessToken
+      )
+    ).props;
+    if (response.error !== undefined) return false;
+    return true;
+  } catch (e) {
+    return null;
+  }
 };
 
 export const insertProductInCart = async (
@@ -91,23 +106,31 @@ export const insertProductInCart = async (
     id,
     quantity,
   };
-  const { response } = (
-    await getlambdaResponse(
-      `cart/addProduct/${decode(session.accessToken).sub}`,
-      "PUT",
-      session.accessToken,
-      JSON.stringify(body)
-    )
-  ).props;
-  if (response.error !== undefined) return false;
-  return true;
+  try {
+    const { response } = (
+      await getlambdaResponse(
+        `cart/addProduct/${decode(session.accessToken).sub}`,
+        "PUT",
+        session.accessToken,
+        JSON.stringify(body)
+      )
+    ).props;
+    if (response.error !== undefined) return false;
+    return true;
+  } catch (e) {
+    return null;
+  }
 };
 
 export const getProduct = async (id: string, session): Promise<StoredProduct> => {
-  const { response } = (
-    await getlambdaResponse(`product/${id}`, "GET", session ? session.accessToken : null)
-  ).props;
-  return response.result;
+  try {
+    const { response } = (
+      await getlambdaResponse(`product/${id}`, "GET", session ? session.accessToken : null)
+    ).props;
+    return response.result;
+  } catch (e) {
+    return null;
+  }
 };
 
 export const getProductsFromLocalStorage = async (session): Promise<Cart> => {
@@ -140,3 +163,23 @@ export const getProductsFromLocalStorage = async (session): Promise<Cart> => {
   }
   return new Cart([]);
 };
+
+// This is needed, as there was a weird interation happening when the insertion of a product was being called in a parallel loop.
+// The lambda function in the backend would fire correctly, but random products in the list weren't being added to dynamoDB
+
+/* eslint-disable */
+
+export const addProductsFromLocalStorage = async (session): Promise<void> => {
+  if (localStorage) {
+    const jsonCart = localStorage.getItem("cart")
+      ? JSON.parse(localStorage.getItem("cart")).items
+      : [];
+
+    if (jsonCart) {
+      for (const item of jsonCart) {
+        await insertProductInCart(item.id, item.quantity, session);
+      }
+    }
+  }
+};
+/* eslint-enable */

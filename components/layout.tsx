@@ -18,11 +18,6 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
         <title>{title}</title>
         <meta charSet="utf-8" />
         <meta name="viewport" content="initial-scale=1.0, width=device-width" />
-        {title === "Cart page" ? (
-          <script id="stripe-js" src="https://js.stripe.com/v3/" async />
-        ) : (
-          ""
-        )}
       </Head>
       <header>
         <div className="logo">
@@ -39,7 +34,7 @@ const Layout = ({ children, title = "This is the default title" }: Props) => {
         </style>
         <nav>
           <Link href="/">Home</Link>
-          <Link href="/Cart">Cart</Link>
+          <Link href="/cart">Cart</Link>
           {session && <Link href="/profile">Profile</Link>}
           {session && session?.adm && <Link href="/dashboard">Merchant Dashboard</Link>}
           {!session && (

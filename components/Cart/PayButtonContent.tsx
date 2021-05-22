@@ -25,9 +25,16 @@ class PayButtonContent extends React.Component<{
       null,
       JSON.stringify(body)
     );
-    stripe.redirectToCheckout({
-      sessionId: response.props.response.sessionId,
-    });
+
+    if (response.props.response.error) {
+      window.location.href = `/cart?error=${response.props.response.error}`;
+    }
+
+    if (response.props.response.sessionId) {
+      stripe.redirectToCheckout({
+        sessionId: response.props.response.sessionId,
+      });
+    }
   };
 
   render() {

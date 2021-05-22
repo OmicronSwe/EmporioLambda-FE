@@ -55,6 +55,49 @@
   "profile": {
     "name": "typicode"
   },
+  "cart": [
+    {
+      "id": 1,
+      "username": "93edaf82-37fe-420d-af28-44d3693c8bdf",
+      "products": [
+        {
+          "id": "1a3f1905-45b7-4a31-9af4-ec5b9862f794",
+          "name": "Korg Minilogue",
+          "description": "Synthesizer Korg Minilogue",
+          "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/beb57d31-a9e3-4182-8f43-a7a377e2bdd7.jpg",
+          "price": 179.99,
+          "category": "Synthesizers",
+          "quantity": 1
+        },
+        {
+          "id": "ff60640d-e92e-4f06-a7cd-79a570474dda",
+          "name": "Korg Monologue",
+          "description": "Synthesizer Korg Monologue",
+          "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/9669d5bd-c448-4c03-a47b-bfe43586c904.jpg",
+          "price": 260.5,
+          "category": "Synthesizers",
+          "quantity": 1
+        },
+        {
+          "id": "022fd11f-624a-4f87-b4a1-8547d698027b",
+          "name": "M-Audio Venom",
+          "description": "12-Voice Virtual\nAnalog Synthesizer",
+          "imageUrl": "https://local-imagebucket.s3-eu-central-1.amazonaws.com/5822a808-bf2b-4faf-a189-3acdcfd90ede.jpg",
+          "price": 229,
+          "category": "Synthesizers",
+          "quantity": 1
+        }
+      ],
+      "totalPrice": 803.39,
+      "taxesApplied": 20
+    },
+    {
+      "username": "93edaf82-37fe-420d-af28-44d3693c8bdf",
+      "products": [],
+      "totalPrice": 0,
+      "taxesApplied": 20
+    }
+  ],
   "orderAdmin": [
     {
       "date": "2021-04-23T09:38:55.823Z",
