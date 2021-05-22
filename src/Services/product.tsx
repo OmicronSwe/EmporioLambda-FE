@@ -1,6 +1,7 @@
 import { decode } from "jsonwebtoken";
 import StoredProduct from "../types/StoredProduct";
 import getlambdaResponse from "../../pages/api/lib/lambdas";
+import { getProducts } from "./dashboard";
 
 export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
   try {
@@ -105,6 +106,10 @@ export const getProductsFiltered = async (
   }
 
   searchInput = searchInput.slice(0, -1);
+
+  if (!name && !minPrice && !maxPrice && !category) {
+    return getProducts(ses);
+  }
 
   const { response } = (
     await getlambdaResponse(

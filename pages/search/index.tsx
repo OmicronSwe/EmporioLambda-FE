@@ -30,8 +30,8 @@ class SearchPage extends React.Component<{
           <SearchBarSection
             categories={categories}
             category={category}
-            minPrice={minPrice}
-            maxPrice={maxPrice}
+            minPrice={minPrice || undefined}
+            maxPrice={maxPrice || undefined}
             name={name}
           />
           <ListingSection products={products} session={session} />
