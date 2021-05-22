@@ -11,6 +11,7 @@ import {
 import Cart from "../../src/types/Cart";
 import SummaryInfo from "./SummaryInfo";
 import RemoveAllButton from "./RemoveAllButton";
+import { getTax } from "../../src/Services/product";
 
 class CartListSection extends React.Component<
   { cart: Cart; session },
@@ -22,11 +23,8 @@ class CartListSection extends React.Component<
     disabled: boolean;
   }
 > {
-  tax: number;
-
   constructor(props) {
     super(props);
-    this.tax = 0.2;
     const { cart } = this.props;
     this.state = { cart, insertAlert: null, removeAlert: null, fetchAlert: null, disabled: false };
   }
@@ -40,7 +38,8 @@ class CartListSection extends React.Component<
         this.setState({ cart });
       } catch (e) {
         localStorage.setItem("cart", "{items: []}");
-        const cart = new Cart([]);
+        const tax = await getTax(session);
+        const cart = new Cart([],tax);
         this.setState({ cart });
       }
     } else {
@@ -67,18 +66,19 @@ class CartListSection extends React.Component<
   removeAllProduct = async () => {
     this.setState({ removeAlert: null });
     const { session } = this.props;
+    const { cart } = this.state;
     if (session) {
       // authenticated -> internal API to call external API to delete the cart
       const resp = await removeAllProductsFromCart(session);
       if (resp) {
-        this.setState({ cart: new Cart([]), removeAlert: false });
+        this.setState({ cart: new Cart([],cart.tax), removeAlert: false });
       } else {
         this.setState({ removeAlert: true });
       }
     } else if (localStorage) {
       // not authenticated -> empty the localStorage
       localStorage.setItem("cart", '{"items": []}');
-      this.setState({ cart: new Cart([]), removeAlert: false });
+      this.setState({ cart: new Cart([],cart.tax), removeAlert: false });
     }
   };
 
@@ -202,7 +202,7 @@ class CartListSection extends React.Component<
           setDisabledState={this.setDisabledState}
         />
         <RemoveAllButton cart={cart} removeAllProduct={this.removeAllProduct} />
-        <SummaryInfo tax={this.tax} cart={cart} />
+        <SummaryInfo tax={cart.tax} cart={cart} />
       </>
     );
   }

@@ -116,3 +116,14 @@ export const getProductsFiltered = async (
   if (response.error) return null;
   return response.result.items;
 };
+
+export const getTax = async (session): Promise<number> => {
+  try {
+    const { response } = (
+      await getlambdaResponse(`tax/IVA`, "GET", session ? session.accessToken : null)
+    ).props;
+    return response.result.rate;
+  } catch (e) {
+    return 0
+  } 
+};

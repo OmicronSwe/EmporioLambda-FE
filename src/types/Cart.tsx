@@ -2,9 +2,11 @@ import ProductInCart from "./ProductInCart";
 
 export default class Cart {
   products: ProductInCart[];
+  tax: number;
 
-  constructor(products: ProductInCart[]) {
+  constructor(products: ProductInCart[], tax: number) {
     this.products = products;
+    this.tax = tax;
   }
 
   public toStringForLocalStorage(): string {
@@ -25,5 +27,10 @@ export default class Cart {
       sum += element.product.price * element.quantity;
     });
     return sum;
+  }
+
+  public getCartTotal(): number {
+    const totalWithoutTax = this.getProductsSum()
+    return totalWithoutTax + totalWithoutTax*this.tax;
   }
 }

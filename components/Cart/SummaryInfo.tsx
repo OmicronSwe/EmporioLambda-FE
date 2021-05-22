@@ -2,52 +2,25 @@ import React from "react";
 import Cart from "../../src/types/Cart";
 
 interface SummaryInfoProps {
-  tax: number;
   cart: Cart;
 }
 
-const SummaryInfo = ({ tax, cart }: SummaryInfoProps) => {
+const SummaryInfo = ({ cart }: SummaryInfoProps) => {
   return (
     <>
       <div id="summaryInfo">
         <br />
         Products cost:
-        {`€${cart.getProductsSum().toString()}`}
+        {`€${cart.getProductsSum().toFixed(2)}`}
         <br />
         Tax cost:
-        {`${(tax * 100).toString()}%`}
+        {`${(cart.tax * 100).toString()}%`}
         <br />
         Total cost:
-        {`€${(cart.getProductsSum() + cart.getProductsSum() * tax).toFixed(2)}`}
+        {`€${(cart.getCartTotal()).toFixed(2)}`}
       </div>
     </>
   );
 };
-
-/* class SummaryInfo extends React.Component<{ tax: number; cart: Cart }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
-
-  render() {
-    const { tax, cart } = this.props;
-    return (
-      <>
-      <div id="summaryInfo">
-        <br />
-        Products cost:
-        {`€${cart.getProductsSum().toString()}`}
-        <br />
-        Tax cost:
-        {`${(tax * 100).toString()}%`}
-        <br />
-        Total cost:
-        {`€${(cart.getProductsSum() + cart.getProductsSum() * tax).toFixed(2)}`}
-      </div>
-      </>
-    );
-  }
-} */
 
 export default SummaryInfo;
