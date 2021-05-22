@@ -10,13 +10,16 @@ import StoredProduct from "../../src/types/StoredProduct";
 import { getCategories, getProducts } from "../../src/Services/dashboard";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 
-class ProductPage extends React.Component<{
-  product: StoredProduct;
-  categories: string[];
-},{session}> {
+class ProductPage extends React.Component<
+  {
+    product: StoredProduct;
+    categories: string[];
+  },
+  { session }
+> {
   constructor(props) {
     super(props);
-    this.state = {session: null};
+    this.state = { session: null };
   }
 
   async componentDidMount() {
@@ -58,7 +61,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       product: await getProduct(params.id.toString(), null),
-      categories: await getCategories(null)
+      categories: await getCategories(null),
     },
     revalidate: 60,
   };

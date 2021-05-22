@@ -1,6 +1,6 @@
-import { decode } from "jsonwebtoken";
 import StoredProduct from "../types/StoredProduct";
 import getlambdaResponse from "../../pages/api/lib/lambdas";
+import { insertCart } from "./product";
 
 export const getProductsByCategory = async (
   category: string,
@@ -17,55 +17,18 @@ export const getProductsByCategory = async (
   return response.result.items;
 };
 
-export const insertCart = async (id: string, session) => {
-  if (session) {
-    // authenticated
+// This is needed, as there was a weird interation happening when the insertion of a product was being called in a parallel loop.
+// The lambda function in the backend would fire correctly, but random products in the list weren't being added to dynamoDB
 
-    const stringJSON = JSON.stringify({
-      id,
-      quantity: 1,
-    });
-
-    await getlambdaResponse(
-      `cart/addProduct/${decode(session.accessToken).sub}`,
-      "PUT",
-      session ? session.accessToken : null,
-      stringJSON
-    );
-  } else {
-    // not authenticated -> add product to localstorage
-    const cart = localStorage.getItem("cart"); // retrieve cart
-    let jsonCart;
-
-    if (cart != null) {
-      try {
-        jsonCart = JSON.parse(cart);
-      } catch (e) {
-        jsonCart = { items: [] };
-      }
-    } else {
-      jsonCart = {
-        items: [],
-      };
-    }
-
-    let change: boolean = false;
-    for (let i = 0; i < jsonCart.items.length; i += 1) {
-      // look for the entry with a matching code value
-      if (jsonCart.items[i].id === id) {
-        jsonCart.items[i].quantity += 1;
-        change = true;
-      }
-    }
-    if (!change) {
-      jsonCart.items.push({ id, quantity: 1 }); // push new id to the cart
-    }
-    localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
-  }
-};
+/* eslint-disable */
 
 export const insertCartList = async (ids: string[], session) => {
-  ids.forEach((id) => {
-    insertCart(id, session);
-  });
+  let finalResult : boolean = true;
+  for (const id of ids) {
+    let result: boolean = await insertCart(session, id, 1)
+    if(result===false) finalResult = false;
+  };
+
+  return finalResult
 };
+/* eslint-enable */

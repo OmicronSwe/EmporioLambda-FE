@@ -18,7 +18,7 @@ class CartSection extends React.Component<
 
     const { session, product } = this.props;
 
-    const resp = await insertCart(session, product, Number(event.target.quantity.value));
+    const resp = await insertCart(session, product.id, Number(event.target.quantity.value));
 
     if (resp) {
       this.setState({ addedCartAlert: true });

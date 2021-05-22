@@ -14,23 +14,16 @@ export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
     return null;
   }
 };
-/* eslint-disable */
-export const insertCart = async (
-  session,
-  product: StoredProduct,
-  quantity: number
-): Promise<boolean> => {
+
+export const insertCart = async (session, id: string, quantity: number): Promise<boolean> => {
   if (session) {
     // authenticated
     const stringJSON = JSON.stringify({
-      id: product.id,
+      id,
       quantity,
     });
 
     try {
-      console.log(decode(session.accessToken).sub)
-      console.log(session)
-      console.log(stringJSON)
       const { response } = (
         await getlambdaResponse(
           `cart/addProduct/${decode(session.accessToken).sub}`,
@@ -39,11 +32,10 @@ export const insertCart = async (
           stringJSON
         )
       ).props;
-      console.log(response)
       if (response.error !== undefined) return false;
       return true;
     } catch (e) {
-      return null;
+      return false;
     }
   } else {
     // not authenticated -> add product to localstorage
@@ -53,10 +45,24 @@ export const insertCart = async (
     if (cart != null) {
       try {
         jsonCart = JSON.parse(cart);
+
+        let change: boolean = false;
+        for (let i = 0; i < jsonCart.items.length; i += 1) {
+          // look for the entry with a matching code value
+          if (jsonCart.items[i].id === id) {
+            jsonCart.items[i].quantity += quantity;
+            change = true;
+          }
+        }
+        if (!change) {
+          jsonCart.items.push({ id, quantity }); // push new id to the cart
+        }
       } catch (error) {
         jsonCart = {
           items: [],
         };
+
+        jsonCart.items.push({ id, quantity });
       }
     } else {
       jsonCart = {
@@ -64,17 +70,6 @@ export const insertCart = async (
       };
     }
 
-    let change: boolean = false;
-    for (let i = 0; i < jsonCart.items.length; i += 1) {
-      // look for the entry with a matching code value
-      if (jsonCart.items[i].id === product.id) {
-        jsonCart.items[i].quantity += quantity;
-        change = true;
-      }
-    }
-    if (!change) {
-      jsonCart.items.push({ id: product.id, quantity }); // push new id to the cart
-    }
     try {
       localStorage.setItem("cart", JSON.stringify(jsonCart)); // update localstorage
       return true;
@@ -83,7 +78,6 @@ export const insertCart = async (
     }
   }
 };
-/* eslint-enable */
 
 export const getProductsFiltered = async (
   name,
