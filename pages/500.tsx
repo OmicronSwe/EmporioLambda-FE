@@ -4,11 +4,11 @@ import SearchBarSection from "../components/SearchBar/SearchBarSection";
 import { getCategories } from "../src/Services/dashboard";
 import Layout from "../components/layout";
 
-interface Custom404Props {
+interface Custom500Props {
   categories: string[];
 }
 
-const Custom500 = ({ categories }: Custom404Props) => {
+const Custom500 = ({ categories }: Custom500Props) => {
   return (
     <>
       <Layout title="Error 500">
