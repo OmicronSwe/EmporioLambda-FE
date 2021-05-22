@@ -26,7 +26,7 @@ describe("Test cart", () => {
       });
       cy.get('div[id="summaryInfo"]').then(($div) => {
         const text = $div.text();
-        expect(text).to.equal("Products cost:€0Tax cost:20%Total cost:€0.00");
+        expect(text).to.equal("Products cost:€0.00Tax cost:0%Total cost:€0.00");
       });
     });
   });
@@ -68,7 +68,7 @@ describe("Test cart", () => {
       cy.get("button").contains("Remove All").click();
       cy.get('div[id="summaryInfo"]').then(($div) => {
         const text = $div.text();
-        expect(text).to.equal("Products cost:€0Tax cost:20%Total cost:€0.00");
+        expect(text).to.equal("Products cost:€0.00Tax cost:0%Total cost:€0.00");
         expect(localStorage.getItem("cart")).to.equal('{"items": []}');
       });
     });
