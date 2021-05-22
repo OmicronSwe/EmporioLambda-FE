@@ -1,6 +1,8 @@
 module.exports = (req, res, next) => {
     pureResponseMethods = ["updateProfileSuccess", "updatePasswordSuccess", "updatePasswordFail", "noOrdersFound", "deleteProfileSuccess"];
     allowedPOSTMethods = ["product"];
+    singleResultItemsArrayMethods = ["/orderUser?id="];
+
     if (!allowedPOSTMethods.some((el) => req.url.includes(el))) {
         if (req.method === "POST") {
             req.method = "GET";
@@ -30,18 +32,16 @@ module.exports = (req, res, next) => {
         var send = res.send;
         res.send = function (string) {
             var body = string instanceof Buffer ? string.toString() : string;
-            console.log(JSON.parse(body).length);
             var newbody = "";
             if (body.includes("id_token")) {
                 newbody = body;
-            } else if (JSON.parse(body).length > 1) {
+            } else if (JSON.parse(body).length > 1 || singleResultItemsArrayMethods.some((el) => req.url.includes(el))) {
                 newbody = '{"result": { "items": ' + body + "} }";
             } else if (body.includes('"error":')) {
                 newbody = body.replace(/.$/, "").replace(/^./, "");
             } else {
                 newbody = '{"result": ' + body.replace(/.$/, "").replace(/^./, "") + "}";
             }
-            console.log(newbody);
             send.call(this, newbody);
         };
     }

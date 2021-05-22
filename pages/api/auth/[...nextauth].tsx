@@ -1,6 +1,7 @@
 import NextAuth from "next-auth";
 import Providers from "next-auth/providers";
 import jwt from "jsonwebtoken";
+import jose from "jose";
 
 async function refreshAccessToken(token) {
   try {
@@ -42,6 +43,17 @@ const options = {
     verificationOptions: {
       algorithms: ["HS256"],
     },
+    /* eslint-disable @typescript-eslint/no-unused-vars */
+    async encode({ token, secret, signingKey }) {
+      const signingKeyBytes = jose.JWK.asKey(JSON.parse(signingKey));
+      const signedToken = jose.JWT.sign(token, signingKeyBytes, { algorithm: "HS256", iat: false });
+      return signedToken;
+    },
+    async decode({ signingKey, secret, token, verificationOptions }) {
+      const signingKeyBytes = jose.JWK.asKey(JSON.parse(signingKey));
+      return jose.JWT.verify(token, signingKeyBytes, verificationOptions);
+    },
+    /* eslint-enable @typescript-eslint/no-unused-vars */
   },
   callbacks: {
     async jwt(token, user, account) {

@@ -14,7 +14,7 @@ export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
     return null;
   }
 };
-
+/* eslint-disable */
 export const insertCart = async (
   session,
   product: StoredProduct,
@@ -28,6 +28,9 @@ export const insertCart = async (
     });
 
     try {
+      console.log(decode(session.accessToken).sub)
+      console.log(session)
+      console.log(stringJSON)
       const { response } = (
         await getlambdaResponse(
           `cart/addProduct/${decode(session.accessToken).sub}`,
@@ -36,6 +39,7 @@ export const insertCart = async (
           stringJSON
         )
       ).props;
+      console.log(response)
       if (response.error !== undefined) return false;
       return true;
     } catch (e) {
@@ -79,6 +83,7 @@ export const insertCart = async (
     }
   }
 };
+/* eslint-enable */
 
 export const getProductsFiltered = async (
   name,
