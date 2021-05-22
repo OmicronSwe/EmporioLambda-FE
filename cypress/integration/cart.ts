@@ -112,7 +112,7 @@ describe("Test cart", () => {
   it("Check localstorage integrity on cart open while signed out", () => {
     localStorage.setItem("cart", "{items : [");
     cy.visit("/cart").then(() => {
-      cy.wait(3000)
+      cy.wait(3000);
       expect(localStorage.getItem("cart")).to.equal("{items: []}");
     });
   });
