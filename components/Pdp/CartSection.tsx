@@ -29,10 +29,9 @@ class CartSection extends React.Component<
 
   render() {
     const { addedCartAlert } = this.state;
+    const { product } = this.props;
     return (
-      <>
-        <CartForm addCart={this.addCart} addedCartAlert={addedCartAlert} />
-      </>
+      <>{product ? <CartForm addCart={this.addCart} addedCartAlert={addedCartAlert} /> : ""}</>
     );
   }
 }

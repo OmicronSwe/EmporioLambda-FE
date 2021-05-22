@@ -100,7 +100,7 @@ class OrderSection extends React.Component<{ order: Order }> {
             </tbody>
           </Table>
         ) : (
-          <p />
+          <p> Order not found! </p>
         )}
       </>
     );

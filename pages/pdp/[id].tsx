@@ -34,7 +34,7 @@ class ProductPage extends React.Component<
         <Layout title="Product page">
           <SearchBarSection
             categories={categories}
-            category={product.category}
+            category={product ? product.category : "All categories"}
             maxPrice={undefined}
             minPrice={undefined}
             name=""
