@@ -92,3 +92,13 @@ header nav {
   width: 1em;
   transform: scale(2);
 }
+
+#taxInput{
+  width: 50%;
+}
+
+#taxForm{
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  padding: 1em;
+}

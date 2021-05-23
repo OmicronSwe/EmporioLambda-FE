@@ -12,9 +12,11 @@ import { getProducts, getCategories } from "../../src/Services/dashboard";
 import { getOrders } from "../../src/Services/order";
 import Order from "../../src/types/Order";
 import StoredProduct from "../../src/types/StoredProduct";
+import { getTax } from "../../src/Services/product";
+import TaxSection from "../../components/Dashboard/TaxSection";
 
 class Dashboard extends React.Component<
-  { products: StoredProduct[]; categories: string[]; orders: Order[]; session },
+  { products: StoredProduct[]; categories: string[]; orders: Order[]; tax: number; session },
   { categories: string[] }
 > {
   constructor(props) {
@@ -31,7 +33,7 @@ class Dashboard extends React.Component<
   };
 
   render() {
-    const { products, orders, session } = this.props;
+    const { products, orders, session, tax } = this.props;
     const { categories } = this.state;
     return (
       <>
@@ -42,6 +44,7 @@ class Dashboard extends React.Component<
             refreshOnCategoryChange={this.refreshOnCategoryChange}
             session={session}
           />
+          <TaxSection tax={tax} session={session} />
           <OrderSection orders={orders} />
           <DashboardLinks />
         </Layout>
@@ -66,6 +69,7 @@ export const getServerSideProps: GetServerSideProps = async ({ req }) => {
       products: await getProducts(session),
       categories: await getCategories(session),
       orders: await getOrders(session),
+      tax: await getTax(session),
       session,
     },
   };

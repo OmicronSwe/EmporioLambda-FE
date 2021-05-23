@@ -78,6 +78,26 @@ export const getCategories = async (ses): Promise<string[]> => {
   return response.result.items;
 };
 
+export const setTax = async (taxValue: number, session): Promise<boolean> => {
+  const body = {
+    rate: taxValue,
+  };
+  try {
+    const { response } = (
+      await getlambdaResponse(
+        `tax/IVA`,
+        "POST",
+        session ? session.accessToken : null,
+        JSON.stringify(body)
+      )
+    ).props;
+    if (response.error || !response.message) return false;
+    return true;
+  } catch (e) {
+    return false;
+  }
+};
+
 export const fileToBase64 = async (file): Promise<string> => {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
