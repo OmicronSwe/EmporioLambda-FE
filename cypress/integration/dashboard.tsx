@@ -120,7 +120,7 @@ describe("Test dashboard", () => {
 
     cy.get("div").should("contain", "At least one field must be filled in to modify the product");
   });
-  //test fallimento
+  // test fallimento
   it("Failing product modification because of input errors", () => {
     cy.visit("/dashboard");
     cy.get("#productList")
