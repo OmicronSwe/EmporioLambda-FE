@@ -109,27 +109,37 @@ const CartProductList = ({
         </Table>
         {insertAlert === true ? (
           <Alert variant="danger">
-            <Alert.Heading className="text-center">A problem occurred while inserting the item from the cart</Alert.Heading>
+            <Alert.Heading className="text-center">
+              A problem occurred while inserting the item from the cart
+            </Alert.Heading>
           </Alert>
         ) : null}
         {insertAlert === false ? (
           <Alert variant="success">
-            <Alert.Heading className="text-center">Item correctly inserted to the cart</Alert.Heading>
+            <Alert.Heading className="text-center">
+              Item correctly inserted to the cart
+            </Alert.Heading>
           </Alert>
         ) : null}
         {removeAlert === true ? (
           <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
-            <Alert.Heading className="text-center">A problem occurred while removing the item from the cart</Alert.Heading>
+            <Alert.Heading className="text-center">
+              A problem occurred while removing the item from the cart
+            </Alert.Heading>
           </Alert>
         ) : null}
         {removeAlert === false ? (
           <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
-            <Alert.Heading className="text-center">Item correctly removed from the cart</Alert.Heading>
+            <Alert.Heading className="text-center">
+              Item correctly removed from the cart
+            </Alert.Heading>
           </Alert>
         ) : null}
         {fetchAlert === true ? (
           <Alert variant="danger">
-            <Alert.Heading className="text-center">A problem occured while getting the necessary data</Alert.Heading>
+            <Alert.Heading className="text-center">
+              A problem occured while getting the necessary data
+            </Alert.Heading>
           </Alert>
         ) : null}
       </>
@@ -140,12 +150,16 @@ const CartProductList = ({
       <h3 className="text-center">Your cart is empty</h3>
       {removeAlert === true ? (
         <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
-          <Alert.Heading className="text-center">A problem occurred while removing the item from the cart</Alert.Heading>
+          <Alert.Heading className="text-center">
+            A problem occurred while removing the item from the cart
+          </Alert.Heading>
         </Alert>
       ) : null}
       {removeAlert === false ? (
         <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
-          <Alert.Heading className="text-center">Item correctly removed from the cart</Alert.Heading>
+          <Alert.Heading className="text-center">
+            Item correctly removed from the cart
+          </Alert.Heading>
         </Alert>
       ) : null}
     </>

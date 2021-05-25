@@ -11,63 +11,71 @@ interface CategoryProductListProps {
   addedCartId: string;
 }
 
-const CategoryProductList = ( { products, addToCart, toggleSelect, addedCartAlert, addedCartId } : CategoryProductListProps) => {
+const CategoryProductList = ({
+  products,
+  addToCart,
+  toggleSelect,
+  addedCartAlert,
+  addedCartId,
+}: CategoryProductListProps) => {
   const [show, setShow] = useState(true);
-    return (
-      <>
-        {products ? (
-          <CardColumns>
-            {products.map((item) => (
-              <Card key={item.id}>
-                {item.imageUrl ? <Card.Img src={item.imageUrl} /> : ""}
-                <Card.Body>
-                  <Card.Title>{item.name}</Card.Title>
-                  <Card.Subtitle>{`${item.price.toFixed(2)}€`}</Card.Subtitle>
-                  <input
-                    className="insertListCheckbox"
-                    type="checkbox"
-                    value="{{item.id}}"
-                    onChange={() => toggleSelect(item.id)}
-                  />
-                  <br />
-                  <Button
-                    variant="primary"
-                    onClick={() => {
-                      Router.push(`/pdp/${item.id}`);
-                    }}
-                  >
-                    View Product
-                  </Button>
-                  <Button variant="warning" onClick={
-                    () => {
-                      addToCart(item.id);
-                      setShow(true);
-                    }}>
-                    Add to Cart
-                  </Button>
-                  {item.id === addedCartId && addedCartAlert !== null && addedCartAlert === true && (
-                    <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
-                      <Alert.Heading className="text-center">
-                        Product added successfully!
-                      </Alert.Heading>
-                    </Alert>
-                  )}
-                  {item.id === addedCartId && addedCartAlert !== null && addedCartAlert === false && (
-                    <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
-                      <Alert.Heading className="text-center">
-                        Error occured while adding the product
-                      </Alert.Heading>
-                    </Alert>
-                  )}
-                </Card.Body>
-              </Card>
-            ))}
-          </CardColumns>
-        ) : (
-          <h2>No products found</h2>
-        )}
-      </>
-    );
-}
+  return (
+    <>
+      {products ? (
+        <CardColumns>
+          {products.map((item) => (
+            <Card key={item.id}>
+              {item.imageUrl ? <Card.Img src={item.imageUrl} /> : ""}
+              <Card.Body>
+                <Card.Title>{item.name}</Card.Title>
+                <Card.Subtitle>{`${item.price.toFixed(2)}€`}</Card.Subtitle>
+                <input
+                  className="insertListCheckbox"
+                  type="checkbox"
+                  value="{{item.id}}"
+                  onChange={() => toggleSelect(item.id)}
+                />
+                <br />
+                <Button
+                  variant="primary"
+                  onClick={() => {
+                    Router.push(`/pdp/${item.id}`);
+                  }}
+                >
+                  View Product
+                </Button>
+                <Button
+                  variant="warning"
+                  onClick={() => {
+                    addToCart(item.id);
+                    setShow(true);
+                  }}
+                >
+                  Add to Cart
+                </Button>
+                {item.id === addedCartId && addedCartAlert !== null && addedCartAlert === true && (
+                  <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
+                    <Alert.Heading className="text-center">
+                      Product added successfully!
+                    </Alert.Heading>
+                  </Alert>
+                )}
+                {item.id === addedCartId && addedCartAlert !== null && addedCartAlert === false && (
+                  <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
+                    <Alert.Heading className="text-center">
+                      Error occured while adding the product
+                    </Alert.Heading>
+                  </Alert>
+                )}
+              </Card.Body>
+            </Card>
+          ))}
+        </CardColumns>
+      ) : (
+        <h2>No products found</h2>
+      )}
+    </>
+  );
+};
 
 export default CategoryProductList;

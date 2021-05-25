@@ -17,7 +17,7 @@ const NewCategoryForm = ({
       <div className="d-flex justify-content-center">
         <Accordion style={{ width: "50%" }}>
           <Card>
-            <Card.Header style={{backgroundColor: "white"}}>
+            <Card.Header style={{ backgroundColor: "white" }}>
               <div className="d-flex justify-content-center">
                 <Accordion.Toggle as={Button} eventKey="0">
                   Add new category
@@ -56,7 +56,9 @@ const NewCategoryForm = ({
         )}
         {categoryInsertedAlert !== null && categoryInsertedAlert === false ? (
           <Alert variant="danger" onClose={() => handleInsertAlert()} dismissible>
-            <Alert.Heading className="text-center">Error on category creation, check if it already exists</Alert.Heading>
+            <Alert.Heading className="text-center">
+              Error on category creation, check if it already exists
+            </Alert.Heading>
           </Alert>
         ) : (
           <p />
