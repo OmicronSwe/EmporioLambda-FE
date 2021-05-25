@@ -1,5 +1,5 @@
 import Router from "next/router";
-import React from "react";
+import React, { useState } from "react";
 import { Button, CardColumns, Card, Alert } from "react-bootstrap";
 import StoredProduct from "../../src/types/StoredProduct";
 
@@ -12,6 +12,7 @@ interface CategoryProductListProps {
 }
 
 const CategoryProductList = ( { products, addToCart, toggleSelect, addedCartAlert, addedCartId } : CategoryProductListProps) => {
+  const [show, setShow] = useState(true);
     return (
       <>
         {products ? (
@@ -37,18 +38,22 @@ const CategoryProductList = ( { products, addToCart, toggleSelect, addedCartAler
                   >
                     View Product
                   </Button>
-                  <Button variant="warning" onClick={() => addToCart(item.id)}>
+                  <Button variant="warning" onClick={
+                    () => {
+                      addToCart(item.id);
+                      setShow(true);
+                    }}>
                     Add to Cart
                   </Button>
                   {item.id === addedCartId && addedCartAlert !== null && addedCartAlert === true && (
-                    <Alert variant="success">
+                    <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>
                       <Alert.Heading className="text-center">
                         Product added successfully!
                       </Alert.Heading>
                     </Alert>
                   )}
                   {item.id === addedCartId && addedCartAlert !== null && addedCartAlert === false && (
-                    <Alert variant="danger">
+                    <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
                       <Alert.Heading className="text-center">
                         Error occured while adding the product
                       </Alert.Heading>

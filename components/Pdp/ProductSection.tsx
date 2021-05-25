@@ -2,14 +2,11 @@ import React from "react";
 import { Col, Form, Image, Row } from "react-bootstrap";
 import StoredProduct from "../../src/types/StoredProduct";
 
-class ProductSection extends React.Component<{ product: StoredProduct }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+interface ProductSectionProps {
+  product: StoredProduct;
+}
 
-  render() {
-    const { product } = this.props;
+const ProductSection = ( { product }: ProductSectionProps ) => {
     return (
       <>
         {product ? (
@@ -78,7 +75,6 @@ class ProductSection extends React.Component<{ product: StoredProduct }> {
         )}
       </>
     );
-  }
 }
 
 export default ProductSection;

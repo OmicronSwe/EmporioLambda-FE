@@ -44,14 +44,14 @@ const NewCategoryForm = ({
         </Accordion>
         {categoryInsertedAlert !== null && categoryInsertedAlert === true ? (
           <Alert variant="success" onClose={() => handleInsertAlert()} dismissible>
-            <Alert.Heading>Category created successfully!</Alert.Heading>
+            <Alert.Heading className="text-center">Category created successfully!</Alert.Heading>
           </Alert>
         ) : (
           <p />
         )}
         {categoryInsertedAlert !== null && categoryInsertedAlert === false ? (
           <Alert variant="danger" onClose={() => handleInsertAlert()} dismissible>
-            <Alert.Heading>Error on category creation, check if it already exists</Alert.Heading>
+            <Alert.Heading className="text-center">Error on category creation, check if it already exists</Alert.Heading>
           </Alert>
         ) : (
           <p />
