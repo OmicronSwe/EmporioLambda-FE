@@ -12,7 +12,7 @@ class OrderSection extends React.Component<{ orders: Order[] }> {
     const { orders } = this.props;
     return (
       <>
-        <h1>Order section</h1>
+        <h1 className="text-center mb-3">Order section</h1>
         <OrderList orders={orders} />
       </>
     );

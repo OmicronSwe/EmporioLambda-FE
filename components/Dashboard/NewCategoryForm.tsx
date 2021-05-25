@@ -14,13 +14,15 @@ const NewCategoryForm = ({
 }: NewCategoryFormProps) => {
   return (
     <>
-      <div>
+      <div className="d-flex justify-content-center">
         <Accordion style={{ width: "50%" }}>
           <Card>
-            <Card.Header>
-              <Accordion.Toggle as={Button} eventKey="0">
-                Add new category
-              </Accordion.Toggle>
+            <Card.Header style={{backgroundColor: "white"}}>
+              <div className="d-flex justify-content-center">
+                <Accordion.Toggle as={Button} eventKey="0">
+                  Add new category
+                </Accordion.Toggle>
+              </div>
             </Card.Header>
             <Accordion.Collapse eventKey="0">
               <Card.Body>
@@ -30,13 +32,16 @@ const NewCategoryForm = ({
                       Category name
                     </Form.Label>
                     <Col sm="8">
-                      {" "}
                       <Form.Control placeholder="Name" name="name" id="categoryName" />
                     </Col>
                   </Form.Group>
-                  <Button variant="primary" type="submit" id="categoryInsertSubmit">
-                    Submit
-                  </Button>
+                  <Form.Row className="text-center">
+                    <Col sm="12">
+                      <Button variant="primary" type="submit" id="categoryInsertSubmit">
+                        Submit
+                      </Button>
+                    </Col>
+                  </Form.Row>
                 </Form>
               </Card.Body>
             </Accordion.Collapse>

@@ -35,7 +35,7 @@ class TaxSection extends React.Component<
     const { tax, taxChangedAlert } = this.state;
     return (
       <>
-        <h1>Tax Section</h1>
+        <h1 className="text-center mb-3">Tax Section</h1>
         <TaxForm
           tax={tax}
           taxChangedAlert={taxChangedAlert}

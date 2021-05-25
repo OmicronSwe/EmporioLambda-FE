@@ -48,7 +48,7 @@ class CategorySection extends React.Component<
     const { categoryInsertedAlert, categoryRemovedAlert } = this.state;
     return (
       <>
-        <h1>Category Section</h1>
+        <h1 className="text-center mb-3">Category Section</h1>
         <NewCategoryForm
           insertCategory={this.insertCategory}
           categoryInsertedAlert={categoryInsertedAlert}

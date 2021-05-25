@@ -125,7 +125,7 @@ class ProductSection extends React.Component<
     const { categories } = this.props;
     return (
       <>
-        <h1>Product Section</h1>
+        <h1 className="text-center mb-3">Product Section</h1>
         <NewProductForm
           insertProduct={this.insertProduct}
           categories={categories}

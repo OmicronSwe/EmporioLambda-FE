@@ -29,9 +29,13 @@ const TaxForm = ({ tax, taxChangedAlert, handleChangedAlert, insertTax }: TaxFor
               />
             </Col>
           </Form.Group>
-          <Button variant="primary" type="submit">
-            Submit
-          </Button>
+          <Form.Row className="text-center">
+            <Col sm="12">
+              <Button variant="primary" type="submit">
+                Submit
+              </Button>
+            </Col>
+          </Form.Row>
         </Form>
         {taxChangedAlert !== null && taxChangedAlert === true ? (
           <Alert variant="success" onClose={() => handleChangedAlert()} dismissible>

@@ -22,6 +22,7 @@ const ProductList = ({
 
   return (
     <>
+      <div className="mt-4">
       <Table id="productList">
         <thead className="thead-light">
           <tr>
@@ -117,6 +118,7 @@ const ProductList = ({
           )}
         </tbody>
       </Table>
+      </div>
     </>
   );
 };

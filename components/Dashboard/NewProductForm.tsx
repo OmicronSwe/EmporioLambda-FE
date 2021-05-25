@@ -32,10 +32,12 @@ const NewProductForm = ({
     <>
       <Accordion>
         <Card>
-          <Card.Header>
+          <Card.Header style={{backgroundColor: "white"}}>
+            <div className="d-flex justify-content-center">
             <Accordion.Toggle as={Button} eventKey="1">
               Add new product
             </Accordion.Toggle>
+            </div>
           </Card.Header>
           <Accordion.Collapse eventKey="1">
             <Card.Body>

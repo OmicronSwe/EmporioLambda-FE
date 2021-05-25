@@ -1,6 +1,5 @@
 import React from "react";
 import Cart from "../../src/types/Cart";
-import { Text } from "react-bootstrap"
 
 interface SummaryInfoProps {
   cart: Cart;
