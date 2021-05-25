@@ -1,5 +1,6 @@
 import React from "react";
 import Cart from "../../src/types/Cart";
+import { Text } from "react-bootstrap"
 
 interface SummaryInfoProps {
   cart: Cart;
@@ -10,14 +11,14 @@ const SummaryInfo = ({ cart }: SummaryInfoProps) => {
     <>
       <div id="summaryInfo">
         <br />
-        Products cost:
-        {`€${cart.getProductsSum().toFixed(2)}`}
+         <em>Products cost</em>:
+        {" "+`€${cart.getProductsSum().toFixed(2)}`}
         <br />
-        Tax cost:
-        {`${(cart.tax * 100).toString()}%`}
+        <em>Tax cost</em>:
+        {" "+`${(cart.tax * 100).toString()}%`}
         <br />
-        Total cost:
-        {`€${cart.getCartTotal().toFixed(2)}`}
+        <b>Total cost</b>:
+        {" "+`€${cart.getCartTotal().toFixed(2)}`}
       </div>
     </>
   );

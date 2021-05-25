@@ -32,6 +32,7 @@ class ProductPage extends React.Component<
     return (
       <>
         <Layout title="Product page">
+          <h1 className="text-center mb-4">Product Details</h1>
           <SearchBarSection
             categories={categories}
             category={product ? product.category : "All categories"}

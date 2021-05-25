@@ -40,7 +40,7 @@ const CartProductList = ({
         )}
 
         <Table className="product-list" borderless>
-          <caption> Shopping Cart </caption>
+          <caption className="text-center"> Shopping Cart </caption>
           <thead>
             <tr>
               <th>Image</th>
@@ -137,7 +137,7 @@ const CartProductList = ({
 
   return (
     <>
-      <h2>Your cart is empty</h2>
+      <h3 className="text-center">Your cart is empty</h3>
       {removeAlert === true ? (
         <Alert variant="danger" show={show} onClose={() => setShow(false)} dismissible>
           <Alert.Heading className="text-center">A problem occurred while removing the item from the cart</Alert.Heading>

@@ -16,7 +16,7 @@ class CategoryListHome extends React.Component<{ categories: string[] }> {
     return (
       <>
         <Layout title="Homepage">
-          <h1>Home</h1>
+          <h1 className="text-center mb-4">Home</h1>
           <SearchBarSection
             categories={categories}
             category="All categories"
@@ -24,6 +24,7 @@ class CategoryListHome extends React.Component<{ categories: string[] }> {
             maxPrice={undefined}
             name=""
           />
+          <br />
           <CategoryList categories={categories} />
         </Layout>
       </>

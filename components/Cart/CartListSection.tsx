@@ -196,7 +196,7 @@ class CartListSection extends React.Component<
     const { cart, insertAlert, removeAlert, fetchAlert, disabled } = this.state;
     return (
       <>
-        <h1>Cart Section</h1>
+        <h1 className="text-center mb-3">Cart Section</h1>
         <CartProductList
           cart={cart}
           removeOnClick={this.removeProduct}
@@ -207,8 +207,13 @@ class CartListSection extends React.Component<
           disabled={disabled}
           setDisabledState={this.setDisabledState}
         />
-        <RemoveAllButton cart={cart} removeAllProduct={this.removeAllProduct} />
-        <SummaryInfo cart={cart} />
+        <div className="row justify-content-center">
+          <RemoveAllButton cart={cart} removeAllProduct={this.removeAllProduct} />
+        </div>
+        <div className="row justify-content-center">
+          <SummaryInfo cart={cart} />
+        </div>
+        <br />
       </>
     );
   }

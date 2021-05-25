@@ -38,7 +38,11 @@ class PayButtonContent extends React.Component<{
   };
 
   render() {
-    return <Button onClick={this.handlePay}>Pay </Button>;
+    return (
+      <div className="row justify-content-center">
+        <Button onClick={this.handlePay}>Pay </Button>
+      </div>
+    );
   }
 }
 
