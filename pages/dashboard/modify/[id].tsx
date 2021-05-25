@@ -97,16 +97,16 @@ class ModifyProductPage extends React.Component<
     if (fileObject) {
       base64StringImage = await fileToBase64(fileObject);
     }
-    const name = event.target.productName.value ? event.target.productName.value : "";
-    const description = event.target.productDescription.value
+    const name: string = event.target.productName.value ? event.target.productName.value : "";
+    const description: string = event.target.productDescription.value
       ? event.target.productDescription.value
       : "";
-    const price = event.target.productPrice.value ? event.target.productPrice.value : "";
+    const price: string = event.target.productPrice.value ? event.target.productPrice.value : "";
     const image: RawImage =
       base64StringImage !== ""
         ? new RawImage(fileObject.type, `base64,${base64StringImage}`)
         : undefined;
-    const category =
+    const category: string =
       event.target.productCategorySelection.value !== "Choose..."
         ? event.target.productCategorySelection.value
         : "";
@@ -128,7 +128,7 @@ class ModifyProductPage extends React.Component<
         name !== "" ? name : product.name,
         description !== "" ? description : product.description,
         image,
-        price !== "" ? parseInt(price, 10) : product.price,
+        price !== "" ? Number(price) : product.price,
         category !== "" ? category : product.category
       );
       await updateProduct(product.id, session, modifiedProduct);
