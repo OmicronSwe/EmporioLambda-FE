@@ -32,6 +32,7 @@ class ProductListingPage extends React.Component<
     return (
       <>
         <Layout title="Category Products">
+          <h1 className="text-center mb-4">{category}</h1>
           <SearchBarSection
             categories={categories}
             category={category}
@@ -39,6 +40,7 @@ class ProductListingPage extends React.Component<
             maxPrice={undefined}
             name=""
           />
+          <br />
           <ListingSection products={products} session={session} />
         </Layout>
       </>
