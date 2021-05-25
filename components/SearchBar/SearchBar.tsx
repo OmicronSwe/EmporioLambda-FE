@@ -73,6 +73,7 @@ const SearchBar = ({
           name="minPriceValue"
           aria-label="Amount (to the nearest dollar)"
           type="number"
+          min="0"
           placeholder="Min price"
           defaultValue={minPrice}
         />
@@ -85,6 +86,7 @@ const SearchBar = ({
           name="maxPriceValue"
           aria-label="Amount (to the nearest dollar)"
           type="number"
+          min="0"
           placeholder="Max price"
           defaultValue={maxPrice}
         />
