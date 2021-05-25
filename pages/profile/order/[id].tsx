@@ -19,6 +19,7 @@ class OrderPage extends React.Component<{ order: Order }> {
     return (
       <>
         <Layout title="Order detail page">
+        <h1 className="text-center mb-4">Order Details</h1>
           <OrderDetail order={order} />
         </Layout>
       </>

@@ -12,15 +12,17 @@ const AddToCartList = ({ addToCartList, disabled, addedListAlert }: AddToCartLis
   return (
     <>
       {!disabled && (
-        <Button
-          variant="warning"
-          onClick={() => {
-            addToCartList();
-            setShow(true);
-          }}
-        >
-          Add Selected to Cart
-        </Button>
+        <div className="row justify-content-center mb-4">
+          <Button
+            variant="warning"
+            onClick={() => {
+              addToCartList();
+              setShow(true);
+            }}
+          >
+            Add Selected to Cart
+          </Button>
+        </div>
       )}
       {addedListAlert !== null && addedListAlert === true && (
         <Alert variant="success" show={show} onClose={() => setShow(false)} dismissible>

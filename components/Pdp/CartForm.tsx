@@ -25,7 +25,7 @@ const CartForm = ({ addCart, addedCartAlert }: AddCartProps) => {
               <option value="3">3</option>
               <option value="4">4</option>
             </Form.Control>
-            <Button type="submit" className="add" onClick={() => setShow(true)}>
+            <Button type="submit" variant="warning" className="add" onClick={() => setShow(true)}>
               Add to cart
             </Button>
           </Form>
