@@ -1,18 +1,13 @@
 import React from "react";
 import { Alert, Button } from "react-bootstrap";
 
-class AddToCartList extends React.Component<{
+interface AddToCartListProps {
   addToCartList;
   disabled: boolean;
   addedListAlert: boolean;
-}> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+}
 
-  render() {
-    const { addToCartList, disabled, addedListAlert } = this.props;
+const AddToCartList = ( { addToCartList, disabled, addedListAlert } : AddToCartListProps ) => {
     return (
       <>
         {!disabled && (
@@ -34,6 +29,5 @@ class AddToCartList extends React.Component<{
         )}
       </>
     );
-  }
 }
 export default AddToCartList;

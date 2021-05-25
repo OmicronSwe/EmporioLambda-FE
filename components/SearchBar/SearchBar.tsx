@@ -2,7 +2,7 @@ import React from "react";
 import { Button, InputGroup, DropdownButton, FormControl, Dropdown } from "react-bootstrap";
 import { BsSearch } from "react-icons/bs";
 
-class SearchBar extends React.Component<{
+interface SearchBarProps {
   categories: string[];
   category: string;
   name: string;
@@ -10,14 +10,9 @@ class SearchBar extends React.Component<{
   minPrice: number;
   changeCategory;
   onSearch;
-}> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+}
 
-  render() {
-    const { categories, category, changeCategory, onSearch, minPrice, maxPrice, name } = this.props;
+const SearchBar = ( { categories, category, name, maxPrice, minPrice, changeCategory, onSearch } : SearchBarProps ) => {
     return (
       <>
         <InputGroup id="searchBar">
@@ -92,7 +87,6 @@ class SearchBar extends React.Component<{
         </InputGroup>
       </>
     );
-  }
 }
 
 export default SearchBar;

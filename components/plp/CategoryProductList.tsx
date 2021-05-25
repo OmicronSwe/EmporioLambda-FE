@@ -3,20 +3,15 @@ import React from "react";
 import { Button, CardColumns, Card, Alert } from "react-bootstrap";
 import StoredProduct from "../../src/types/StoredProduct";
 
-class CategoryProductList extends React.Component<{
+interface CategoryProductListProps {
   products: StoredProduct[];
   addToCart;
   toggleSelect;
   addedCartAlert: boolean;
   addedCartId: string;
-}> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+}
 
-  render() {
-    const { products, addToCart, toggleSelect, addedCartAlert, addedCartId } = this.props;
+const CategoryProductList = ( { products, addToCart, toggleSelect, addedCartAlert, addedCartId } : CategoryProductListProps) => {
     return (
       <>
         {products ? (
@@ -26,7 +21,7 @@ class CategoryProductList extends React.Component<{
                 {item.imageUrl ? <Card.Img src={item.imageUrl} /> : ""}
                 <Card.Body>
                   <Card.Title>{item.name}</Card.Title>
-                  <Card.Subtitle>{item.price}</Card.Subtitle>
+                  <Card.Subtitle>{`${item.price.toFixed(2)}€`}</Card.Subtitle>
                   <input
                     className="insertListCheckbox"
                     type="checkbox"
@@ -68,7 +63,6 @@ class CategoryProductList extends React.Component<{
         )}
       </>
     );
-  }
 }
 
 export default CategoryProductList;
