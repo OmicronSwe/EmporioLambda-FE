@@ -10,7 +10,7 @@ const SummaryInfo = ({ cart }: SummaryInfoProps) => {
     <>
       <div id="summaryInfo">
         <br />
-        <em>Products cost:</em>
+        <em>Products cost</em>
         {`: €${cart.getProductsSum().toFixed(2)}`}
         <br />
         <em>Tax cost</em>
