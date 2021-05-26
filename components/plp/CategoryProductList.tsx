@@ -9,6 +9,7 @@ interface CategoryProductListProps {
   toggleSelect;
   addedCartAlert: boolean;
   addedCartId: string;
+  categoryNotExists: boolean;
 }
 
 const CategoryProductList = ({
@@ -17,6 +18,7 @@ const CategoryProductList = ({
   toggleSelect,
   addedCartAlert,
   addedCartId,
+  categoryNotExists
 }: CategoryProductListProps) => {
   const [show, setShow] = useState(true);
   return (
@@ -73,9 +75,9 @@ const CategoryProductList = ({
         </CardColumns>
       ) : (
         <div>
-          <h3 className="text-center pt-4">No products found!</h3>
+          <h3 className="text-center pt-4">{categoryNotExists ? "Category not found!" : "There are no products in this category!"}</h3>
           <h6 className="text-center pt-2">Please try again using the search bar</h6>
-          <h6 className="text-center pt-2">or selecting a category from the homepage </h6>
+          <h6 className="text-center pt-2">or selecting another category from the homepage</h6>
         </div>
       )}
     </>

@@ -1,10 +1,16 @@
 describe("Test Plp", () => {
-  it("Successfully loads a category", () => {
+  it("Successfully loads a PLP corresponding to a category", () => {
     cy.visit("/plp/Synthesizers");
+  });
+  it("Successfully loads a PLP of an unexisting category", () => {
+    cy.visit("/plp/1234");
+    cy.get("h3").should("contain", "Category not found!");
+    cy.get("h6").should("contain", "Please try again using the search bar");
+    cy.get("h6").should("contain", "or selecting another category from the homepage");
   });
   it("Correctly visiting a category without products", () => {
     cy.visit("/plp/Headphones");
-    cy.get("h2").should("contain", "No products found");
+    cy.get("h3").should("contain", "There are no products in this category!");
   });
   it("Correctly visiting a category with at least one product", () => {
     cy.visit("/plp/Synthesizers");

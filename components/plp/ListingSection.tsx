@@ -6,7 +6,7 @@ import AddToCartList from "./AddToCartList";
 import { insertCart } from "../../src/Services/product";
 
 class ListingSection extends React.Component<
-  { products: StoredProduct[]; session },
+  { products: StoredProduct[]; session; categoryNotExists: boolean },
   {
     idProducts: string[];
     products: StoredProduct[];
@@ -53,6 +53,7 @@ class ListingSection extends React.Component<
   };
 
   render() {
+    const { categoryNotExists } = this.props;
     const { products, disabled, addedCartAlert, addedCartId, addedListAlert } = this.state;
     return (
       <>
@@ -68,6 +69,7 @@ class ListingSection extends React.Component<
             toggleSelect={this.toggleSelect}
             addedCartAlert={addedCartAlert}
             addedCartId={addedCartId}
+            categoryNotExists={categoryNotExists}
           />
         </div>
       </>

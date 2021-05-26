@@ -13,7 +13,7 @@ class ProductListingPage extends React.Component<
     products?: StoredProduct[];
     category?: string;
     categories?: string[];
-    error: boolean;
+    categoryNotExists: boolean;
   },
   { session }
 > {
@@ -28,15 +28,12 @@ class ProductListingPage extends React.Component<
 
   render() {
     const { session } = this.state;
-    const { products, category, categories, error } = this.props;
+    const { products, category, categories, categoryNotExists } = this.props;
 
-    // const categoryExists: boolean = categories.indexOf(category) !== -1;
-    // categoryExists ? "Products in "+category : "Non-existent category"
-    // categoryExists ? category : ""
     return (
       <>
-        <Layout title={!error ? `Products in ${category} category` : "Non-existent category"}>
-          <h1 className="text-center mb-4">{!error ? category : ""}</h1>
+        <Layout title={!categoryNotExists ? `Products in ${category} category` : "Non-existent category"}>
+          <h1 className="text-center mb-4">{!categoryNotExists ? category : ""}</h1>
           <SearchBarSection
             categories={categories}
             category={category}
@@ -45,7 +42,7 @@ class ProductListingPage extends React.Component<
             name=""
           />
           <br />
-          <ListingSection products={products} session={session} />
+          <ListingSection products={products} session={session} categoryNotExists={categoryNotExists} />
         </Layout>
       </>
     );
@@ -70,7 +67,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     return {
       props: {
         category,
-        error: true,
+        categoryNotExists: true,
       },
       revalidate: 60,
     };
@@ -80,7 +77,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
       products: await getProductsByCategory(decodeURI(params.category.toString()), null),
       categories,
       category,
-      error: false,
+      categoryNotExists: false,
     },
     revalidate: 60,
   };
