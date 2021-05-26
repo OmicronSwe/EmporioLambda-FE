@@ -35,7 +35,7 @@ class ProductListingPage extends React.Component<
     // categoryExists ? category : ""
     return (
       <>
-        <Layout title={!error ? "Products in "+category+" category" : "Non-existent category"}>
+        <Layout title={!error ? `Products in ${category} category` : "Non-existent category"}>
           <h1 className="text-center mb-4">{!error ? category : ""}</h1>
           <SearchBarSection
             categories={categories}
@@ -63,16 +63,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-
   const categories: string[] = await getCategories(null);
   const category: string = decodeURI(params.category.toString());
 
-
-  if(!categories.includes(category)){
+  if (!categories.includes(category)) {
     return {
       props: {
-        category: category,
-        error: true
+        category,
+        error: true,
       },
       revalidate: 60,
     };
@@ -80,9 +78,9 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   return {
     props: {
       products: await getProductsByCategory(decodeURI(params.category.toString()), null),
-      categories: categories,
-      category:category,
-      error: false
+      categories,
+      category,
+      error: false,
     },
     revalidate: 60,
   };
