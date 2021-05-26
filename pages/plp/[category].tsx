@@ -32,7 +32,9 @@ class ProductListingPage extends React.Component<
 
     return (
       <>
-        <Layout title={!categoryNotExists ? `Products in ${category} category` : "Non-existent category"}>
+        <Layout
+          title={!categoryNotExists ? `Products in ${category} category` : "Non-existent category"}
+        >
           <h1 className="text-center mb-4">{!categoryNotExists ? category : ""}</h1>
           <SearchBarSection
             categories={categories}
@@ -42,7 +44,11 @@ class ProductListingPage extends React.Component<
             name=""
           />
           <br />
-          <ListingSection products={products} session={session} categoryNotExists={categoryNotExists} />
+          <ListingSection
+            products={products}
+            session={session}
+            categoryNotExists={categoryNotExists}
+          />
         </Layout>
       </>
     );

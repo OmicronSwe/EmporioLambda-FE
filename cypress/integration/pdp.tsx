@@ -7,7 +7,7 @@ describe("Test pdp", () => {
     cy.visit("/pdp/1234");
     cy.get("h3").should("contain", "Product not found!");
     cy.get("h6").should("contain", "Please try again using the search bar");
-    cy.get("h1").should("not.contain","Product Details");
+    cy.get("h1").should("not.contain", "Product Details");
   });
   it("Check product info", () => {
     cy.visit("/pdp/ff60640d-e92e-4f06-a7cd-79a570474dda");
