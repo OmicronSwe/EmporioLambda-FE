@@ -257,4 +257,5 @@ describe("Test profile", () => {
     cy.contains("Redirect to Home page");
   });
 });
+
 export {};
