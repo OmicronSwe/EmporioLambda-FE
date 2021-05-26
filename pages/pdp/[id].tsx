@@ -31,8 +31,8 @@ class ProductPage extends React.Component<
     const { session } = this.state;
     return (
       <>
-        <Layout title="Product page">
-          <h1 className="text-center mb-4">Product Details</h1>
+        <Layout title={product ? "Product page of "+product.name : "Non-existent product"}>
+          <h1 className="text-center mb-4">{product ? "Product Details" : ""}</h1>
           <SearchBarSection
             categories={categories}
             category={product ? product.category : "All categories"}

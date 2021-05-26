@@ -10,9 +10,10 @@ import ListingSection from "../../components/plp/ListingSection";
 
 class ProductListingPage extends React.Component<
   {
-    products: StoredProduct[];
-    category: string;
-    categories: string[];
+    products?: StoredProduct[];
+    category?: string;
+    categories?: string[];
+    error: boolean;
   },
   { session }
 > {
@@ -27,12 +28,15 @@ class ProductListingPage extends React.Component<
 
   render() {
     const { session } = this.state;
-    const { products, category, categories } = this.props;
+    const { products, category, categories, error } = this.props;
 
+    // const categoryExists: boolean = categories.indexOf(category) !== -1;
+    // categoryExists ? "Products in "+category : "Non-existent category"
+    // categoryExists ? category : ""
     return (
       <>
-        <Layout title="Category Products">
-          <h1 className="text-center mb-4">{category}</h1>
+        <Layout title={!error ? "Products in "+category+" category" : "Non-existent category"}>
+          <h1 className="text-center mb-4">{!error ? category : ""}</h1>
           <SearchBarSection
             categories={categories}
             category={category}
@@ -59,11 +63,26 @@ export const getStaticPaths: GetStaticPaths = async () => {
 };
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
+
+  const categories: string[] = await getCategories(null);
+  const category: string = decodeURI(params.category.toString());
+
+
+  if(!categories.includes(category)){
+    return {
+      props: {
+        category: category,
+        error: true
+      },
+      revalidate: 60,
+    };
+  }
   return {
     props: {
       products: await getProductsByCategory(decodeURI(params.category.toString()), null),
-      categories: await getCategories(null),
-      category: decodeURI(params.category.toString()),
+      categories: categories,
+      category:category,
+      error: false
     },
     revalidate: 60,
   };

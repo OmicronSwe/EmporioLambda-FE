@@ -1,6 +1,12 @@
 describe("Test pdp", () => {
-  it("Successfully loads", () => {
+  it("Successfully loads a PDP", () => {
     cy.visit("/pdp/ff60640d-e92e-4f06-a7cd-79a570474dda");
+    cy.get("h1").should("contain", "Product Details");
+  });
+  it("Successfully loads a PDP of an unexisting product", () => {
+    cy.visit("/pdp/1234");
+    cy.get("h3").should("contain", "Product not found!");
+    cy.get("h6").should("contain", "Please try again using the search bar");
   });
   it("Check product info", () => {
     cy.visit("/pdp/ff60640d-e92e-4f06-a7cd-79a570474dda");

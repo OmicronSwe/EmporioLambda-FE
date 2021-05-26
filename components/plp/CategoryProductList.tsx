@@ -72,7 +72,11 @@ const CategoryProductList = ({
           ))}
         </CardColumns>
       ) : (
-        <h2>No products found</h2>
+        <div>
+          <h3 className="text-center pt-4">No products found!</h3>
+          <h6 className="text-center pt-2">Please try again using the search bar</h6>
+          <h6 className="text-center pt-2">or selecting a category from the homepage </h6>
+        </div>
       )}
     </>
   );

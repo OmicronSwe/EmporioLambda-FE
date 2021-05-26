@@ -71,7 +71,10 @@ const ProductSection = ({ product }: ProductSectionProps) => {
           <br />
         </Form>
       ) : (
-        <p> Product not found! </p>
+        <div>
+          <h3 className="text-center pt-4"> Product not found! </h3>
+          <h6 className="text-center pt-2"> Please try again using the search bar </h6>
+        </div>
       )}
     </>
   );
