@@ -19,7 +19,7 @@ describe("Test Plp", () => {
     cy.get('[type="checkbox"]').check();
     cy.get("button").should("contain", "Add Selected to Cart");
   });
-  it("Check if the filter form is present", () => {
+  it("Check if the searchbar is present", () => {
     cy.visit("/plp/Synthesizers");
     cy.get("#category");
     cy.get("#productValue");
