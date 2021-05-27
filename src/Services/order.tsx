@@ -28,13 +28,17 @@ export const getOrderDetails = async (id: string, ses): Promise<Order> => {
 };
 
 export const getOrderDetailsByUser = async (id: string, ses): Promise<Order> => {
-  const response = await (
+  const res = await (
     await getlambdaResponse(
       `order/getByUsername/${decode(ses.accessToken).sub}/${id}`,
       "GET",
       ses.accessToken
     )
-  ).props.response.result.items[0];
+  ).props.response.result;
+
+  if(res === undefined) return null;
+
+  const response = res.items[0];
 
   const productArray: ProductInCart[] = [];
   response.products.forEach((product) => {

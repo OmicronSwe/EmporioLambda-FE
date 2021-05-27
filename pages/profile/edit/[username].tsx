@@ -110,6 +110,7 @@ class EditProfile extends React.Component<
     return (
       <>
         <Layout title="Profile edit page">
+          {profile !== null ? (
           <Container>
             <Row className="justify-content-md-center">
               <h1>Profile edit</h1>
@@ -150,6 +151,9 @@ class EditProfile extends React.Component<
               <p />
             )}
           </Container>
+          ) : (
+            <h3 className="text-center pt-4 mt-4">Profile not found!</h3>
+          )}
         </Layout>
       </>
     );

@@ -142,6 +142,7 @@ class ModifyProductPage extends React.Component<
     return (
       <>
         <Layout title="Product modifying page">
+          {product !== null? (
           <Container>
             <Row className="justify-content-md-center">
               <h1>Product modification</h1>
@@ -186,6 +187,9 @@ class ModifyProductPage extends React.Component<
               <p />
             )}
           </Container>
+          ) : ( 
+            <h3 className="text-center pt-4 mt-4">Product not found!</h3> 
+          )}
         </Layout>
       </>
     );
