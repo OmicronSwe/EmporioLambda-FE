@@ -36,7 +36,7 @@ export const getOrderDetailsByUser = async (id: string, ses): Promise<Order> => 
     )
   ).props.response.result;
 
-  if(res === undefined) return null;
+  if (res === undefined) return null;
 
   const response = res.items[0];
 

@@ -47,7 +47,7 @@ export const updateProduct = async (
 export const getProduct = async (id: string, ses): Promise<StoredProduct> => {
   const response = (await getlambdaResponse(`product/${id}`, "GET", ses.accessToken)).props.response
     .result;
-  return response? response : null;
+  return response || null;
 };
 
 export const insertCategory = async (category: string, ses): Promise<boolean> => {

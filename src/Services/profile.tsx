@@ -6,7 +6,7 @@ export const getProfile = async (session): Promise<Profile> => {
   const response = (
     await getlambdaResponse(`user/${decode(session.accessToken).sub}/`, "GET", session.accessToken)
   ).props.response.result;
-  return response? response : null;
+  return response || null;
 };
 
 export const updateProfile = async (profile: Profile, session): Promise<string> => {

@@ -111,46 +111,46 @@ class EditProfile extends React.Component<
       <>
         <Layout title="Profile edit page">
           {profile !== null ? (
-          <Container>
-            <Row className="justify-content-md-center">
-              <h1>Profile edit</h1>
-            </Row>
-            <Row>
-              <Col>
-                <ProfileInfoForm profile={profile} />
-              </Col>
-              <Col>
-                <ModifyingProfileForm updateProfile={this.updateProfile} errors={errors} />
-              </Col>
-            </Row>
-            {updatedProfileAlert !== null && updatedProfileAlert === true ? (
-              <Container>
-                <Row className="justify-content-md-center mt-3">
-                  <Alert variant="success">
-                    <Alert.Heading className="text-center">
-                      Profile edited Successfully!
-                    </Alert.Heading>
-                  </Alert>
-                </Row>
-                <Row className="justify-content-md-center">
-                  <Button variant="success" onClick={() => Router.push("/profile")}>
-                    Redirect to Profile page
-                  </Button>
-                </Row>
-              </Container>
-            ) : (
-              <p />
-            )}
-            {updatedProfileAlert !== null && updatedProfileAlert === false ? (
-              <Alert variant="danger">
-                <Alert.Heading className="text-center">
-                  At least one field must be filled in to modify the profile
-                </Alert.Heading>
-              </Alert>
-            ) : (
-              <p />
-            )}
-          </Container>
+            <Container>
+              <Row className="justify-content-md-center">
+                <h1>Profile edit</h1>
+              </Row>
+              <Row>
+                <Col>
+                  <ProfileInfoForm profile={profile} />
+                </Col>
+                <Col>
+                  <ModifyingProfileForm updateProfile={this.updateProfile} errors={errors} />
+                </Col>
+              </Row>
+              {updatedProfileAlert !== null && updatedProfileAlert === true ? (
+                <Container>
+                  <Row className="justify-content-md-center mt-3">
+                    <Alert variant="success">
+                      <Alert.Heading className="text-center">
+                        Profile edited Successfully!
+                      </Alert.Heading>
+                    </Alert>
+                  </Row>
+                  <Row className="justify-content-md-center">
+                    <Button variant="success" onClick={() => Router.push("/profile")}>
+                      Redirect to Profile page
+                    </Button>
+                  </Row>
+                </Container>
+              ) : (
+                <p />
+              )}
+              {updatedProfileAlert !== null && updatedProfileAlert === false ? (
+                <Alert variant="danger">
+                  <Alert.Heading className="text-center">
+                    At least one field must be filled in to modify the profile
+                  </Alert.Heading>
+                </Alert>
+              ) : (
+                <p />
+              )}
+            </Container>
           ) : (
             <h3 className="text-center pt-4 mt-4">Profile not found!</h3>
           )}

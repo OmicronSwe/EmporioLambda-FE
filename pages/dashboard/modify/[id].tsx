@@ -142,53 +142,53 @@ class ModifyProductPage extends React.Component<
     return (
       <>
         <Layout title="Product modifying page">
-          {product !== null? (
-          <Container>
-            <Row className="justify-content-md-center">
-              <h1>Product modification</h1>
-            </Row>
-            <Row>
-              <Col>
-                <OldProductInformations product={product} />
-              </Col>
-              <Col>
-                <ModifyingProductForm
-                  updateProduct={this.updateProduct}
-                  categories={categories}
-                  errors={errors}
-                />
-              </Col>
-            </Row>
-            {productModified !== null && productModified === true ? (
-              <Container>
-                <Row className="justify-content-md-center mt-3">
-                  <Alert variant="success">
-                    <Alert.Heading className="text-center">
-                      Product edited Successfully!
-                    </Alert.Heading>
-                  </Alert>
-                </Row>
-                <Row className="justify-content-md-center">
-                  <Button variant="success" onClick={() => Router.push("/dashboard")}>
-                    Redirect to Dashboard
-                  </Button>
-                </Row>
-              </Container>
-            ) : (
-              <p />
-            )}
-            {productModified !== null && productModified === false ? (
-              <Alert variant="danger">
-                <Alert.Heading className="text-center">
-                  At least one field must be filled in to modify the product
-                </Alert.Heading>
-              </Alert>
-            ) : (
-              <p />
-            )}
-          </Container>
-          ) : ( 
-            <h3 className="text-center pt-4 mt-4">Product not found!</h3> 
+          {product !== null ? (
+            <Container>
+              <Row className="justify-content-md-center">
+                <h1>Product modification</h1>
+              </Row>
+              <Row>
+                <Col>
+                  <OldProductInformations product={product} />
+                </Col>
+                <Col>
+                  <ModifyingProductForm
+                    updateProduct={this.updateProduct}
+                    categories={categories}
+                    errors={errors}
+                  />
+                </Col>
+              </Row>
+              {productModified !== null && productModified === true ? (
+                <Container>
+                  <Row className="justify-content-md-center mt-3">
+                    <Alert variant="success">
+                      <Alert.Heading className="text-center">
+                        Product edited Successfully!
+                      </Alert.Heading>
+                    </Alert>
+                  </Row>
+                  <Row className="justify-content-md-center">
+                    <Button variant="success" onClick={() => Router.push("/dashboard")}>
+                      Redirect to Dashboard
+                    </Button>
+                  </Row>
+                </Container>
+              ) : (
+                <p />
+              )}
+              {productModified !== null && productModified === false ? (
+                <Alert variant="danger">
+                  <Alert.Heading className="text-center">
+                    At least one field must be filled in to modify the product
+                  </Alert.Heading>
+                </Alert>
+              ) : (
+                <p />
+              )}
+            </Container>
+          ) : (
+            <h3 className="text-center pt-4 mt-4">Product not found!</h3>
           )}
         </Layout>
       </>
