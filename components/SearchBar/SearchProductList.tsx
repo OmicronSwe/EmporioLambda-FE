@@ -16,7 +16,7 @@ const SearchProductList = ({
   addToCart,
   toggleSelect,
   addedCartAlert,
-  addedCartId
+  addedCartId,
 }: SearchProductListProps) => {
   const [show, setShow] = useState(true);
   return (
@@ -73,9 +73,7 @@ const SearchProductList = ({
         </CardColumns>
       ) : (
         <div>
-          <h3 className="text-center pt-4">
-            {"Products not found!"}
-          </h3>
+          <h3 className="text-center pt-4">Products not found!</h3>
           <h6 className="text-center pt-2">Please try again using the search bar</h6>
           <h6 className="text-center pt-2">or selecting a category from the homepage</h6>
         </div>

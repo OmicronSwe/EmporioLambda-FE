@@ -2,7 +2,6 @@ describe("Test Plp", () => {
   it("Successfully loads a PLP corresponding to a category", () => {
     cy.visit("/plp/Synthesizers");
   });
-  // unexisting category
   it("Successfully loads a PLP of an unexisting category", () => {
     cy.visit("/plp/1234");
     cy.get("h3").should("contain", "Category not found!");
