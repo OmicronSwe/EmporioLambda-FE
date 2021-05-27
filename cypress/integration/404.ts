@@ -1,5 +1,5 @@
 describe("Test 404 Page", () => {
-  it("Correctly viting of 404 page due to incorrect user search", () => {
+  it("Correctly visiting of 404 page due to incorrect user search", () => {
     cy.visit("/123", { failOnStatusCode: false });
     cy.get("h2").should("contain", "That page cannot be found!");
   });
