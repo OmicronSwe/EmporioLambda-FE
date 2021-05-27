@@ -43,7 +43,13 @@ const ProductSection = ({ product }: ProductSectionProps) => {
                   <strong> Description </strong>
                 </Form.Label>
                 <Col sm="9">
-                  <Form.Control as="textarea" rows={1} plaintext readOnly defaultValue={product.description} />
+                  <Form.Control
+                    as="textarea"
+                    rows={1}
+                    plaintext
+                    readOnly
+                    defaultValue={product.description}
+                  />
                 </Col>
               </Form.Group>
               {product.category !== null ? (

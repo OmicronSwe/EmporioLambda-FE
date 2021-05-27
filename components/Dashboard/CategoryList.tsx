@@ -26,7 +26,10 @@ const CategoryList = ({
         )}
         {categoryRemovedAlert !== null && categoryRemovedAlert === false ? (
           <Alert variant="danger" onClose={() => handleRemoveAlert()} dismissible>
-            <Alert.Heading className="text-center">Error on category removal, please verify that the category is not associated with any product</Alert.Heading>
+            <Alert.Heading className="text-center">
+              Error on category removal, please verify that the category is not associated with any
+              product
+            </Alert.Heading>
           </Alert>
         ) : (
           <div />
