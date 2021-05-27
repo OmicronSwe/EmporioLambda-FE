@@ -15,40 +15,40 @@ const NewCategoryForm = ({
   return (
     <>
       <div>
-      <div className="d-flex justify-content-center">
-        <Accordion style={{ width: "50%" }}>
-          <Card>
-            <Card.Header style={{ backgroundColor: "white" }}>
-              <div className="d-flex justify-content-center">
-                <Accordion.Toggle as={Button} eventKey="0">
-                  Add new category
-                </Accordion.Toggle>
-              </div>
-            </Card.Header>
-            <Accordion.Collapse eventKey="0">
-              <Card.Body>
-                <Form onSubmit={insertCategory}>
-                  <Form.Group as={Row}>
-                    <Form.Label column sm="4">
-                      Category name
-                    </Form.Label>
-                    <Col sm="8">
-                      <Form.Control placeholder="Name" name="name" id="categoryName" />
-                    </Col>
-                  </Form.Group>
-                  <Form.Row className="text-center">
-                    <Col sm="12">
-                      <Button variant="primary" type="submit" id="categoryInsertSubmit">
-                        Submit
-                      </Button>
-                    </Col>
-                  </Form.Row>
-                </Form>
-              </Card.Body>
-            </Accordion.Collapse>
-          </Card>
-        </Accordion>
-      </div>
+        <div className="d-flex justify-content-center">
+          <Accordion style={{ width: "50%" }}>
+            <Card>
+              <Card.Header style={{ backgroundColor: "white" }}>
+                <div className="d-flex justify-content-center">
+                  <Accordion.Toggle as={Button} eventKey="0">
+                    Add new category
+                  </Accordion.Toggle>
+                </div>
+              </Card.Header>
+              <Accordion.Collapse eventKey="0">
+                <Card.Body>
+                  <Form onSubmit={insertCategory}>
+                    <Form.Group as={Row}>
+                      <Form.Label column sm="4">
+                        Category name
+                      </Form.Label>
+                      <Col sm="8">
+                        <Form.Control placeholder="Name" name="name" id="categoryName" />
+                      </Col>
+                    </Form.Group>
+                    <Form.Row className="text-center">
+                      <Col sm="12">
+                        <Button variant="primary" type="submit" id="categoryInsertSubmit">
+                          Submit
+                        </Button>
+                      </Col>
+                    </Form.Row>
+                  </Form>
+                </Card.Body>
+              </Accordion.Collapse>
+            </Card>
+          </Accordion>
+        </div>
         {categoryInsertedAlert !== null && categoryInsertedAlert === true ? (
           <div>
             <br />
