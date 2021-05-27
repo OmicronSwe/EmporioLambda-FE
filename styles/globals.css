@@ -1,9 +1,16 @@
+
 html,
 body {
   padding: 0;
-  margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
     Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+}
+
+body > div > div{
+  height:100vh;
+  margin:0;
+  display:flex; 
+  flex-direction:column; 
 }
 
 a {
@@ -50,26 +57,48 @@ header nav {
 }
 
 .content {
-  margin: auto;
+  margin: 0 auto auto auto;
   padding: 2em;
   word-wrap: break-word;
+  width: 70%;
 }
 
 #footer {
-  border-top: 1px solid #ccc;
-  position: absolute;
-  bottom: 0;
   width: 100%;
   height: 3em;
   text-align: center;
-  padding-top: 0.8em;
+  padding: 0.8em;
   background-color: #CEDAE0;
+  margin-top:auto;
 }
 
 #footer div {
   align-items: center;
-  display: flex;
   justify-content: space-evenly;
-  max-width: 30em;
-  margin: 0 auto;
+}
+
+.searchProductName{
+  width: 40% !important;
+}
+
+.categoryInsertAlert {
+  transition: opacity 0.5s;
+  opacity: 1;
+}
+
+.insertListCheckbox {
+  float: right;
+  margin-top: 2em;
+  width: 1em;
+  transform: scale(2);
+}
+
+#taxInput{
+  width: 50%;
+}
+
+#taxForm{
+  border: 1px solid rgba(0,0,0,.125);
+  border-radius: .25rem;
+  padding: 1em;
 }

@@ -1,9 +1,44 @@
+import React from "react";
+import { GetStaticProps } from "next";
+import CategoryList from "../components/home/CategoryList";
 import Layout from "../components/layout";
+import { getCategories } from "../src/Services/dashboard";
+import SearchBarSection from "../components/SearchBar/SearchBarSection";
 
-const IndexPage = () => (
-  <Layout title="Home | EmporioLambda">
-    <h1>Initial setup👋</h1>
-  </Layout>
-);
+class CategoryListHome extends React.Component<{ categories: string[] }> {
+  constructor(props) {
+    super(props);
+    this.state = {};
+  }
 
-export default IndexPage;
+  render() {
+    const { categories } = this.props;
+    return (
+      <>
+        <Layout title="Homepage">
+          <h1 className="text-center mb-4">Home</h1>
+          <SearchBarSection
+            categories={categories}
+            category="All categories"
+            minPrice={undefined}
+            maxPrice={undefined}
+            name=""
+          />
+          <br />
+          <CategoryList categories={categories} />
+        </Layout>
+      </>
+    );
+  }
+}
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {
+      categories: await getCategories(null),
+    },
+    revalidate: 60,
+  };
+};
+
+export default CategoryListHome;

@@ -1,0 +1,19 @@
+{
+    "/local/*": "/$1",
+    "/product/search/category=:category": "/product?category=:category",
+	  "/cart/toEmpty/:id": "/cart/1",
+	  "/cart/:id": "/cart?username=:id&_limit=1",
+    "/product/search/*": "/product",
+    "/product/:id": "/product?id=:id",
+    "/order/:id": "/orderAdmin?id=:id",
+    "/order": "/orderUser",
+    "/oauth2/*": "/token",
+    "/user/:id": "/user?username=:id",
+    "/user/3184a143-558f-4461-9b91-d0047037a53b/updatePassword": "/updatePasswordSuccess",
+    "/user/93edaf82-37fe-420d-af28-44d3693c8bdf/updatePassword": "/updatePasswordFail",
+    "/user/:id/update": "/updateProfileSuccess",
+    "/order/getByUsername/93edaf82-37fe-420d-af28-44d3693c8bdf": "/noOrdersFound",
+    "/order/getByUsername/:userID/:orderId": "/orderUser?id=:orderId",
+    "/order/getByUsername/:id": "/orderUser?username=:id",
+    "/user/:id/delete": "/deleteProfileSuccess"
+}

@@ -29,7 +29,6 @@ yarn-error.log*
 
 
 # cypress
-/cypress/fixtures
 /cypress/videos
 /cypress/screenshots
 .nyc_output

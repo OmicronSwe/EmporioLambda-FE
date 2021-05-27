@@ -17,9 +17,12 @@ jobs:
 
       - name: Test ESLint 🛂
         run: npm run checkWithLint
+      
+      - name: Test Cypress 🌲👮
+        run: npm run test
 
-      - name: Test Cypress 🌲👮 and push coverage to Codecov ☂️
-        run: npm run test && npx codecov
+      - name: Push code coverage to Codecov ☂️
+        run: npx codecov
 
       - name: Deploy preview 🚀🌟
         if: github.ref == 'refs/heads/develop'
