@@ -14,6 +14,7 @@ const NewCategoryForm = ({
 }: NewCategoryFormProps) => {
   return (
     <>
+      <div>
       <div className="d-flex justify-content-center">
         <Accordion style={{ width: "50%" }}>
           <Card>
@@ -47,19 +48,26 @@ const NewCategoryForm = ({
             </Accordion.Collapse>
           </Card>
         </Accordion>
+      </div>
         {categoryInsertedAlert !== null && categoryInsertedAlert === true ? (
-          <Alert variant="success" onClose={() => handleInsertAlert()} dismissible>
-            <Alert.Heading className="text-center">Category created successfully!</Alert.Heading>
-          </Alert>
+          <div>
+            <br />
+            <Alert variant="success" onClose={() => handleInsertAlert()} dismissible>
+              <Alert.Heading className="text-center">Category created successfully!</Alert.Heading>
+            </Alert>
+          </div>
         ) : (
-          <p />
+          <div />
         )}
         {categoryInsertedAlert !== null && categoryInsertedAlert === false ? (
-          <Alert variant="danger" onClose={() => handleInsertAlert()} dismissible>
-            <Alert.Heading className="text-center">
-              Error on category creation, check if it already exists
-            </Alert.Heading>
-          </Alert>
+          <div>
+            <br />
+            <Alert variant="danger" onClose={() => handleInsertAlert()} dismissible>
+              <Alert.Heading className="text-center">
+                Error on category creation, check if it already exists
+              </Alert.Heading>
+            </Alert>
+          </div>
         ) : (
           <p />
         )}

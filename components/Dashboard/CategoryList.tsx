@@ -19,17 +19,17 @@ const CategoryList = ({
       <div>
         {categoryRemovedAlert !== null && categoryRemovedAlert === true ? (
           <Alert variant="success" onClose={() => handleRemoveAlert()} dismissible>
-            <Alert.Heading>Category removed successfully!</Alert.Heading>
+            <Alert.Heading className="text-center">Category removed successfully!</Alert.Heading>
           </Alert>
         ) : (
-          <p />
+          <div />
         )}
         {categoryRemovedAlert !== null && categoryRemovedAlert === false ? (
           <Alert variant="danger" onClose={() => handleRemoveAlert()} dismissible>
-            <Alert.Heading>Error on category removal!</Alert.Heading>
+            <Alert.Heading className="text-center">Error on category removal!</Alert.Heading>
           </Alert>
         ) : (
-          <p />
+          <div />
         )}
         <CardColumns>
           {categories ? (
@@ -44,7 +44,7 @@ const CategoryList = ({
               </Card>
             ))
           ) : (
-            <p>No category found</p>
+            <h3 className="text-center">No category found</h3>
           )}
         </CardColumns>
       </div>

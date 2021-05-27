@@ -70,8 +70,7 @@ class OrderSection extends React.Component<{ order: Order }> {
                             <td>{item.product.name}</td>
                             <td>{item.quantity}</td>
                             <td>
-                              {item.product.price}
-                              &euro;
+                              {`${item.product.price.toFixed(2)}€`}
                             </td>
                           </tr>
                         ))

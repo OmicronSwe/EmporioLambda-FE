@@ -23,7 +23,7 @@ const ProductList = ({ orders }: ProductListProps) => {
             {orders.map((item) => (
               <tr key={item.id}>
                 <td>{item.id}</td>
-                <td>{item.date}</td>
+                <td>{`${new Date(item.date).toLocaleDateString()}`}</td>
                 <td>{`${item.totalPrice.toFixed(2)}€`}</td>
                 <td>
                   <Button
