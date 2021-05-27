@@ -6,7 +6,7 @@ import StoredProduct from "../../src/types/StoredProduct";
 import { getProductsByCategory } from "../../src/Services/plp";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 import { getCategories } from "../../src/Services/dashboard";
-import ListingSection from "../../components/plp/ListingSection";
+import CategoryProductListingSection from "../../components/plp/CategoryProductListingSection";
 
 class ProductListingPage extends React.Component<
   {
@@ -44,7 +44,7 @@ class ProductListingPage extends React.Component<
             name=""
           />
           <br />
-          <ListingSection
+          <CategoryProductListingSection
             products={products}
             session={session}
             categoryNotExists={categoryNotExists}

@@ -5,7 +5,7 @@ import Layout from "../../components/layout";
 import StoredProduct from "../../src/types/StoredProduct";
 import SearchBarSection from "../../components/SearchBar/SearchBarSection";
 import { getCategories } from "../../src/Services/dashboard";
-import ListingSection from "../../components/plp/ListingSection";
+import SearchProductListingSection from "../../components/SearchBar/SearchProductListingSection";
 import { getProductsFiltered } from "../../src/Services/product";
 
 class SearchPage extends React.Component<{
@@ -16,6 +16,7 @@ class SearchPage extends React.Component<{
   name: string;
   minPrice: number;
   maxPrice: number;
+  categoryNotExists: boolean;
 }> {
   constructor(props) {
     super(props);
@@ -26,7 +27,7 @@ class SearchPage extends React.Component<{
     const { products, category, categories, session, minPrice, maxPrice, name } = this.props;
     return (
       <>
-        <Layout title="Category Products">
+        <Layout title="Search results">
           <h1 className="text-center mb-4">Search Results</h1>
           <SearchBarSection
             categories={categories}
@@ -36,7 +37,7 @@ class SearchPage extends React.Component<{
             name={name}
           />
           <br />
-          <ListingSection products={products} session={session} />
+          <SearchProductListingSection products={products} session={session} />
         </Layout>
       </>
     );

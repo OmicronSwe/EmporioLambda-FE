@@ -1,12 +1,12 @@
 import React from "react";
 import StoredProduct from "../../src/types/StoredProduct";
 import { insertCartList } from "../../src/Services/plp";
-import CategoryProductList from "./CategoryProductList";
-import AddToCartList from "./AddToCartList";
+import SearchProductList from "./SearchProductList";
+import AddToCartList from "../plp/AddToCartList";
 import { insertCart } from "../../src/Services/product";
 
-class ListingSection extends React.Component<
-  { products: StoredProduct[]; session; categoryNotExists: boolean },
+class SearchProductListingSection extends React.Component<
+  { products: StoredProduct[]; session },
   {
     idProducts: string[];
     products: StoredProduct[];
@@ -53,7 +53,6 @@ class ListingSection extends React.Component<
   };
 
   render() {
-    const { categoryNotExists } = this.props;
     const { products, disabled, addedCartAlert, addedCartId, addedListAlert } = this.state;
     return (
       <>
@@ -63,13 +62,12 @@ class ListingSection extends React.Component<
             disabled={disabled}
             addedListAlert={addedListAlert}
           />
-          <CategoryProductList
+          <SearchProductList
             products={products}
             addToCart={this.addToCart}
             toggleSelect={this.toggleSelect}
             addedCartAlert={addedCartAlert}
             addedCartId={addedCartId}
-            categoryNotExists={categoryNotExists}
           />
         </div>
       </>
@@ -77,4 +75,4 @@ class ListingSection extends React.Component<
   }
 }
 
-export default ListingSection;
+export default SearchProductListingSection;
