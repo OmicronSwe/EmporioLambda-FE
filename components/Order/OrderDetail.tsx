@@ -2,14 +2,11 @@ import React from "react";
 import { Table } from "react-bootstrap";
 import Order from "../../src/types/Order";
 
-class OrderSection extends React.Component<{ order: Order }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+interface OrderDetailProps {
+  order: Order
+}
 
-  render() {
-    const { order } = this.props;
+const OrderDetail = ( { order }: OrderDetailProps) => {
     return (
       <>
         {order ? (
@@ -73,7 +70,7 @@ class OrderSection extends React.Component<{ order: Order }> {
                           </tr>
                         ))
                       ) : (
-                        <p>No product found</p>
+                        <h3>No product found!</h3>
                       )}
                     </tbody>
                   </Table>
@@ -97,11 +94,10 @@ class OrderSection extends React.Component<{ order: Order }> {
             </tbody>
           </Table>
         ) : (
-          <p> Order not found! </p>
+          <h3 className="text-center pt-4 mt-4"> Order not found! </h3>
         )}
       </>
     );
-  }
 }
 
-export default OrderSection;
+export default OrderDetail;

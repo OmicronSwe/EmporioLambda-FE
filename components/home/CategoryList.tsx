@@ -2,14 +2,11 @@ import Router from "next/router";
 import React from "react";
 import { Button, CardColumns, Card } from "react-bootstrap";
 
-class CategoryList extends React.Component<{ categories: string[] }> {
-  constructor(props) {
-    super(props);
-    this.state = {};
-  }
+interface CategoryListProps {
+  categories: string[]
+}
 
-  render() {
-    const { categories } = this.props;
+const CategoryList = ( { categories }: CategoryListProps ) => {
     return (
       <>
         <CardColumns>
@@ -31,12 +28,11 @@ class CategoryList extends React.Component<{ categories: string[] }> {
               </Card>
             ))
           ) : (
-            <p>No category found</p>
+            <h3>No category found</h3>
           )}
         </CardColumns>
       </>
     );
-  }
 }
 
 export default CategoryList;
