@@ -72,7 +72,8 @@
       "pages/api/_coverage_.ts"
     ],
     "reporter": [
-      "clover"
+      "json-summary",
+      "json"
     ]
   }
 }
