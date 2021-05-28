@@ -48,9 +48,6 @@ Nelle *Github Actions* viene utilizzato `npm run checkWithLint`, senza il *fix* 
 ## Testing
 Per il testing viene utilizzato [Cypress](https://docs.cypress.io/guides/overview/why-cypress.html#In-a-nutshell). I test vanno inseriti nella cartella `cypress/integration`. All'interno della cartella `cypress/plugins` e `cypress/support` sono inseriti alcuni file relativi alla configurazione di esso (non dovrebbero essere toccati se è tutto configurato bene). Per lanciare i test lanciare il comando `npm run test`. Cypress mostrerà anche il video del test eseguito e i relativi screenshots rispettivamente nella cartella `cypress/videos` e `cypress/screenshots` (tali cartelle non vengono versionate quindi saranno disponibili solo lanciando il comando del test **localmente**) . E' presente un file di test come esempio.
 
-## Code Coverage
-GitHub inserirà automaticamente il code coverage dopo aver eseguito i test, se questi hanno tutti esito positivo. Il code coverage è disponibile all'indirizzo https://app.codecov.io/gh/OmicronSwe/EmporioLambda-FE/
-
 ## Visualizzazione sito
 Per visualizzare il sito creato, in locale, si deve lanciare il comando `npm run dev` il quale hosterà il sito all'indirizzo http://localhost:3000/. Per meaggiori info vedere la documentazione [Next.js](https://nextjs.org/docs).
 
