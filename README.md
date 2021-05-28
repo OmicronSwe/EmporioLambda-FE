@@ -1,7 +1,6 @@
 # EmporioLambda-Front-end
 
 ![Workflow status](https://github.com/OmicronSwe/EmporioLambda-FE/actions/workflows/deployWebsite.yml/badge.svg)
-[![Code coverage](https://codecov.io/gh/OmicronSwe/EmporioLambda-FE/branch/master/graph/badge.svg?token=S45ES4F9UL)](https://codecov.io/gh/OmicronSwe/EmporioLambda-FE)
 
 
 ## Requisiti
